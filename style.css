@@ -35,3 +35,38 @@ a.button {
 a.button:hover {
   background-color: #555;
 }
+
+
+/* Responsive design for mobile */
+@media (max-width: 768px) {
+  body {
+    padding: 10px;
+  }
+
+  header {
+    font-size: 14px;
+    padding: 20px 0;
+  }
+
+  section {
+    padding: 10px;
+    margin: 10px 0;
+  }
+
+  h1 {
+    font-size: 24px;
+  }
+
+  h2 {
+    font-size: 20px;
+  }
+
+  p, li {
+    font-size: 16px;
+  }
+
+  a.button {
+    padding: 8px 16px;
+    font-size: 14px;
+  }
+}
