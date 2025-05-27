@@ -5,7 +5,6 @@ import React from "react";
 import { Card, CardContent } from "./components/ui/card";
 import { Button } from "./components/ui/button";
 
-
 export default function Home() {
   return (
     <div className="min-h-screen bg-gray-100 p-4">
@@ -54,8 +53,7 @@ export default function Home() {
           <CardContent className="p-4">
             <h2 className="text-2xl font-semibold mb-2">Contact</h2>
             <ul className="space-y-1">
-              <li>Email: shahzad@example.com</li>
-              <li>LinkedIn: linkedin.com/in/azhads</li>
+              <li>Email: shaikazhadshahzad@gmail.com</li>
               <li>GitHub: github.com/s-shahzad</li>
             </ul>
           </CardContent>
