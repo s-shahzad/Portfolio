@@ -31,7 +31,7 @@ export default function Home() {
         </div>
       </header>
 
-      <section className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <section className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
         {/* About Me */}
         <Card className="hover:shadow-lg transition-shadow duration-300">
           <CardContent className="p-4">
@@ -73,6 +73,18 @@ export default function Home() {
             <ul className="space-y-1">
               <li>Email: shaikazhadshahzad@gmail.com</li>
               <li>GitHub: github.com/s-shahzad</li>
+            </ul>
+          </CardContent>
+        </Card>
+
+        {/* Writeups */}
+        <Card className="hover:shadow-lg transition-shadow duration-300 col-span-full">
+          <CardContent className="p-4">
+            <h2 className="text-2xl font-semibold mb-2">Writeups</h2>
+            <ul className="list-disc pl-5 space-y-1">
+              <li><a href="#" className="text-blue-500 hover:underline">TryHackMe: Blue - Initial Access via SMBv1</a></li>
+              <li><a href="#" className="text-blue-500 hover:underline">Phishing Email Analysis - SOC Level 1 Techniques</a></li>
+              <li><a href="#" className="text-blue-500 hover:underline">EVCS ML Detection - Dataset + Attack Flow Explained</a></li>
             </ul>
           </CardContent>
         </Card>
