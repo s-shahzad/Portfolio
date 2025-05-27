@@ -72,7 +72,7 @@ export default function Home() {
             <h2 className="text-2xl font-semibold mb-2">Contact</h2>
             <ul className="space-y-1">
               <li>Email: shaikazhadshahzad@gmail.com</li>
-              <li>GitHub: github.com/s-shahzad</li>
+              <li>GitHub: <a href="https://github.com/s-shahzad" className="text-blue-500 hover:underline">github.com/s-shahzad</a></li>
             </ul>
           </CardContent>
         </Card>
@@ -82,9 +82,9 @@ export default function Home() {
           <CardContent className="p-4">
             <h2 className="text-2xl font-semibold mb-2">Writeups</h2>
             <ul className="list-disc pl-5 space-y-1">
-              <li><a href="#" className="text-blue-500 hover:underline">TryHackMe: Blue - Initial Access via SMBv1</a></li>
-              <li><a href="#" className="text-blue-500 hover:underline">Phishing Email Analysis - SOC Level 1 Techniques</a></li>
-              <li><a href="#" className="text-blue-500 hover:underline">EVCS ML Detection - Dataset + Attack Flow Explained</a></li>
+              <li><a href="https://tryhackme.com/room/blue" className="text-blue-500 hover:underline" target="_blank" rel="noopener noreferrer">TryHackMe: Blue - Initial Access via SMBv1</a></li>
+              <li><a href="https://tryhackme.com/p/s-shahzad" className="text-blue-500 hover:underline" target="_blank" rel="noopener noreferrer">Phishing Email Analysis - SOC Level 1 Techniques</a></li>
+              <li><a href="https://github.com/s-shahzad/EVCS-DoS-ML" className="text-blue-500 hover:underline" target="_blank" rel="noopener noreferrer">EVCS ML Detection - Dataset + Attack Flow Explained</a></li>
             </ul>
           </CardContent>
         </Card>
