@@ -1,43 +1,113 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
-    <meta
-      name="description"
-      content="Web site created using create-react-app"
-    />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-    <!--
-      manifest.json provides metadata used when your web app is installed on a
-      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
-    -->
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <!--
-      Notice the use of %PUBLIC_URL% in the tags above.
-      It will be replaced with the URL of the `public` folder during the build.
-      Only files inside the `public` folder can be referenced from the HTML.
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Azhad Shahzad Shaik | Portfolio</title>
 
-      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
-      work correctly both with client-side routing and a non-root public URL.
-      Learn how to configure a non-root public URL by running `npm run build`.
-    -->
-    <title>React App</title>
-  </head>
-  <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
+  <!-- SEO / social  -->
+  <meta name="description"
+        content="Cybersecurity enthusiast & network engineer who builds secure infrastructure and ML-aided threat-detection projects.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Azhad Shahzad Shaik | Portfolio">
+  <meta property="og:description" content="Cybersecurity • Network Engineering • Python">
+  <meta property="og:image" content="assets/og.png">
 
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
+  <link rel="icon" href="assets/favicon.svg">
+  <link rel="stylesheet" href="css/style.css">
 
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
-  </body>
+  <!-- Font & icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/4f03e6c0c1.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+<header class="site-header container">
+  <img class="avatar" src="assets/avatar.jpg" alt="Portrait of Azhad Shaikh" />
+  <div>
+    <h1 class="name">Azhad Shahzad Shaik</h1>
+    <p class="subtitle">
+      <span class="badge">Cybersecurity&nbsp;Enthusiast</span>
+      <span class="badge">Network&nbsp;Engineer</span>
+      <span class="badge">Python&nbsp;Learner</span>
+    </p>
+  </div>
+  <button id="themeToggle" class="toggle" aria-label="Toggle dark mode">
+      <i class="fas fa-moon"></i>
+  </button>
+</header>
+
+<main class="container">
+
+  <!-- ===== Hero ===== -->
+  <section class="hero">
+    <p class="lead">
+      Master’s student in <strong>Cyber/Computer Forensics & Counter-terrorism</strong> (Sacred Heart University).
+      I secure systems and build data-driven defenses against modern threats.
+    </p>
+    <a class="btn-cta" href="resume.pdf" download>Download Resume (PDF)</a>
+  </section>
+
+  <!-- ===== Projects ===== -->
+  <section id="projects">
+    <h2>Projects</h2>
+
+    <div class="card-grid">
+      <article class="card">
+        <h3>EVCS DoS Detection <span class="tag tag-ml">Machine Learning</span></h3>
+        <p>Built & evaluated SVM / Random-Forest models that detect DoS traffic in electric-vehicle charging networks with 99% recall.</p>
+        <a class="card-link" href="writeups/evcs-ml.html">Read case study</a>
+      </article>
+
+      <article class="card">
+        <h3>SOC Analyst Internship <span class="tag tag-soc">SIEM</span></h3>
+        <p>Created ElastAlert rules in Kibana, integrated threat-intel feeds and reduced false positives by 42%.</p>
+        <a class="card-link" href="writeups/soc-internship.html">Key learnings</a>
+      </article>
+
+      <article class="card">
+        <h3>TryHackMe Labs <span class="tag tag-ctf">CTF</span></h3>
+        <p>Completed Blue team, Phishing Emails and SOC Level 1 paths; published detailed walk-throughs.</p>
+        <a class="card-link" href="#blog">See write-ups</a>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===== Skills ===== -->
+  <section id="skills">
+    <h2>Skills & Tools</h2>
+    <ul class="skill-list">
+      <li>Firepower / ASA firewalls</li><li>Infoblox DNS-DHCP-IPAM</li>
+      <li>Splunk & ELK</li><li>AWS, Azure, GCP</li>
+      <li>Python • Bash</li><li>Wireshark & tcpdump</li>
+    </ul>
+  </section>
+
+  <!-- ===== Blog / Write-ups ===== -->
+  <section id="blog">
+    <h2>Write-ups</h2>
+    <ul class="post-list">
+      <li><a href="writeups/thm-blue-smbv1.html">TryHackMe: Blue – Initial Access via SMBv1</a></li>
+      <li><a href="writeups/phishing-email-analysis.html">Phishing Email Analysis – SOC Level 1 Techniques</a></li>
+      <li><a href="writeups/evcs-flow.html">EVCS ML Detection – Dataset + Attack Flow Explained</a></li>
+    </ul>
+  </section>
+
+  <!-- ===== Contact ===== -->
+  <section id="contact">
+    <h2>Contact</h2>
+    <p>
+      <a class="contact-link" href="mailto:shaikazhadshahzad@gmail.com"><i class="fas fa-envelope"></i> Email me</a> |
+      <a class="contact-link" href="https://github.com/s-shahzad"><i class="fab fa-github"></i> GitHub</a> |
+      <a class="contact-link" href="https://www.linkedin.com/in/azhadshaikh"><i class="fab fa-linkedin"></i> LinkedIn</a>
+    </p>
+  </section>
+</main>
+
+<footer class="site-footer">
+  © 2025 Azhad Shahzad Shaik
+</footer>
+
+<script src="js/main.js" defer></script>
+</body>
 </html>
