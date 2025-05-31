@@ -84,7 +84,7 @@ export default function Home() {
             <ul className="list-disc pl-5 space-y-1">
               <li><a href="https://tryhackme.com/room/blue" className="text-blue-500 hover:underline" target="_blank" rel="noopener noreferrer">TryHackMe: Blue - Initial Access via SMBv1</a></li>
               <li><a href="https://tryhackme.com/p/s-shahzad" className="text-blue-500 hover:underline" target="_blank" rel="noopener noreferrer">Phishing Email Analysis - SOC Level 1 Techniques</a></li>
-              <li><a href="https://github.com/s-shahzad/EVCS-DoS-ML" className="text-blue-500 hover:underline" target="_blank" rel="noopener noreferrer">EVCS ML Detection - Dataset + Attack Flow Explained</a></li>
+              <li><a href="https://github.com/s-shahzad/EVCS_DoS_NIDS" className="text-blue-500 hover:underline" target="_blank" rel="noopener noreferrer">EVCS ML Detection - Dataset + Attack Flow Explained</a></li>
             </ul>
           </CardContent>
         </Card>
