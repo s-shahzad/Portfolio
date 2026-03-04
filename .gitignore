@@ -1,0 +1,24 @@
+﻿# Python cache/artifacts
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Runtime logs/pids
+*.log
+*.pid
+logs/
+
+# Local env overrides
+portfolio.env.local.ps1
+
+# Local data artifacts
+contact_messages/*.db
+contact_messages/*.jsonl
+
+# Local scans/debug outputs
+mobile-scan/
+mobile-contact-*.png
+styles.css.accidental-truncated-backup-*
+
+# Backup/monitor outputs
+backups/
