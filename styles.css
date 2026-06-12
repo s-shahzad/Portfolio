@@ -529,11 +529,11 @@ body { counter-reset: section-counter; }
   width: 100%;
   aspect-ratio: 4 / 5;
   object-fit: cover;
-  filter: grayscale(0.18) contrast(1.05);
+  filter: grayscale(1) contrast(1.05);
   border: 1px solid var(--hairline-strong);
 }
 .hero-photo::before {
-  content: "PORTRAIT — 2025";
+  content: "PORTRAIT / 2025";
   position: absolute;
   left: -8px;
   top: -22px;
@@ -792,7 +792,7 @@ body { counter-reset: section-counter; }
   }
 }
 .featured-case::before {
-  content: "PROJECT — 0" counter(proj-counter);
+  content: "PROJECT / 0" counter(proj-counter);
   font-family: "JetBrains Mono", monospace;
   font-size: var(--t-label);
   font-weight: 500;
@@ -967,7 +967,7 @@ body { counter-reset: section-counter; }
 @media (min-width: 900px) { .exp-points { grid-column: 3; } }
 .exp-points li { padding-left: 1.5rem; position: relative; }
 .exp-points li::before {
-  content: "—";
+  content: "·";
   position: absolute;
   left: 0;
   color: var(--signal);
@@ -1203,7 +1203,7 @@ details > p { padding: 1rem 0 0; }
   background: var(--ink-mid);
   position: relative;
 }
-.edu-logo { max-width: 100%; max-height: 100%; padding: 8px; filter: grayscale(0.2); }
+.edu-logo { max-width: 100%; max-height: 100%; padding: 8px; filter: grayscale(1); }
 .edu-logo-fallback {
   font-family: "JetBrains Mono", monospace;
   font-size: 0.85rem;
