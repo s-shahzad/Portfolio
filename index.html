@@ -99,7 +99,7 @@
     <link rel="preload" as="font" type="font/woff2" crossorigin href="https://fonts.gstatic.com/s/bricolagegrotesque/v9/3y9K6as8bTXq_nANBjzKo3IeZx8z6up5BeSl9D4dj_x9PpZBMlGIInE.woff2" />
     <link rel="icon" href="assets/screenshots/assets/logo-alt-c-icon.png" type="image/png" />
     <link rel="shortcut icon" href="assets/screenshots/assets/logo-alt-c-icon.png" type="image/png" />
-    <link rel="stylesheet" href="styles.min.css?v=20260516-07" />
+    <link rel="stylesheet" href="styles.min.css?v=20260612-01" />
   </head>
   <body>
     <a class="skip-link" href="#mainContent">Skip to main content</a>
@@ -338,7 +338,7 @@
                   <article class="project-card featured-case" data-category="security ml backend">
                     <h3>Universal NIDS - Hybrid Intrusion Detection</h3>
                     <figure class="featured-proof">
-                      <img class="featured-proof-image" src="assets/images/proof-nids-workspace.svg" alt="NIDS workspace diagram showing ingest, features, training, and detection output" width="640" height="320" loading="lazy" decoding="async" fetchpriority="low" />
+                      <img class="featured-proof-image" src="assets/images/proof-nids-workspace.svg?v=20260612" alt="NIDS workspace diagram showing ingest, features, training, and detection output" width="640" height="320" loading="lazy" decoding="async" fetchpriority="low" />
                     </figure>
                     <p>Suricata 7.0 + Zeek logs feeding a CatBoost classifier, with a signature-anomaly fusion layer on top. Soaked it for 6 hours straight on <strong>87,432 flows</strong>. Not a single false alert. The IDS literature is full of papers that don't reproduce - I wanted one that did.</p>
                     <ul class="featured-meta">
@@ -367,7 +367,7 @@
                   <article class="project-card featured-case" data-category="security ml backend ai">
                     <h3>Vector - Local-first AI Security Platform</h3>
                     <figure class="featured-proof">
-                      <img class="featured-proof-image" src="assets/images/proof-nids-workspace.svg" alt="Vector platform architecture diagram" width="640" height="320" loading="lazy" decoding="async" fetchpriority="low" />
+                      <img class="featured-proof-image" src="assets/images/proof-nids-workspace.svg?v=20260612" alt="Vector platform architecture diagram" width="640" height="320" loading="lazy" decoding="async" fetchpriority="low" />
                     </figure>
                     <p>Local-first because I don't want telemetry leaving the box. FastAPI runtime (chosen over Flask for its middleware model), multi-provider router falls across Ollama &rarr; Gemini &rarr; OpenAI &rarr; Grok &rarr; NVIDIA. Bounded agents so the model can't reach beyond the tools I've defined for it.</p>
                     <ul class="featured-meta">
@@ -382,7 +382,7 @@
                   <article class="project-card featured-case" data-category="security">
                     <h3>Enterprise Risk &amp; Threat Analysis</h3>
                     <figure class="featured-proof">
-                      <img class="featured-proof-image" src="assets/images/proof-enterprise-risk.svg" alt="Enterprise risk workflow from findings to NIST mapping and remediation" width="640" height="320" loading="lazy" decoding="async" fetchpriority="low" />
+                      <img class="featured-proof-image" src="assets/images/proof-enterprise-risk.svg?v=20260612" alt="Enterprise risk workflow from findings to NIST mapping and remediation" width="640" height="320" loading="lazy" decoding="async" fetchpriority="low" />
                     </figure>
                     <p>Read through the 2022 Uber breach at iQ4 and rebuilt the postmortem against NIST CSF - Identify through Recover. Wrote remediation language eng teams could actually pick up without re-translating.</p>
                     <a class="text-link" href="case-studies/enterprise-risk-threat-analysis.html">View case study</a>
@@ -392,7 +392,7 @@
                   <article class="project-card featured-case" data-category="backend healthcare">
                     <h3>HL7 v2.5 &rarr; FHIR R4 at Solstice</h3>
                     <figure class="featured-proof">
-                      <img class="featured-proof-image" src="assets/images/proof-hl7-fhir.svg" alt="HL7 to FHIR mapping pipeline diagram" width="640" height="320" loading="lazy" decoding="async" fetchpriority="low" />
+                      <img class="featured-proof-image" src="assets/images/proof-hl7-fhir.svg?v=20260612" alt="HL7 to FHIR mapping pipeline diagram" width="640" height="320" loading="lazy" decoding="async" fetchpriority="low" />
                     </figure>
                     <p>HL7 v2.5 messages parsed, mapped to FHIR R4 resources, dropped into Azure. Validation at ingest, transform, and export. Caught one EDI 837 claim with a malformed patient identifier that would've bounced a real bill back.</p>
                     <a class="text-link" href="case-studies/hl7-fhir-integration.html">View case study</a>
