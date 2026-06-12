@@ -1317,7 +1317,7 @@ a.contact-link:hover { color: var(--signal); border-color: var(--signal); }
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 18px 35px -10px rgba(255, 107, 61, 0.45);
+  box-shadow: 0 18px 35px -10px rgba(140, 151, 168, 0.30);
   border: 1px solid var(--signal-soft);
   position: relative;
   transition: transform var(--dur) var(--ease-out);
