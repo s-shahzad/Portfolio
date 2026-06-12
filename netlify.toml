@@ -38,3 +38,9 @@
   from = "/portfolio/*"
   to = "/:splat"
   status = 301
+
+[[redirects]]
+  from = "/reports/assets/Azhad_Shaik_Detection_Engineer_Resume.pdf"
+  to = "/reports/assets/Azhad%20Shahzad%20Shaik%20CV.pdf"
+  status = 301
+  force = true
