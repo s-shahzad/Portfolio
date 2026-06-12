@@ -50,24 +50,24 @@
    Tokens
    -------------------------------------------------------------------------- */
 :root {
-  /* Ink palette — cool deep ground, warm paper foreground */
-  --ink-base: #0a0c10;
-  --ink-deep: #0e1116;
-  --ink-mid: #161a22;
-  --ink-soft: #1d222c;
-  --paper: #ede7d5;
-  --paper-soft: #c5bda9;
-  --paper-faint: #b8af99;     /* 7.5:1 vs ink-base — comfortable AA margin */
-  --paper-ghost: #4a4538;
+  /* Ink palette - cool deep ground, neutral paper foreground (B/W) */
+  --ink-base: #0a0b0d;
+  --ink-deep: #101216;
+  --ink-mid: #181b20;
+  --ink-soft: #20242b;
+  --paper: #e9e9ec;
+  --paper-soft: #b8bac0;
+  --paper-faint: #adafb6;     /* AA-comfortable vs ink-base */
+  --paper-ghost: #44464c;
 
   --hairline: #2e3340;
   --hairline-soft: #1d2129;
   --hairline-strong: #4a5061;
 
-  /* One warm signal accent — terracotta — used sparingly */
-  --signal: #ff6b3d;
-  --signal-soft: #ff8e6b;
-  --signal-faint: #4a2517;
+  /* One restrained, quiet accent - cool slate - used sparingly */
+  --signal: #8c97a8;
+  --signal-soft: #aab3c2;
+  --signal-faint: #232833;
 
   /* Status colors used only in metrics */
   --metric-pos: #a8c479;
@@ -981,6 +981,15 @@ body { counter-reset: section-counter; }
   text-transform: uppercase;
 }
 .resume-line a { color: var(--paper); border-bottom: 1px solid var(--signal); }
+
+.now-note {
+  margin-top: clamp(1.75rem, 3vw, 2.5rem);
+  max-width: 62ch;
+  font-size: var(--t-lead);
+  line-height: 1.55;
+  color: var(--paper-soft);
+}
+.now-note a { color: var(--paper); border-bottom: 1px solid var(--signal); }
 
 /* --------------------------------------------------------------------------
    Publications / Certifications — flat grid
