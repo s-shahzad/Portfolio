@@ -1,4 +1,4 @@
-﻿export type NavLink = { label: string; href: string };
+export type NavLink = { label: string; href: string };
 
 export type FeaturedItem = {
   id: string;
@@ -335,7 +335,7 @@ export const EXPERIENCE: ExperienceItem[] = [
 export const CONTACT = {
   heading: "Let's Build",
   subtitle: "Let's talk about security & ML roles.",
-  email: "azhadshahzads@gmail.com",
+  email: "shaikazhadshahzad@gmail.com",
   githubLabel: "github.com/s-shahzad",
   githubLink: "https://github.com/s-shahzad",
   response: "Responding within 24-48 hours.",

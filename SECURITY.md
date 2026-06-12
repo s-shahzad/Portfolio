@@ -1,9 +1,9 @@
-﻿# Security Policy
+# Security Policy
 
 ## Reporting a Vulnerability
 
 If you discover a security vulnerability, email:
-azhadshahzads@gmail.com
+shaikazhadshahzad@gmail.com
 
 Target response time: 48 hours.
 
