@@ -155,7 +155,7 @@
               <a class="btn ghost" href="#contact">Get in Touch</a>
             </div>
             <div class="credentials-strip" aria-label="Verified credentials">
-              <span class="credential"><strong>IEEE</strong> first-author &middot; GCAIoT 2025</span>
+              <span class="credential"><strong>IEEE</strong> first-author &middot; <a href="https://ieeexplore.ieee.org/document/11275540" target="_blank" rel="noopener noreferrer">GCAIoT 2025</a></span>
               <span class="credential-sep" aria-hidden="true">|</span>
               <span class="credential"><strong>CompTIA</strong> Security+ &middot; valid Oct 2028</span>
               <span class="credential-sep" aria-hidden="true">|</span>
@@ -196,8 +196,8 @@
           </div>
           <div class="about-grid">
             <div class="about-panel">
-              <p>Cyber forensics MS, IEEE first-author on ML for EV-charger DoS. I build security tooling that actually ships. Vector handles auth and the multi-provider AI router my team uses internally. Universal NIDS ran a 6-hour soak without a single false alert across 87,432 flows - and yeah, I picked accuracy over latency, p99 sits at 340ms and I'm not thrilled about it. Working on it.</p>
-              <p>Three lanes of background. Telecom OSS for ~3,500 Vodafone Idea sites during the SRAN cutover (got woken at 3am for stuck migration scripts more times than I'd like). HL7 v2.5 &rarr; FHIR R4 pipelines at Solstice on Azure. IT risk + NIST CSF at iQ4 - the Uber-breach reading was as depressing as it sounds.</p>
+              <p>Cyber forensics M.S. and IEEE first-author on ML for EV-charger DoS. I build security systems to understand them, then measure whether they hold up. Universal NIDS ran a 6-hour soak without a single false alert across 87,432 flows; I chose accuracy over latency, so p99 inference sits at 340 ms, a tradeoff I am actively working to improve. Vector handles auth and a multi-provider AI router I use daily.</p>
+              <p>Three lanes of background feed the research. Telecom OSS for ~3,500 Vodafone Idea sites during the SRAN cutover, including on-call work on migration failures. HL7 v2.5 &rarr; FHIR R4 pipelines at Solstice on Azure. IT risk and NIST CSF at iQ4, where I studied the 2016 Uber breach in depth.</p>
               <ul class="about-list" aria-label="What I work on">
                 <li>Backend APIs in Python / FastAPI. Auth, retries that aren't optimistic, structured errors.</li>
                 <li>Healthcare interop - HL7 v2.5, FHIR R4, EDI 837/835. Validation at every pipeline stage.</li>
@@ -229,6 +229,100 @@
               <p>Bounded agents, multi-provider routing, on-host telemetry, and health-IT data integrity (HL7/FHIR). How do we get useful AI tooling without handing data to someone else's cloud?</p>
             </article>
           </div>
+          <p class="now-note research-statement">I am applying to Ph.D. programs to work on these questions full time, ideally where security, machine learning, and real systems meet. I want to build detection and AI-security methods that are reproducible and hold up outside a benchmark, and to do it with an advisor who pushes on the parts I get wrong. Open to research directions I have not thought of yet.</p>
+        </div>
+      </section>
+      <section id="publications" class="section reveal">
+        <div class="container">
+          <div class="section-head">
+            <h2>Publications</h2>
+            <p>Two papers. One IEEE first-author on ML for EV-charger DoS attacks. Full citations below.</p>
+          </div>
+          <div class="cards">
+            <article class="project-card">
+              <div class="chip">Journal</div>
+              <h3>Remote monitoring system of heart conditions for elderly persons with ECG machine using IoT platform</h3>
+              <p>Built an IoT-based ECG monitoring framework to enable remote, continuous screening for elderly patients.</p>
+              <details>
+                <summary>View details</summary>
+                <p class="meta-row">
+                  <span class="meta-badge">JIST</span>
+                  <span class="meta-badge">Vol 10 &middot; Issue 1</span>
+                  <span class="meta-badge">Pages 11-19</span>
+                  <span class="meta-badge">2022-01-01</span>
+                </p>
+                <p class="meta-row">
+                  <span class="meta-badge">ISSN 2322-1437</span>
+                  <span class="meta-badge">EISSN 2345-2773</span>
+                  <span class="meta-badge">jist.acecr.org</span>
+                </p>
+                <p><strong>Authors:</strong> Singh Ngangbam Phalguni, Aditya Kanakamalla, Shahzad Shaik Azhad, Sai Guntupalli Divya, Shruti Suman</p>
+              </details>
+              <div class="pub-actions">
+                <a class="btn ghost small" href="https://doi.org/10.52547/jist.15692.10.37.11" target="_blank" rel="noopener noreferrer">Open DOI</a>
+                <button class="btn ghost small copy-citation" type="button" data-citation="Singh Ngangbam Phalguni, Aditya Kanakamalla, Shahzad Shaik Azhad, Sai Guntupalli Divya, Shruti Suman. Remote monitoring system of heart conditions for elderly persons with ECG machine using IoT platform. Journal of Information Systems and Telecommunication (JIST), 2022. DOI: 10.52547/jist.15692.10.37.11">Copy citation</button>
+              </div>
+              <a class="text-link" href="https://jist.ir/en/article/15692" target="_blank" rel="noopener noreferrer">Read</a>
+            </article>
+            <article class="project-card">
+              <div class="chip">Research</div>
+              <h3>Plugged-in and Protected: Leveraging Machine Learning to Secure IoT-Based Electric Vehicle Charging Stations from Denial-of-Service Threats</h3>
+              <p>Applied ML-based intrusion detection to reduce DoS risk in EV charging networks.</p>
+              <details>
+                <summary>View details</summary>
+                <p><strong>Authors:</strong> Azhad Shahzad Shaik, Meghana Gutla, Athma Phanindhra Raju Kagitala, Sajal Bhatia</p>
+                <p class="meta-row">
+                  <span class="meta-badge">GCAIoT 2025</span>
+                  <span class="meta-badge">IEEE</span>
+                  <span class="meta-badge">Ben Guerir, Morocco</span>
+                </p>
+                <p class="meta-row">
+                  <span class="meta-badge">Nov 23-25, 2025</span>
+                  <span class="meta-badge">DOI 10.1109/GCAIoT68269.2025.11275540</span>
+                  <span class="meta-badge">ISBN 979-8-3315-6879-5</span>
+                </p>
+              </details>
+              <div class="pub-actions">
+                <a class="btn ghost small" href="https://doi.org/10.1109/GCAIoT68269.2025.11275540" target="_blank" rel="noopener noreferrer">Open DOI</a>
+                <button class="btn ghost small copy-citation" type="button" data-citation="Azhad Shahzad Shaik, Meghana Gutla, Athma Phanindhra Raju Kagitala, Sajal Bhatia. Plugged-in and Protected: Leveraging Machine Learning to Secure IoT-Based Electric Vehicle Charging Stations from Denial-of-Service Threats. 2025 IEEE Global Conference on Artificial Intelligence and Internet of Things (GCAIoT). DOI: 10.1109/GCAIoT68269.2025.11275540">Copy citation</button>
+              </div>
+              <a class="text-link" href="https://ieeexplore.ieee.org/document/11275540" target="_blank" rel="noopener noreferrer">Read</a>
+            </article>
+          </div>
+        </div>
+      </section>
+      <section id="education" class="section reveal">
+        <div class="container">
+          <div class="section-head">
+            <h2>Education</h2>
+            <p>Where I studied.</p>
+          </div>
+          <div class="edu-list">
+            <div class="edu-item">
+              <div class="edu-logo-wrap" aria-hidden="true">
+                <img class="edu-logo" src="assets/screenshots/assets/logos/shu.png" alt="Sacred Heart University logo" width="56" height="56" loading="lazy" decoding="async" />
+                <span class="edu-logo-fallback">SHU</span>
+              </div>
+              <div class="edu-content">
+                <h3>Sacred Heart University</h3>
+                <p>M.S. in Cyber/Computer Forensics and Counterterrorism</p>
+                <p>Fairfield, Connecticut, USA</p>
+              </div>
+              <div class="edu-date">Mar 2025</div>
+            </div>
+            <div class="edu-item">
+              <div class="edu-logo-wrap" aria-hidden="true">
+                <img class="edu-logo" src="assets/screenshots/assets/logos/klu.png" alt="Koneru Lakshmaiah College of Engineering logo" width="56" height="56" loading="lazy" decoding="async" />
+                <span class="edu-logo-fallback">KLU</span>
+              </div>
+              <div class="edu-content">
+                <h3>Koneru Lakshmaiah College of Engineering</h3>
+                <p>B.Tech in Electronics and Communications Engineering</p>
+                <p>Guntur, Andhra Pradesh, India</p>
+              </div>
+              <div class="edu-date">May 2021</div>
+            </div>
+          </div>
         </div>
       </section>
       <section id="featured" class="section reveal">
@@ -251,7 +345,7 @@
                       <li><strong>Stack:</strong> Python, FastAPI, Suricata 7.0, Zeek, CatBoost, Pandas, Docker</li>
                       <li><strong>Detection:</strong> signature + anomaly + supervised ML, fusion layer for confirmation</li>
                       <li><strong>Validation:</strong> 6h soak / 87,432 flows / 0 false alerts &middot; 79% test coverage</li>
-                      <li><strong>Tradeoff:</strong> picked accuracy over latency. p99 inference is 340ms. Not thrilled about it.</li>
+                      <li><strong>Tradeoff:</strong> chose accuracy over latency; p99 inference is 340 ms, which I am working to bring down.</li>
                     </ul>
                     <a class="text-link" href="projects/nids/">View NIDS case study</a>
                   </article>
@@ -275,7 +369,7 @@
                     <figure class="featured-proof">
                       <img class="featured-proof-image" src="assets/images/proof-nids-workspace.svg" alt="Vector platform architecture diagram" width="640" height="320" loading="lazy" decoding="async" fetchpriority="low" />
                     </figure>
-                    <p>Local-first because I don't want telemetry leaving the box. FastAPI runtime (Flask's middleware story is a mess), multi-provider router falls across Ollama &rarr; Gemini &rarr; OpenAI &rarr; Grok &rarr; NVIDIA. Bounded agents so the model can't reach beyond the tools I've defined for it.</p>
+                    <p>Local-first because I don't want telemetry leaving the box. FastAPI runtime (chosen over Flask for its middleware model), multi-provider router falls across Ollama &rarr; Gemini &rarr; OpenAI &rarr; Grok &rarr; NVIDIA. Bounded agents so the model can't reach beyond the tools I've defined for it.</p>
                     <ul class="featured-meta">
                       <li><strong>Stack:</strong> Python, FastAPI, Ollama, sqlite, Windows DPAPI for creds</li>
                       <li><strong>Architecture:</strong> local-first, agent-bounded, telemetry stays on-host</li>
@@ -365,65 +459,6 @@
           </div>
         </div>
       </section>
-      <section id="publications" class="section reveal">
-        <div class="container">
-          <div class="section-head">
-            <h2>Publications</h2>
-            <p>Two papers. One IEEE first-author on ML for EV-charger DoS attacks. Full citations below.</p>
-          </div>
-          <div class="cards">
-            <article class="project-card">
-              <div class="chip">Journal</div>
-              <h3>Remote monitoring system of heart conditions for elderly persons with ECG machine using IoT platform</h3>
-              <p>Built an IoT-based ECG monitoring framework to enable remote, continuous screening for elderly patients.</p>
-              <details>
-                <summary>View details</summary>
-                <p class="meta-row">
-                  <span class="meta-badge">JIST</span>
-                  <span class="meta-badge">Vol 10 &middot; Issue 1</span>
-                  <span class="meta-badge">Pages 11-19</span>
-                  <span class="meta-badge">2022-01-01</span>
-                </p>
-                <p class="meta-row">
-                  <span class="meta-badge">ISSN 2322-1437</span>
-                  <span class="meta-badge">EISSN 2345-2773</span>
-                  <span class="meta-badge">jist.acecr.org</span>
-                </p>
-                <p><strong>Authors:</strong> Singh Ngangbam Phalguni, Aditya Kanakamalla, Shahzad Shaik Azhad, Sai Guntupalli Divya, Shruti Suman</p>
-              </details>
-              <div class="pub-actions">
-                <a class="btn ghost small" href="https://doi.org/10.52547/jist.15692.10.37.11" target="_blank" rel="noopener noreferrer">Open DOI</a>
-                <button class="btn ghost small copy-citation" type="button" data-citation="Singh Ngangbam Phalguni, Aditya Kanakamalla, Shahzad Shaik Azhad, Sai Guntupalli Divya, Shruti Suman. Remote monitoring system of heart conditions for elderly persons with ECG machine using IoT platform. Journal of Information Systems and Telecommunication (JIST), 2022. DOI: 10.52547/jist.15692.10.37.11">Copy citation</button>
-              </div>
-              <a class="text-link" href="https://jist.ir/en/article/15692" target="_blank" rel="noopener noreferrer">Read</a>
-            </article>
-            <article class="project-card">
-              <div class="chip">Research</div>
-              <h3>Plugged-in and Protected: Leveraging Machine Learning to Secure IoT-Based Electric Vehicle Charging Stations from Denial-of-Service Threats</h3>
-              <p>Applied ML-based intrusion detection to reduce DoS risk in EV charging networks.</p>
-              <details>
-                <summary>View details</summary>
-                <p><strong>Authors:</strong> Azhad Shahzad Shaik, Meghana Gutla, Athma Phanindhra Raju Kagitala, Sajal Bhatia</p>
-                <p class="meta-row">
-                  <span class="meta-badge">GCAIoT 2025</span>
-                  <span class="meta-badge">IEEE</span>
-                  <span class="meta-badge">Ben Guerir, Morocco</span>
-                </p>
-                <p class="meta-row">
-                  <span class="meta-badge">Nov 23-25, 2025</span>
-                  <span class="meta-badge">DOI 10.1109/GCAIoT68269.2025.11275540</span>
-                  <span class="meta-badge">ISBN 979-8-3315-6879-5</span>
-                </p>
-              </details>
-              <div class="pub-actions">
-                <a class="btn ghost small" href="https://doi.org/10.1109/GCAIoT68269.2025.11275540" target="_blank" rel="noopener noreferrer">Open DOI</a>
-                <button class="btn ghost small copy-citation" type="button" data-citation="Azhad Shahzad Shaik, Meghana Gutla, Athma Phanindhra Raju Kagitala, Sajal Bhatia. Plugged-in and Protected: Leveraging Machine Learning to Secure IoT-Based Electric Vehicle Charging Stations from Denial-of-Service Threats. 2025 IEEE Global Conference on Artificial Intelligence and Internet of Things (GCAIoT). DOI: 10.1109/GCAIoT68269.2025.11275540">Copy citation</button>
-              </div>
-              <a class="text-link" href="https://ieeexplore.ieee.org/document/11275540" target="_blank" rel="noopener noreferrer">Read</a>
-            </article>
-          </div>
-        </div>
-      </section>
 
       <section id="certifications" class="section reveal">
         <div class="container">
@@ -507,40 +542,6 @@
         </div>
       </section>
 
-      <section id="education" class="section reveal">
-        <div class="container">
-          <div class="section-head">
-            <h2>Education</h2>
-            <p>Where I studied.</p>
-          </div>
-          <div class="edu-list">
-            <div class="edu-item">
-              <div class="edu-logo-wrap" aria-hidden="true">
-                <img class="edu-logo" src="assets/screenshots/assets/logos/shu.png" alt="Sacred Heart University logo" width="56" height="56" loading="lazy" decoding="async" />
-                <span class="edu-logo-fallback">SHU</span>
-              </div>
-              <div class="edu-content">
-                <h3>Sacred Heart University</h3>
-                <p>M.S. in Cyber/Computer Forensics and Counterterrorism</p>
-                <p>Fairfield, Connecticut, USA</p>
-              </div>
-              <div class="edu-date">Mar 2025</div>
-            </div>
-            <div class="edu-item">
-              <div class="edu-logo-wrap" aria-hidden="true">
-                <img class="edu-logo" src="assets/screenshots/assets/logos/klu.png" alt="Koneru Lakshmaiah College of Engineering logo" width="56" height="56" loading="lazy" decoding="async" />
-                <span class="edu-logo-fallback">KLU</span>
-              </div>
-              <div class="edu-content">
-                <h3>Koneru Lakshmaiah College of Engineering</h3>
-                <p>B.Tech in Electronics and Communications Engineering</p>
-                <p>Guntur, Andhra Pradesh, India</p>
-              </div>
-              <div class="edu-date">May 2021</div>
-            </div>
-          </div>
-        </div>
-      </section>
       <section id="contact" class="section contact reveal">
         <div class="container">
           <div class="section-head">
