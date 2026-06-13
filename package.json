@@ -19,7 +19,7 @@
     "images": "npm run image:webp && npm run image:mobile"
   },
   "devDependencies": {
-    "esbuild": "^0.28.0"
+    "esbuild": "0.28.0"
   },
   "engines": {
     "node": ">=18"

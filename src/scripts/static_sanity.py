@@ -4,6 +4,7 @@ import argparse
 import re
 import sys
 from pathlib import Path
+from urllib.parse import unquote
 
 
 MOJIBAKE_MARKERS = ["Ã", "Â", "â"]
@@ -26,7 +27,9 @@ def _is_ignored_ref(ref: str) -> bool:
 
 def _normalize_ref_path(raw_ref: str) -> str:
     ref = raw_ref.split("?", 1)[0].split("#", 1)[0].strip()
-    return ref
+    # URL-decode so refs like "Azhad%20Shahzad%20Shaik%20CV.pdf" resolve to the
+    # on-disk filename with spaces instead of failing the existence check.
+    return unquote(ref)
 
 
 def _check_html_file(path: Path, repo_root: Path) -> list[str]:

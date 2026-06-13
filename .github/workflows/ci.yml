@@ -1,4 +1,4 @@
-﻿name: CI
+name: CI
 
 on:
   push:
@@ -9,10 +9,41 @@ permissions:
   contents: read
 
 jobs:
-  checks:
+  # Guard for the #1 deploy gotcha: the site serves styles.min.css / script.min.js,
+  # not source. This job rebuilds both with the pinned esbuild and fails if the
+  # committed .min files do not match the committed source.
+  verify-min:
+    name: Min files fresh (required)
     runs-on: ubuntu-latest
-    continue-on-error: true
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
 
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24.14.0"
+          cache: npm
+
+      - name: Install exact dependencies
+        run: npm ci
+
+      - name: Rebuild minified assets
+        run: npm run build
+
+      - name: Fail if committed min files are stale
+        run: |
+          if ! git diff --exit-code -- styles.min.css script.min.js; then
+            echo '::error::styles.min.css / script.min.js are STALE versus source.'
+            echo 'Fix locally: npm run build, bump the ?v= cache stamps in index.html,'
+            echo 'then git add the regenerated .min files together with the source change.'
+            exit 1
+          fi
+
+  # Cheap deterministic checks. These can actually fail the build.
+  static-checks:
+    name: Static checks (required)
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -27,6 +58,33 @@ jobs:
         with:
           node-version: "24.14.0"
 
+      - name: Python compile check
+        run: python -m py_compile src/server.py
+
+      - name: JS syntax check
+        run: node --check script.js
+
+      - name: Static HTML sanity
+        run: python src/scripts/static_sanity.py
+
+      - name: Accessibility/performance sanity
+        run: python src/scripts/accessibility_perf_sanity.py
+
+  # Heavier checks stay advisory until they prove green in Actions, then drop
+  # the continue-on-error line to make them required too.
+  tests:
+    name: API smoke + pytest (advisory)
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12.10"
+
       - name: Install test dependencies
         run: |
           python -m pip install --upgrade pip
@@ -36,49 +94,8 @@ jobs:
             python -m pip install pytest
           fi
 
-      - name: Python compile check
-        run: |
-          mkdir -p artifacts
-          set -o pipefail
-          python -m py_compile server.py 2>&1 | tee artifacts/python-compile.log
-
-      - name: JS syntax check
-        run: |
-          mkdir -p artifacts
-          set -o pipefail
-          {
-            echo '--- script.js ---'
-            node --check script.js
-          } 2>&1 | tee artifacts/js-syntax.log
-
-      - name: Static HTML sanity
-        run: |
-          mkdir -p artifacts
-          set -o pipefail
-          python scripts/static_sanity.py 2>&1 | tee artifacts/static-sanity.log
-
-      - name: Accessibility/performance sanity
-        run: |
-          mkdir -p artifacts
-          set -o pipefail
-          python scripts/accessibility_perf_sanity.py 2>&1 | tee artifacts/a11y-perf-sanity.log
-
       - name: API smoke tests
-        run: |
-          mkdir -p artifacts
-          set -o pipefail
-          python scripts/api_smoke_test.py --port 8123 2>&1 | tee artifacts/api-smoke.log
+        run: python src/scripts/api_smoke_test.py --port 8123
 
       - name: Pytest integration tests
-        run: |
-          mkdir -p artifacts
-          set -o pipefail
-          python -m pytest -q --junitxml artifacts/pytest-junit.xml 2>&1 | tee artifacts/pytest.log
-
-      - name: Upload CI artifacts
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: ci-artifacts-${{ github.run_id }}
-          path: artifacts/
-          if-no-files-found: warn
+        run: python -m pytest -q src/tests

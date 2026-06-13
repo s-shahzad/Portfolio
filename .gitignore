@@ -2,6 +2,7 @@
 __pycache__/
 *.py[cod]
 .pytest_cache/
+.cache/
 
 # Runtime logs/pids
 *.log
@@ -21,7 +22,6 @@ mobile-contact-*.png
 styles.css.accidental-truncated-backup-*
 .audit/
 node_modules/
-package-lock.json
 
 # Backup/monitor outputs
 backups/
