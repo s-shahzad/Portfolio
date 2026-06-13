@@ -134,8 +134,40 @@
   status = 404
   force = true
 
+# Netlify root-level splats do not reliably match "/*.ps1", so block each
+# PowerShell file at the repo root explicitly.
 [[redirects]]
-  from = "/*.ps1"
+  from = "/deploy.ps1"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/deploy-staging.ps1"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/start-server.ps1"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/portfolio.env.local.ps1"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/portfolio.env.local.ps1.example"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/portfolio.env.staging.ps1.example"
   to = "/404.html"
   status = 404
   force = true
