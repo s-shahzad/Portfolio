@@ -4,9 +4,9 @@ status: experimental
 description: |
   Detects PowerShell processes invoked with `-EncodedCommand` (or short forms) where the
   encoded blob decodes to common offensive tradecraft strings (IEX, DownloadString,
-  WebClient, FromBase64String, Invoke-Expression). Pairs with the supervised CatBoost
-  engine in the NIDS hybrid — the rule provides the labeled signal; the model handles
-  variants the static rule misses.
+  WebClient, FromBase64String, Invoke-Expression). Pairs with the supervised ensemble
+  engine (RF, ExtraTrees, HistGB, XGBoost) in the NIDS hybrid — the rule provides the
+  labeled signal; the model handles variants the static rule misses.
 references:
   - https://attack.mitre.org/techniques/T1059/001/
   - https://attack.mitre.org/techniques/T1027/

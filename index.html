@@ -30,7 +30,7 @@
             "email": "mailto:shaikazhadshahzad@gmail.com",
             "image": "assets/screenshots/assets/profile-hero.jpg",
             "url": "https://azhadshahzadshaik.netlify.app/",
-            "sameAs": ["https://github.com/s-shahzad"],
+            "sameAs": ["https://github.com/s-shahzad", "https://orcid.org/0009-0009-6450-5837", "https://scholar.google.com/citations?user=l2McKRYAAAAJ"],
             "knowsAbout": [
               "Detection Engineering",
               "Network Intrusion Detection",
@@ -148,7 +148,7 @@
             <p class="hero-eyebrow">Engineer &amp; applied researcher &middot; security, ML &amp; intelligent systems &middot; New Haven, CT</p>
             <h1>Azhad Shahzad Shaik</h1>
             <p class="hero-role">Engineer &amp; Applied Researcher</p>
-            <p class="hero-lead">I build systems to understand them, and I publish what I learn. IEEE first-author on ML detection for EV-charger DoS attacks (<a href="https://doi.org/10.1109/GCAIoT68269.2025.11275540" target="_blank" rel="noopener noreferrer">DOI</a>), with an M.S. in Cyber Forensics from Sacred Heart. Lately I work where security, machine learning, and data systems meet: a hybrid ML intrusion-detection platform (<strong>Universal NIDS</strong>, soak-tested clean over 87,432 flows), a local-first AI security router (<strong>Vector</strong>), and production HL7&rarr;FHIR pipelines. Curious about emerging tech, honest about tradeoffs, and always open to a better idea.</p>
+            <p class="hero-lead">I build systems to understand them, and I publish what I learn. IEEE first-author on ML detection for EV-charger DoS attacks (<a href="https://doi.org/10.1109/GCAIoT68269.2025.11275540" target="_blank" rel="noopener noreferrer">DOI</a>), with an M.S. in Cyber Forensics from Sacred Heart. Lately I work where security, machine learning, and data systems meet: a hybrid ML intrusion-detection platform (<strong>Universal NIDS</strong>, 6-hour stability soak with self-audited evidence), a local-first AI security router (<strong>Vector</strong>), and production HL7&rarr;FHIR pipelines. Curious about emerging tech, honest about tradeoffs, and always open to a better idea.</p>
             <div class="cta-row">
               <a class="btn primary" href="#research">Research &amp; Projects</a>
               <a class="btn ghost" href="reports/assets/Azhad%20Shahzad%20Shaik%20CV.pdf" target="_blank" rel="noopener noreferrer">View CV</a>
@@ -198,12 +198,12 @@
           </div>
           <div class="about-grid">
             <div class="about-panel">
-              <p>Cyber forensics M.S. and IEEE first-author on ML for EV-charger DoS. I build security systems to understand them, then measure whether they hold up. Universal NIDS ran a 6-hour soak without a single false alert across 87,432 flows; I chose accuracy over latency, so p99 inference sits at 340 ms, a tradeoff I am actively working to improve. Vector handles auth and a multi-provider AI router I use daily.</p>
+              <p>Cyber forensics M.S. and IEEE first-author on ML for EV-charger DoS. I build security systems to understand them, then measure whether they hold up. Universal NIDS ran a 6-hour stability soak — 87,533 packet records, 0 emitted alerts, memory bounded at 409 MB — and then I audited my own headline and published what that result does and does not prove (it demonstrates pipeline stability, not detection quality). I chose accuracy over latency, so p99 inference sits at 340 ms, a tradeoff I am actively working to improve. Vector handles auth and a multi-provider AI router I use daily.</p>
               <p>Three lanes of background feed the research. Telecom OSS for ~3,500 Vodafone Idea sites during the SRAN cutover, including on-call work on migration failures. HL7 v2.5 &rarr; FHIR R4 pipelines at Solstice on Azure. IT risk and NIST CSF at iQ4, where I studied the 2016 Uber breach in depth.</p>
               <ul class="about-list" aria-label="What I work on">
                 <li>Backend APIs in Python / FastAPI. Auth, retries that aren't optimistic, structured errors.</li>
                 <li>Healthcare interop - HL7 v2.5, FHIR R4, EDI 837/835. Validation at every pipeline stage.</li>
-                <li>Hybrid IDS - Suricata 7.0 + Zeek logs feeding a CatBoost classifier, with a signature-anomaly fusion layer on top.</li>
+                <li>Hybrid IDS - live capture and PCAP replay with optional Suricata/Zeek ingest, feeding a supervised ensemble (Random Forest, ExtraTrees, HistGB, XGBoost) with a signature-anomaly fusion layer on top.</li>
                 <li>Local-first AI tooling - multi-provider router (Ollama &rarr; Gemini &rarr; OpenAI &rarr; Grok &rarr; NVIDIA), bounded agents.</li>
                 <li>Risk &rarr; remediation in language eng teams will actually pick up. No infosec-ese.</li>
               </ul>
@@ -342,11 +342,11 @@
                     <figure class="featured-proof">
                       <img class="featured-proof-image" src="assets/images/proof-nids-workspace.svg?v=20260612" alt="NIDS workspace diagram showing ingest, features, training, and detection output" width="640" height="320" loading="lazy" decoding="async" fetchpriority="low" />
                     </figure>
-                    <p>Suricata 7.0 + Zeek logs feeding a CatBoost classifier, with a signature-anomaly fusion layer on top. Soaked it for 6 hours straight on <strong>87,432 flows</strong>. Not a single false alert. The IDS literature is full of papers that don't reproduce - I wanted one that did.</p>
+                    <p>Live capture and PCAP replay with optional Suricata/Zeek ingest, feeding a supervised ensemble (Random Forest, ExtraTrees, HistGB, XGBoost) plus unsupervised detection, with a signature-anomaly fusion layer on top. Ran it through a <strong>6-hour stability soak</strong> — 87,533 packet records, 0 emitted alerts, 409 MB peak memory, 13.3 s restart recovery — then audited my own headline number and published what it does and does not prove. The IDS literature is full of claims that don't survive scrutiny. I wanted mine to.</p>
                     <ul class="featured-meta">
-                      <li><strong>Stack:</strong> Python, FastAPI, Suricata 7.0, Zeek, CatBoost, Pandas, Docker</li>
+                      <li><strong>Stack:</strong> Python, FastAPI, scikit-learn, XGBoost, Suricata/Zeek adapters, Pandas, Docker</li>
                       <li><strong>Detection:</strong> signature + anomaly + supervised ML, fusion layer for confirmation</li>
-                      <li><strong>Validation:</strong> 6h soak / 87,432 flows / 0 false alerts &middot; 79% test coverage</li>
+                      <li><strong>Validation:</strong> 6h stability soak / 0 emitted alerts / 409 MB peak RSS &middot; 144 tests passing, 79% coverage &middot; claims self-audited (SOAK_CLAIM_AUDIT)</li>
                       <li><strong>Tradeoff:</strong> chose accuracy over latency; p99 inference is 340 ms, which I am working to bring down.</li>
                     </ul>
                     <a class="text-link" href="projects/nids/">View NIDS case study</a>

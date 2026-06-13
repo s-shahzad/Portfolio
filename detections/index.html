@@ -96,15 +96,14 @@
         <p>
           Production-style rules authored alongside the
           <a href="../projects/nids/">Universal NIDS case study</a>. Each rule maps to one of the
-          four hybrid-detection engines used in that project &mdash; <strong>signature</strong>,
-          <strong>anomaly</strong>, <strong>supervised</strong>, <strong>unsupervised</strong>
-          &mdash; and to the <strong>fusion</strong> stage that consolidates agreeing signals
+          four hybrid-detection engines used in that project - <strong>signature</strong>,
+          <strong>anomaly</strong>, <strong>supervised</strong>, <strong>unsupervised</strong> - and to the <strong>fusion</strong> stage that consolidates agreeing signals
           before an analyst is paged.
         </p>
         <dl class="engine-legend">
           <div><dt>Signature</dt><dd>Deterministic IOC / pattern match. Sigma, Suricata.</dd></div>
           <div><dt>Anomaly</dt><dd>Statistical drift from baseline. SPL stddev, KQL series.</dd></div>
-          <div><dt>Supervised</dt><dd>CatBoost classifier on labeled flows.</dd></div>
+          <div><dt>Supervised</dt><dd>Ensemble classifier (Random Forest, ExtraTrees, HistGB, XGBoost) on labeled flows.</dd></div>
           <div><dt>Unsupervised</dt><dd>IsolationForest scoring on encoded flow features.</dd></div>
           <div><dt>Fusion</dt><dd>Agreement count &ge; 2 across engines. Paging-grade.</dd></div>
         </dl>
@@ -142,7 +141,7 @@
               <span class="tag">T1071.001</span>
             </div>
             <h3>Periodic C2 Beacon with Low Jitter</h3>
-            <p>Standalone it&rsquo;s soft &mdash; combined with one other engine in the agreement window, it pages.</p>
+            <p>Standalone it&rsquo;s soft - combined with one other engine in the agreement window, it pages.</p>
             <a class="rule-link" href="sigma/net_c2_beacon_jitter.yml">View rule &rarr;</a>
           </article>
           <article class="rule-card">
@@ -150,7 +149,7 @@
               <span class="tag engine-signature">signature</span>
               <span class="tag">T1110.001</span>
             </div>
-            <h3>Authentication Burst &mdash; Failed Logon Rate Spike</h3>
+            <h3>Authentication Burst - Failed Logon Rate Spike</h3>
             <p>10+ failures from one source in 60s. Red-team CIDR excluded; identity-aware filter downstream.</p>
             <a class="rule-link" href="sigma/auth_burst_5xx_fail.yml">View rule &rarr;</a>
           </article>
@@ -214,7 +213,7 @@
               <span class="tag">enrichment</span>
             </div>
             <h3>Connection Enrichment (Zeek)</h3>
-            <p>Tags <code>conn.log</code> with <code>asset_role</code>, <code>dst_reputation</code>, <code>flow_class</code> &mdash; the columns a Tier-1 analyst needs to triage in &lt;30s.</p>
+            <p>Tags <code>conn.log</code> with <code>asset_role</code>, <code>dst_reputation</code>, <code>flow_class</code> - the columns a Tier-1 analyst needs to triage in &lt;30s.</p>
             <a class="rule-link" href="zeek/conn_enrich.zeek">View script &rarr;</a>
           </article>
         </div>
@@ -228,7 +227,7 @@
           <code>engine_distribution</code> across signature, supervised, unsupervised, and
           fusion engines. Every detection here is shaped to feed exactly one of those engines.
           A fusion event in the live dashboard means at least two of these rule families fired
-          on the same entity inside the agreement window &mdash; that&rsquo;s the bar at which
+          on the same entity inside the agreement window - that&rsquo;s the bar at which
           an analyst is paged. The fusion threshold is documented in the bundle metadata
           (<code>fusion_min_agreement_count</code>).
         </p>

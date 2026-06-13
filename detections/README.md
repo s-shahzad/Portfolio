@@ -11,7 +11,7 @@ agreeing signals before an alert is raised.
 |---|---|---|
 | `signature` | Deterministic IOC / rule match | Sigma, Suricata rules |
 | `anomaly` | Statistical drift from baseline | SPL stddev / KQL `series_decompose_anomalies` |
-| `supervised` | CatBoost classifier on labeled flows | Inline scores joined to alert pivots |
+| `supervised` | Ensemble classifier (RF, ExtraTrees, HistGB, XGBoost) on labeled flows | Inline scores joined to alert pivots |
 | `unsupervised` | IsolationForest on encoded flow features | Rare-pattern surfacing |
 | `fusion` | Agreement count ≥ N across engines | Raise only when ≥2 engines agree on the entity |
 

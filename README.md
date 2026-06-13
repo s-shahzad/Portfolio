@@ -8,7 +8,7 @@ Detection-engineering and applied-ML portfolio. Live site, hybrid NIDS case stud
 
 ## What's here
 
-- **Universal NIDS** — a hybrid network intrusion-detection system: Suricata + Zeek telemetry feeding a CatBoost classifier with a signature → supervised-ML → unsupervised-ML → weighted-fusion pipeline. Built for reproducibility (87k flows, 6-hour soak, validated replay). See `case-studies/`.
+- **Universal NIDS** — a hybrid network intrusion-detection system: live capture and PCAP replay with optional Suricata/Zeek ingest, feeding a supervised ensemble (Random Forest, ExtraTrees, HistGB, XGBoost) and unsupervised detection (IsolationForest, autoencoder) through a signature → ML → weighted-fusion pipeline. Soak-tested for pipeline stability (87,533 packet records, 0 emitted alerts under tuned thresholds), with the headline claim self-audited so it is not quoted as a detection-quality result. See `case-studies/`.
 - **Detection-as-code** — rule library across `detections/`: Sigma, Splunk SPL, Suricata, and Zeek.
 - **Research** — IEEE GCAIoT 2025 (first author, ML-based IoT intrusion detection) and JIST 2022 (IoT remote health monitoring).
 - **Site** — static frontend (`index.html`, `styles.css`, `script.js`, `assets/`) with an optional Python API backend (`src/server.py`) for contact submissions.
@@ -17,7 +17,7 @@ Detection-engineering and applied-ML portfolio. Live site, hybrid NIDS case stud
 
 - Frontend: vanilla HTML/CSS/JS, Swiper, deployed on Netlify (`netlify.toml`).
 - Backend (optional): Python 3.12 (`src/server.py`), SQLite contact storage.
-- ML/detection: CatBoost, Suricata, Zeek, Sigma, Splunk SPL.
+- ML/detection: scikit-learn ensemble (Random Forest, ExtraTrees, HistGB), XGBoost, IsolationForest, Suricata, Zeek, Sigma, Splunk SPL.
 
 ## Repo layout
 
