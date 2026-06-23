@@ -198,7 +198,7 @@
           </div>
           <div class="about-grid">
             <div class="about-panel">
-              <p>Cyber forensics M.S. and IEEE first-author on ML for EV-charger DoS. I build security systems to understand them, then measure whether they hold up. Universal NIDS ran a 6-hour stability soak — 87,533 packet records, 0 emitted alerts, memory bounded at 409 MB — and then I audited my own headline and published what that result does and does not prove (it demonstrates pipeline stability, not detection quality). I chose accuracy over latency, so p99 inference sits at 340 ms, a tradeoff I am actively working to improve. Vector handles auth and a multi-provider AI router I use daily.</p>
+              <p>Cyber forensics M.S. and IEEE first-author on ML for EV-charger DoS. I build security systems to understand them, then measure whether they hold up. Universal NIDS ran a 6-hour stability soak: 87,533 packet records, 0 emitted alerts, memory bounded at 409 MB, and then I audited my own headline and published what that result does and does not prove (it demonstrates pipeline stability, not detection quality). I chose accuracy over latency, so p99 inference sits at 340 ms, a tradeoff I am actively working to improve. Vector handles auth and a multi-provider AI router I use daily.</p>
               <p>Three lanes of background feed the research. Telecom OSS for ~3,500 Vodafone Idea sites during the SRAN cutover, including on-call work on migration failures. HL7 v2.5 &rarr; FHIR R4 pipelines at Solstice on Azure. IT risk and NIST CSF at iQ4, where I studied the 2016 Uber breach in depth.</p>
               <ul class="about-list" aria-label="What I work on">
                 <li>Backend APIs in Python / FastAPI. Auth, retries that aren't optimistic, structured errors.</li>
@@ -230,8 +230,12 @@
               <h3>Local-first &amp; agentic AI systems</h3>
               <p>Bounded agents, multi-provider routing, on-host telemetry, and health-IT data integrity (HL7/FHIR). How do we get useful AI tooling without handing data to someone else's cloud?</p>
             </article>
+            <article class="value-card">
+              <h3>Security of the post-quantum migration</h3>
+              <p>Measuring whether real infrastructure actually moves to post-quantum cryptography or only looks like it has: classical-only fallback, silent downgrades, and incomplete rollouts across TLS and OT/IoT fleets. Crypto-agility, not scheme design.</p>
+            </article>
           </div>
-          <p class="now-note research-statement">I am applying to Ph.D. programs to work on these questions full time, ideally where security, machine learning, and real systems meet. I want to build detection and AI-security methods that are reproducible and hold up outside a benchmark, and to do it with an advisor who pushes on the parts I get wrong. Open to research directions I have not thought of yet.</p>
+          <p class="now-note research-statement">I am applying to Ph.D. programs to work on these questions full time, ideally where security, machine learning, and real systems meet. I want to work on the security of the post-quantum migration and on detection methods that are reproducible and hold up outside a benchmark, with an advisor who pushes on the parts I get wrong. Open to research directions I have not thought of yet.</p>
         </div>
       </section>
       <section id="publications" class="section reveal">
@@ -342,7 +346,7 @@
                     <figure class="featured-proof">
                       <img class="featured-proof-image" src="assets/images/proof-nids-workspace.svg?v=20260612" alt="NIDS workspace diagram showing ingest, features, training, and detection output" width="640" height="320" loading="lazy" decoding="async" fetchpriority="low" />
                     </figure>
-                    <p>Live capture and PCAP replay with optional Suricata/Zeek ingest, feeding a supervised ensemble (Random Forest, ExtraTrees, HistGB, XGBoost) plus unsupervised detection, with a signature-anomaly fusion layer on top. Ran it through a <strong>6-hour stability soak</strong> — 87,533 packet records, 0 emitted alerts, 409 MB peak memory, 13.3 s restart recovery — then audited my own headline number and published what it does and does not prove. The IDS literature is full of claims that don't survive scrutiny. I wanted mine to.</p>
+                    <p>Live capture and PCAP replay with optional Suricata/Zeek ingest, feeding a supervised ensemble (Random Forest, ExtraTrees, HistGB, XGBoost) plus unsupervised detection, with a signature-anomaly fusion layer on top. Ran it through a <strong>6-hour stability soak</strong>: 87,533 packet records, 0 emitted alerts, 409 MB peak memory, 13.3 s restart recovery, then audited my own headline number and published what it does and does not prove. The IDS literature is full of claims that don't survive scrutiny. I wanted mine to.</p>
                     <ul class="featured-meta">
                       <li><strong>Stack:</strong> Python, FastAPI, scikit-learn, XGBoost, Suricata/Zeek adapters, Pandas, Docker</li>
                       <li><strong>Detection:</strong> signature + anomaly + supervised ML, fusion layer for confirmation</li>
@@ -420,6 +424,10 @@
             <article class="value-card">
               <h3>OT / ICS security</h3>
               <p>Going deeper on industrial and EV-charging protocols beyond OCPP. Where my IEEE work pointed, and where I want to take it next.</p>
+            </article>
+            <article class="value-card">
+              <h3>Post-quantum migration security</h3>
+              <p>Building a small open tool that scans TLS endpoints for post-quantum readiness, flagging classical-only and downgradeable hosts. The start of a measurement-first take on the PQC transition.</p>
             </article>
             <article class="value-card">
               <h3>Detection-as-code &amp; evaluation</h3>
