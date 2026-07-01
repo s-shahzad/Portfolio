@@ -1,8 +1,6 @@
 ﻿name: Backup Restore Drill
 
 on:
-  schedule:
-    - cron: "35 4 1 * *"
   workflow_dispatch:
 
 permissions:
