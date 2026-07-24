@@ -1,6 +1,6 @@
 # Detection Library
 
-Production-style detections authored alongside the [Universal NIDS case study](../projects/nids/).
+Production-style detections authored alongside the [Fusion NIDS case study](../projects/nids/).
 Each rule maps to one of the four hybrid engines used in that project — **signature**,
 **anomaly**, **supervised**, **unsupervised** — and to the **fusion** stage that consolidates
 agreeing signals before an alert is raised.

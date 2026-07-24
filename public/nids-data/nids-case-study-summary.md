@@ -1,4 +1,4 @@
-# Universal NIDS Case Study Summary
+# Fusion NIDS Case Study Summary
 
 Generated: 2026-03-25T14:15:00Z
 
