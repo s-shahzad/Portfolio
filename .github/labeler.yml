@@ -1,0 +1,41 @@
+# Path-based PR labelling.
+
+"content-accuracy":
+  - changed-files:
+      - any-glob-to-any-file:
+          - "index.html"
+          - "projects/**"
+          - "reports/**"
+
+"security":
+  - changed-files:
+      - any-glob-to-any-file:
+          - "src/server.py"
+          - "SECURITY.md"
+          - "ops/**"
+          - ".github/workflows/security.yml"
+
+"ci":
+  - changed-files:
+      - any-glob-to-any-file:
+          - ".github/**"
+
+"dependencies":
+  - changed-files:
+      - any-glob-to-any-file:
+          - "package.json"
+          - "package-lock.json"
+          - "requirements*.txt"
+
+"design":
+  - changed-files:
+      - any-glob-to-any-file:
+          - "styles.css"
+          - "styles.min.css"
+          - "assets/**"
+
+"docs":
+  - changed-files:
+      - any-glob-to-any-file:
+          - "*.md"
+          - "docs/**"
