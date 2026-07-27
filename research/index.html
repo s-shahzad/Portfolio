@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Research | Azhad Shahzad Shaik — Post-Quantum Migration Security</title>
+    <meta name="description" content="Measurement-first research on the post-quantum migration: whether real infrastructure moves to PQC or only looks like it has. Cross-protocol readiness scanning, OT/IoT charging-edge measurement, and reproducible detection evaluation. PhD applicant." />
+    <meta name="robots" content="index,follow" />
+    <link rel="canonical" href="https://azhadshahzadshaik.netlify.app/research/" />
+    <meta name="theme-color" content="#090c12" />
+    <meta property="og:title" content="Research | Azhad Shahzad Shaik" />
+    <meta property="og:description" content="Measurement-first research on the security of the post-quantum migration. Crypto-agility, not scheme design." />
+    <meta property="og:type" content="profile" />
+    <meta property="og:url" content="https://azhadshahzadshaik.netlify.app/research/" />
+    <link rel="icon" href="../assets/screenshots/assets/logo-alt-c-icon.png" type="image/png" />
+    <link rel="stylesheet" href="../styles.min.css?v=20260612-02" />
+  </head>
+  <body>
+    <a class="skip-link" href="#mainContent">Skip to main content</a>
+    <div class="grain"></div>
+
+    <header class="hero">
+      <div class="container">
+        <nav class="nav" aria-label="Primary">
+          <ul class="nav-links">
+            <li><a href="../index.html">Portfolio</a></li>
+            <li><a href="#interests">Interests</a></li>
+            <li><a href="#current">Current work</a></li>
+            <li><a href="#publications">Publications</a></li>
+            <li><a href="#method">Method</a></li>
+          </ul>
+        </nav>
+
+        <div class="hero-main">
+          <p class="hero-eyebrow">Research &middot; measurement-first security &middot; PhD applicant</p>
+          <h1>Does critical infrastructure actually move to post-quantum cryptography, or does it only look like it has?</h1>
+          <p class="hero-lead">
+            I measure the post-quantum migration rather than design schemes for it. The interesting failures are
+            operational: classical-only fallback, silent downgrades, and rollouts that terminate at the edge where
+            the constrained devices live. <strong>Crypto-agility, not scheme design.</strong>
+          </p>
+          <p class="hero-lead">
+            I am applying to fully funded PhD programmes to work on this full time, with an advisor who pushes on
+            the parts I get wrong. First-author IEEE publication
+            (<a href="https://doi.org/10.1109/GCAIoT68269.2025.11275540" target="_blank" rel="noopener noreferrer">DOI</a>),
+            M.S. in Cyber Forensics from Sacred Heart University.
+          </p>
+          <div class="hero-actions">
+            <a class="btn primary" href="mailto:shaikazhadshahzad@gmail.com">Email me</a>
+            <a class="btn ghost" href="https://scholar.google.com/citations?user=l2McKRYAAAAJ" target="_blank" rel="noopener noreferrer">Google Scholar</a>
+            <a class="btn ghost" href="https://orcid.org/0009-0009-6450-5837" target="_blank" rel="noopener noreferrer">ORCID</a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main id="mainContent">
+      <section id="current" class="section">
+        <div class="container">
+          <div class="section-head">
+            <h2>Current work</h2>
+            <p>Measurement in progress. Stated plainly, including what is not finished.</p>
+          </div>
+
+          <div class="value-grid">
+            <article class="value-card">
+              <h3>Cross-protocol PQC readiness</h3>
+              <p>
+                Built a scanner that measures post-quantum readiness across TLS, SSH and IKE for the same
+                organisation, rather than treating TLS as the whole story. The question is whether posture is
+                consistent across an estate or whether one protocol quietly lags.
+              </p>
+            </article>
+            <article class="value-card">
+              <h3>The charging edge (OCPP)</h3>
+              <p>
+                Built a probe for the OCPP charging edge, where the constrained devices sit and where a migration
+                is most likely to stop. Measurement work on whether key exchange reaches that boundary at all.
+              </p>
+            </article>
+            <article class="value-card">
+              <h3>Reproducible detection evaluation</h3>
+              <p>
+                Enforced coverage floors, repeatable PCAP replay, queue-loss accounting, and prepared-environment
+                runs. The argument is that for a detector intended for deployment, the validation method is itself
+                the contribution.
+              </p>
+            </article>
+          </div>
+
+          <p class="now-note research-statement">
+            <strong>Status, honestly:</strong> two measurement papers are in preparation, target
+            <a href="https://pam2026.at/" target="_blank" rel="noopener noreferrer">PAM</a> 2027. Drafts are
+            available on request. Nothing is published yet and no results are quoted here, because a measurement
+            paper without a completed scan is a claim without evidence &mdash; the standing blocker is research
+            data access, not the writing.
+          </p>
+        </div>
+      </section>
+
+      <section id="interests" class="section">
+        <div class="container">
+          <div class="section-head">
+            <h2>Research interests</h2>
+            <p>The questions I keep returning to.</p>
+          </div>
+          <div class="value-grid">
+            <article class="value-card">
+              <h3>Security of the post-quantum migration</h3>
+              <p>Measuring whether real infrastructure actually moves to post-quantum cryptography or only looks like it has: classical-only fallback, silent downgrades, and incomplete rollouts across TLS and OT/IoT fleets.</p>
+            </article>
+            <article class="value-card">
+              <h3>Critical-infrastructure &amp; IoT/OT security</h3>
+              <p>Protocol-level attack surfaces (OCPP, MQTT, CAN), EV-charging and smart-grid threat models, and where IT and OT meet and break.</p>
+            </article>
+            <article class="value-card">
+              <h3>ML for security &amp; anomaly detection</h3>
+              <p>Hybrid signature-plus-anomaly fusion, supervised and unsupervised ensembles, and the part nobody publishes: keeping false positives low outside a benchmark.</p>
+            </article>
+            <article class="value-card">
+              <h3>Evaluation that survives scrutiny</h3>
+              <p>Whether a reported result licenses the claim made from it. Most of the interesting work is in the gap between the two.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="publications" class="section">
+        <div class="container">
+          <div class="section-head">
+            <h2>Publications</h2>
+          </div>
+          <article class="value-card">
+            <h3>Plugged-in and Protected: Leveraging Machine Learning to Secure IoT-Based Electric Vehicle Charging Stations from Denial-of-Service Threats</h3>
+            <p><strong>First author.</strong> IEEE Global Conference on Artificial Intelligence and Internet of Things (GCAIoT) 2025.</p>
+            <p><a href="https://doi.org/10.1109/GCAIoT68269.2025.11275540" target="_blank" rel="noopener noreferrer">doi:10.1109/GCAIoT68269.2025.11275540</a></p>
+          </article>
+          <article class="value-card">
+            <h3>Remote monitoring system of heart conditions for elderly persons with ECG machine using IoT platform</h3>
+            <p>Co-author. JIST, vol. 10 no. 37, 2022.</p>
+            <p><a href="https://doi.org/10.52547/jist.15692.10.37.11" target="_blank" rel="noopener noreferrer">doi:10.52547/jist.15692.10.37.11</a></p>
+          </article>
+        </div>
+      </section>
+
+      <section id="method" class="section">
+        <div class="container">
+          <div class="section-head">
+            <h2>How I work</h2>
+            <p>One worked example, including the part that does not flatter me.</p>
+          </div>
+          <article class="value-card">
+            <h3>Auditing my own headline</h3>
+            <p>
+              Fusion NIDS ran a six-hour soak: 87,533 flow records, zero emitted alerts, memory bounded at
+              roughly 400&nbsp;MB. The obvious way to report that is as a detection result. It is not one &mdash; the
+              run contained no attacks, so it demonstrates <strong>pipeline stability under sustained load and
+              nothing about detection quality</strong>.
+            </p>
+            <p>
+              I wrote that down and published it rather than letting the number stand unqualified. The same work
+              records a queue-loss scenario at 99.67% loss, because a detector that silently discards traffic
+              while reporting no alerts is indistinguishable from one that is working, and only explicit
+              accounting tells the two apart.
+            </p>
+            <p>
+              The honest limitation: after that audit the project contains no detection-quality number at all. The
+              audit disclosed an absence rather than filling it. Closing that gap is open work.
+            </p>
+            <p>
+              <a class="text-link" href="https://github.com/s-shahzad/fusion-nids/wiki/Known-Limitations" target="_blank" rel="noopener noreferrer">Known limitations</a>
+              &middot;
+              <a class="text-link" href="https://github.com/s-shahzad/fusion-nids/wiki/Validation-Methodology" target="_blank" rel="noopener noreferrer">Validation methodology</a>
+              &middot;
+              <a class="text-link" href="https://github.com/s-shahzad/fusion-nids" target="_blank" rel="noopener noreferrer">Source</a>
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <div class="section-head">
+            <h2>Contact</h2>
+            <p>Happy to send drafts, discuss fit, or talk through the measurement design.</p>
+          </div>
+          <div class="contact-links">
+            <div class="contact-link-item"><span class="contact-label">Email</span><a class="contact-link" href="mailto:shaikazhadshahzad@gmail.com">shaikazhadshahzad@gmail.com</a></div>
+            <div class="contact-link-item"><span class="contact-label">Scholar</span><a class="contact-link" href="https://scholar.google.com/citations?user=l2McKRYAAAAJ" target="_blank" rel="noopener noreferrer">Google Scholar</a></div>
+            <div class="contact-link-item"><span class="contact-label">ORCID</span><a class="contact-link" href="https://orcid.org/0009-0009-6450-5837" target="_blank" rel="noopener noreferrer">0009-0009-6450-5837</a></div>
+            <div class="contact-link-item"><span class="contact-label">GitHub</span><a class="contact-link" href="https://github.com/s-shahzad" target="_blank" rel="noopener noreferrer">github.com/s-shahzad</a></div>
+            <div class="contact-link-item"><span class="contact-label">LinkedIn</span><a class="contact-link" href="https://www.linkedin.com/in/azhad-shahzad-shaik" target="_blank" rel="noopener noreferrer">azhad-shahzad-shaik</a></div>
+          </div>
+          <p class="now-note"><a class="text-link" href="../index.html">&larr; Engineering portfolio</a></p>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
