@@ -39,3 +39,6 @@ archives/portfolio_related/portfolio-react/*.tsbuildinfo
 docs/portfolio_file_*.csv
 docs/portfolio_related_folder_moves.csv
 docs/portfolio_restructure_summary.txt
+
+# CV/resume PDFs are rebuilt from CAREER-FACTS; never commit one by hand.
+reports/assets/*.pdf
