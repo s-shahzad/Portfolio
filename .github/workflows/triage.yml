@@ -1,0 +1,61 @@
+name: Triage
+
+# Path-based labelling plus stale handling, so the issue and PR list stays
+# honest without anyone maintaining it by hand.
+
+on:
+  pull_request_target:
+    types: [opened, synchronize, reopened]
+  schedule:
+    - cron: "23 7 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+
+jobs:
+  label:
+    if: github.event_name == 'pull_request_target'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/labeler@v5
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          sync-labels: false
+
+  stale:
+    if: github.event_name != 'pull_request_target'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/stale@v9
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+
+          days-before-issue-stale: 90
+          days-before-issue-close: 30
+          days-before-pr-stale: 30
+          days-before-pr-close: 14
+
+          stale-issue-message: >
+            No activity for 90 days. Marking stale - a prompt, not a verdict.
+            Comment to keep it open; it closes in 30 days otherwise.
+          stale-pr-message: >
+            No activity for 30 days. Comment or push to keep this open; it
+            closes in 14 days otherwise.
+
+          stale-issue-label: stale
+          stale-pr-label: stale
+
+          # Security work and owner decisions are open because they matter.
+          # A bot closing one of those destroys information.
+          exempt-issue-labels: "security,needs-decision,content-accuracy"
+          exempt-pr-labels: "security,needs-decision,dependencies,content-accuracy"
+          exempt-all-milestones: true
+          exempt-pr-authors: "dependabot[bot]"
+
+          ascending: true
+          operations-per-run: 60

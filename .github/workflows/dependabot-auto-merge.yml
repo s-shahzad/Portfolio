@@ -1,0 +1,46 @@
+name: Dependabot auto-merge
+
+# Merges low-risk dependency updates without a human. Scoped deliberately:
+# patch and minor only, dependabot[bot] only, and by enabling GitHub auto-merge
+# rather than merging directly - so branch protection still gates it and a red
+# check leaves the PR open.
+#
+# Major bumps are never auto-merged. They get labelled and commented instead.
+
+on: pull_request
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  auto-merge:
+    if: github.actor == 'dependabot[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Fetch Dependabot metadata
+        id: meta
+        uses: dependabot/fetch-metadata@v2
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Enable auto-merge for patch and minor updates
+        if: |
+          steps.meta.outputs.update-type == 'version-update:semver-patch' ||
+          steps.meta.outputs.update-type == 'version-update:semver-minor'
+        run: gh pr merge --auto --squash "$PR_URL"
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Flag major updates for manual review
+        if: steps.meta.outputs.update-type == 'version-update:semver-major'
+        run: |
+          gh pr edit "$PR_URL" --add-label "needs-decision"
+          gh pr comment "$PR_URL" --body \
+            "Major version bump (\`${{ steps.meta.outputs.dependency-names }}\` ${{ steps.meta.outputs.previous-version }} to ${{ steps.meta.outputs.new-version }}). Auto-merge deliberately excludes major updates. Review the build before merging."
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
