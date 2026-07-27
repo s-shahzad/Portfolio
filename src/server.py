@@ -637,13 +637,40 @@ def _evcs_parse_json_payload_to_df(raw_bytes: bytes, pd):
 
 
 def _evcs_parse_xml_payload_to_df(raw_bytes: bytes, pd):
+    """Parse an uploaded XML payload into a DataFrame, safely.
+
+    ``raw_bytes`` is attacker-controlled: it arrives from a file upload. Both
+    ``pandas.read_xml`` (which prefers lxml, and lxml resolves entities by
+    default) and ``xml.etree.ElementTree`` expand internal entities, so either
+    one on its own is a billion-laughs and XXE sink.
+
+    The payload is therefore validated with defusedxml **before** any permissive
+    parser sees it. defusedxml refuses DTDs, entity expansion and external
+    entity references outright, so once it accepts a document the remaining
+    parsers cannot be induced to expand anything.
+    """
+    from defusedxml.common import DefusedXmlException
+    from defusedxml.ElementTree import fromstring as safe_fromstring
+
+    text = raw_bytes.decode("utf-8", errors="ignore")
+
+    try:
+        root = safe_fromstring(text)
+    except DefusedXmlException as exc:
+        # Deliberately explicit: this is a rejection, not a parse failure, and
+        # the operator should be able to tell those apart in the logs.
+        raise ValueError(
+            "XML payload rejected: DTDs, entity expansion and external entities are not accepted."
+        ) from exc
+    except Exception as exc:
+        raise ValueError("XML payload could not be parsed.") from exc
+
+    # Safe to hand to pandas now - the document is known to carry no DTD or
+    # entity declarations. Kept because read_xml handles more table shapes than
+    # the manual walk below.
     try:
         return pd.read_xml(io.BytesIO(raw_bytes))
     except Exception:
-        import xml.etree.ElementTree as et
-
-        text = raw_bytes.decode("utf-8", errors="ignore")
-        root = et.fromstring(text)
         rows: list[dict[str, object]] = []
         for child in list(root):
             row: dict[str, object] = {}
