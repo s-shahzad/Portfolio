@@ -84,7 +84,7 @@
             "publisher": {"@type": "Organization", "name": "JIST (Journal of Information Systems and Telecommunication)"},
             "isPartOf": {
               "@type": "PublicationVolume",
-              "name": "JIST Vol 10, Issue 1, Pages 11-19",
+              "name": "JIST Vol 10, No. 37, Pages 11-19",
               "issn": "2322-1437"
             }
           }
@@ -148,7 +148,7 @@
             <p class="hero-eyebrow">Engineer &amp; applied researcher &middot; security, ML &amp; intelligent systems &middot; New Haven, CT</p>
             <h1>Azhad Shahzad Shaik</h1>
             <p class="hero-role">Engineer &amp; Applied Researcher</p>
-            <p class="hero-lead">I build systems to understand them, and I publish what I learn. IEEE first-author on ML detection for EV-charger DoS attacks (<a href="https://doi.org/10.1109/GCAIoT68269.2025.11275540" target="_blank" rel="noopener noreferrer">DOI</a>), with an M.S. in Cyber Forensics from Sacred Heart. Lately I work where security, machine learning, and data systems meet: a hybrid ML intrusion-detection platform (<strong>Fusion NIDS</strong>, 6-hour stability soak with self-audited evidence), a local-first AI security router (<strong>Vector</strong>), and production HL7&rarr;FHIR pipelines. Curious about emerging tech, honest about tradeoffs, and always open to a better idea.</p>
+            <p class="hero-lead">I build systems to understand them, and I publish what I learn. IEEE first-author on ML detection for EV-charger DoS attacks (<a href="https://doi.org/10.1109/GCAIoT68269.2025.11275540" target="_blank" rel="noopener noreferrer">DOI</a>), with an M.S. in Cybersecurity from Sacred Heart. Lately I work where security, machine learning, and data systems meet: a hybrid ML intrusion-detection platform (<strong>Fusion NIDS</strong>, a stability soak whose headline I audited and corrected myself), a local-first AI security router (<strong>Vector</strong>), and production HL7&rarr;FHIR pipelines. Curious about emerging tech, honest about tradeoffs, and always open to a better idea.</p>
             <div class="cta-row">
               <a class="btn primary" href="#research">Research &amp; Projects</a>
               <a class="btn ghost" href="https://www.linkedin.com/in/azhad-shahzad-shaik" target="_blank" rel="noopener noreferrer">View work history</a>
@@ -198,7 +198,7 @@
           </div>
           <div class="about-grid">
             <div class="about-panel">
-              <p>Cyber forensics M.S. and IEEE first-author on ML for EV-charger DoS. I build security systems to understand them, then measure whether they hold up. Fusion NIDS ran a 6-hour stability soak: 87,533 packet records, 0 emitted alerts, memory bounded at 409 MB, and then I audited my own headline and published what that result does and does not prove (it demonstrates pipeline stability, not detection quality). I chose accuracy over latency, so p99 inference sits at 340 ms, a tradeoff I am actively working to improve. Vector handles auth and a multi-provider AI router I use daily.</p>
+              <p>Cybersecurity M.S., an ECE degree specialized in embedded controllers and power electronics, and IEEE first-author on ML for EV-charger DoS. I build security systems to understand them, then measure whether they hold up. Fusion NIDS ran a 21,600-second stability soak: 87,533 per-packet records, 0 emitted alerts, memory bounded at 409 MB. Then I audited my own headline and published what it does and does not prove. The flow-record span was 3 h 19 m, capture-side packet loss peaked at 30.9%, and no attack-labelled traffic was present, so it demonstrates pipeline stability and not detection quality. I chose accuracy over latency, so p99 inference sits at 340 ms, a tradeoff I am actively working to improve. Vector handles auth and a multi-provider AI router I use daily.</p>
               <p>Three lanes of background feed the research. Telecom OSS for ~3,500 Vodafone Idea sites during the SRAN cutover, including on-call work on migration failures. HL7 v2.5 &rarr; FHIR R4 pipelines at Solstice on Azure. IT risk and NIST CSF at iQ4, where I studied the 2016 Uber breach in depth.</p>
               <ul class="about-list" aria-label="What I work on">
                 <li>Backend APIs in Python / FastAPI. Auth, retries that aren't optimistic, structured errors.</li>
@@ -253,7 +253,7 @@
                 <summary>View details</summary>
                 <p class="meta-row">
                   <span class="meta-badge">JIST</span>
-                  <span class="meta-badge">Vol 10 &middot; Issue 1</span>
+                  <span class="meta-badge">Vol 10 &middot; No. 37</span>
                   <span class="meta-badge">Pages 11-19</span>
                   <span class="meta-badge">2022-01-01</span>
                 </p>
@@ -311,10 +311,10 @@
               </div>
               <div class="edu-content">
                 <h3>Sacred Heart University</h3>
-                <p>M.S. in Cyber/Computer Forensics and Counterterrorism</p>
+                <p>M.S. in Cybersecurity</p>
                 <p>Fairfield, Connecticut, USA</p>
               </div>
-              <div class="edu-date">Mar 2025</div>
+              <div class="edu-date">May 2025</div>
             </div>
             <div class="edu-item">
               <div class="edu-logo-wrap" aria-hidden="true">
@@ -322,9 +322,9 @@
                 <span class="edu-logo-fallback">KLU</span>
               </div>
               <div class="edu-content">
-                <h3>Koneru Lakshmaiah College of Engineering</h3>
-                <p>B.Tech in Electronics and Communications Engineering</p>
-                <p>Guntur, Andhra Pradesh, India</p>
+                <h3>Koneru Lakshmaiah Education Foundation (KL University)</h3>
+                <p>B.Tech in Electronics and Communication Engineering &mdash; specialization in Embedded Controllers, IoT &amp; Power Electronics</p>
+                <p>First Class with Distinction &middot; Vaddeswaram, Guntur, Andhra Pradesh, India</p>
               </div>
               <div class="edu-date">May 2021</div>
             </div>
@@ -346,7 +346,7 @@
                     <figure class="featured-proof">
                       <img class="featured-proof-image" src="assets/images/proof-nids-workspace.svg?v=20260612" alt="NIDS workspace diagram showing ingest, features, training, and detection output" width="640" height="320" loading="lazy" decoding="async" fetchpriority="low" />
                     </figure>
-                    <p>Live capture and PCAP replay with optional Suricata/Zeek ingest, feeding a supervised ensemble (Random Forest, ExtraTrees, HistGB, XGBoost) plus unsupervised detection, with a signature-anomaly fusion layer on top. Ran it through a <strong>6-hour stability soak</strong>: 87,533 packet records, 0 emitted alerts, 409 MB peak memory, 13.3 s restart recovery, then audited my own headline number and published what it does and does not prove. The IDS literature is full of claims that don't survive scrutiny. I wanted mine to.</p>
+                    <p>Live capture and PCAP replay with optional Suricata/Zeek ingest, feeding a supervised ensemble (Random Forest, ExtraTrees, HistGB, XGBoost) plus unsupervised detection, with a signature-anomaly fusion layer on top. Ran it through a <strong>21,600-second stability soak</strong>: 87,533 per-packet records, 0 emitted alerts, 409 MB peak memory, 13.3 s restart recovery, then audited my own headline number and published what it does and does not prove. The honest version: 3 h 19 m of flow records, 30.9% peak capture loss, and no attack traffic in the corpus, so it is a stability result and not a false-positive rate. The IDS literature is full of claims that don't survive scrutiny. I wanted mine to.</p>
                     <ul class="featured-meta">
                       <li><strong>Stack:</strong> Python, FastAPI, scikit-learn, XGBoost, Suricata/Zeek adapters, Pandas, Docker</li>
                       <li><strong>Detection:</strong> signature + anomaly + supervised ML, fusion layer for confirmation</li>

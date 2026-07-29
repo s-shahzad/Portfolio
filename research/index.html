@@ -152,10 +152,11 @@
           <article class="value-card">
             <h3>Auditing my own headline</h3>
             <p>
-              Fusion NIDS ran a six-hour soak: 87,533 flow records, zero emitted alerts, memory bounded at
-              roughly 400&nbsp;MB. The obvious way to report that is as a detection result. It is not one &mdash; the
-              run contained no attacks, so it demonstrates <strong>pipeline stability under sustained load and
-              nothing about detection quality</strong>.
+              Fusion NIDS ran a 21,600-second soak: 87,533 per-packet records, zero emitted alerts, memory
+              bounded at roughly 400&nbsp;MB. The obvious way to report that is as a detection result. It is not
+              one. The flow-record span was 3&nbsp;h&nbsp;19&nbsp;m rather than the full configured window,
+              capture-side packet loss peaked at 30.9%, and the run contained no attacks, so it demonstrates
+              <strong>pipeline stability under sustained load and nothing about detection quality</strong>.
             </p>
             <p>
               I wrote that down and published it rather than letting the number stand unqualified. The same work
