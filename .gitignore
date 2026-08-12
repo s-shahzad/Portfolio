@@ -42,3 +42,7 @@ docs/portfolio_restructure_summary.txt
 
 # CV/resume PDFs are rebuilt from CAREER-FACTS; never commit one by hand.
 reports/assets/*.pdf
+
+# design exploration - not for deploy
+_3d-samples/
+
