@@ -1,4 +1,4 @@
-﻿# Python cache/artifacts
+# Python cache/artifacts
 __pycache__/
 *.py[cod]
 .pytest_cache/
@@ -44,5 +44,4 @@ docs/portfolio_restructure_summary.txt
 reports/assets/*.pdf
 
 # design exploration - not for deploy
-_3d-samples/
 

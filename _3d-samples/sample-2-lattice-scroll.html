@@ -1,0 +1,593 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Sample 2 — Lattice &amp; scroll camera | 3D portfolio direction</title>
+<meta name="description" content="Design sample: a single instanced lattice scene with a scroll-driven camera path, sitting behind fully crawlable semantic content." />
+<meta name="robots" content="noindex,nofollow" />
+<!--
+  ============================================================================
+  SAMPLE 2 — "LATTICE / SCROLL CAMERA"
+  ============================================================================
+  Technique      : InstancedMesh lattice + merged LineSegments edges + sparse
+                   Points depth field. One fixed background canvas. Scrolling
+                   flies the camera along a CatmullRom path between sections.
+  Draw calls     : 3. No lights, no shadows, no post-processing.
+  Rendering      : ON DEMAND. The loop only runs while the smoothed scroll is
+                   still catching up, or (high tier only) while the lattice is
+                   in its slow idle rotation. Idle rotation is off on the low
+                   tier, so a phone renders nothing at all when you stop.
+
+  ALL COPY ON THIS PAGE IS PLACEHOLDER. No career facts, no findings, no stats.
+
+  TO SELF-HOST (required for the real site — the live netlify.toml CSP is
+  script-src 'self' ... which blocks CDNs): vendor
+  three@0.170.0/build/three.module.min.js into /assets/vendor/ and repoint
+  THREE_URL below.
+  ============================================================================
+-->
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Bricolage+Grotesque:wght@400..700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root{
+    --ink-base:#0a0b0d;--ink-deep:#101216;--ink-mid:#181b20;
+    --paper:#e9e9ec;--paper-soft:#b8bac0;--paper-faint:#adafb6;
+    --hairline:#2e3340;--hairline-soft:#1d2129;--hairline-strong:#4a5061;
+    --signal:#8c97a8;--signal-soft:#aab3c2;
+    --container:1240px;--gutter:clamp(1.25rem,3.5vw,2.5rem);
+    --t-label:0.75rem;--ease:cubic-bezier(.22,.61,.36,1);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    background:var(--ink-base);color:var(--paper);
+    font-family:"Bricolage Grotesque",system-ui,-apple-system,sans-serif;
+    font-size:1.0625rem;line-height:1.6;-webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit}
+  .container{max-width:var(--container);margin:0 auto;padding:0 var(--gutter)}
+  :focus-visible{outline:2px solid var(--signal-soft);outline-offset:3px;border-radius:2px}
+  .skip{position:absolute;left:-9999px;top:0;z-index:99;background:var(--paper);color:var(--ink-base);padding:.75rem 1.25rem;font-weight:600}
+  .skip:focus{left:.5rem;top:.5rem}
+
+  /* ---------- the fixed 3D backdrop ---------- */
+  #bg{position:fixed;inset:0;z-index:0;pointer-events:none}
+  #bg canvas{display:block;width:100%;height:100%}
+  /* CSS-only fallback backdrop. Replaced by the canvas when WebGL boots. */
+  #bg::before{
+    content:"";position:absolute;inset:0;
+    background:
+      radial-gradient(1100px 700px at 72% 18%, rgba(140,151,168,.10), transparent 62%),
+      radial-gradient(900px 600px at 18% 78%, rgba(140,151,168,.07), transparent 60%),
+      repeating-linear-gradient(0deg,transparent 0 46px,rgba(46,51,64,.30) 46px 47px),
+      repeating-linear-gradient(90deg,transparent 0 46px,rgba(46,51,64,.20) 46px 47px),
+      var(--ink-base);
+  }
+  body.gl-live #bg::before{display:none}
+  /* scrim keeps text contrast honest whatever the scene is doing behind it */
+  #scrim{
+    position:fixed;inset:0;z-index:1;pointer-events:none;
+    background:
+      linear-gradient(90deg,rgba(10,11,13,.86) 0%,rgba(10,11,13,.58) 45%,rgba(10,11,13,.12) 100%),
+      linear-gradient(180deg,rgba(10,11,13,.45) 0%,rgba(10,11,13,.22) 40%,rgba(10,11,13,.60) 100%);
+  }
+  .page{position:relative;z-index:2}
+
+  /* ---------- sample banner ---------- */
+  .sample-bar{
+    background:rgba(24,27,32,.9);border-bottom:1px solid var(--hairline-soft);
+    font-family:"JetBrains Mono",monospace;font-size:.68rem;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--signal);padding:.55rem 0;
+  }
+  .sample-bar .container{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap}
+
+  /* ---------- nav ---------- */
+  .topnav{position:sticky;top:0;z-index:20;background:rgba(10,11,13,.78);backdrop-filter:blur(10px);border-bottom:1px solid var(--hairline-soft)}
+  @supports not (backdrop-filter:blur(2px)){.topnav{background:#0a0b0d}}
+  .topnav .container{display:flex;align-items:center;justify-content:space-between;gap:1rem;height:60px}
+  .brand{font-family:"Fraunces",serif;font-size:1.05rem;text-decoration:none}
+  .navlinks{display:flex;gap:.25rem;list-style:none;flex-wrap:wrap}
+  .navlinks a{
+    font-family:"JetBrains Mono",monospace;font-size:.72rem;text-transform:uppercase;
+    letter-spacing:.12em;color:var(--paper-faint);text-decoration:none;padding:.55rem .7rem;
+    transition:color 180ms var(--ease),background 180ms var(--ease);
+  }
+  .navlinks a:hover{color:var(--paper);background:var(--ink-mid)}
+  .navlinks a[aria-current="true"]{color:var(--paper);border-bottom:1px solid var(--signal)}
+  @media(max-width:640px){.navlinks{display:none}}
+
+  /* ---------- scroll progress rail (real, not decorative fluff) ---------- */
+  .rail{position:fixed;right:1.1rem;top:50%;transform:translateY(-50%);z-index:20;display:grid;gap:.9rem}
+  @media(max-width:860px){.rail{display:none}}
+  .rail a{
+    width:10px;height:10px;border:1px solid var(--hairline-strong);border-radius:50%;
+    display:block;transition:background 200ms var(--ease),border-color 200ms var(--ease);
+  }
+  .rail a[aria-current="true"]{background:var(--signal-soft);border-color:var(--signal-soft)}
+  .rail a span{position:absolute;left:-9999px}
+
+  /* ---------- sections ---------- */
+  .hero{min-height:88vh;display:flex;align-items:center;padding:5rem 0}
+  .eyebrow{
+    font-family:"JetBrains Mono",monospace;font-size:var(--t-label);text-transform:uppercase;
+    letter-spacing:.18em;color:var(--signal);border-top:1.5px solid var(--signal);
+    padding-top:.9rem;margin-bottom:1.5rem;display:inline-block;
+  }
+  h1{font-family:"Fraunces",serif;font-weight:360;font-size:clamp(3rem,9vw,6.5rem);line-height:.93;letter-spacing:-.04em;margin-bottom:.7rem;text-wrap:balance;max-width:16ch}
+  .role{font-family:"Fraunces",serif;font-style:italic;font-size:clamp(1.25rem,2.6vw,1.9rem);color:var(--paper-soft);margin-bottom:1.6rem}
+  .lead{font-size:clamp(1.05rem,1.35vw,1.2rem);color:var(--paper-soft);max-width:54ch;margin-bottom:2rem}
+  .cta{display:flex;gap:.7rem;flex-wrap:wrap}
+  .btn{
+    font-family:"JetBrains Mono",monospace;font-size:var(--t-label);text-transform:uppercase;
+    letter-spacing:.1em;padding:.85rem 1.35rem;border:1px solid var(--hairline);
+    text-decoration:none;color:var(--paper);background:rgba(10,11,13,.5);cursor:pointer;
+    transition:border-color 180ms var(--ease),background 180ms var(--ease);
+  }
+  .btn:hover{border-color:var(--signal-soft);background:var(--ink-mid)}
+  .btn-primary{background:var(--paper);color:var(--ink-base);border-color:var(--paper);font-weight:600}
+  .btn-primary:hover{background:var(--signal-soft);border-color:var(--signal-soft);color:var(--ink-base)}
+
+  section{padding:clamp(5rem,14vh,9rem) 0;min-height:70vh;display:flex;align-items:center}
+  .panel{
+    background:rgba(16,18,22,.72);border:1px solid var(--hairline-soft);
+    padding:clamp(1.75rem,4vw,3rem);max-width:760px;
+    backdrop-filter:blur(6px);
+  }
+  @supports not (backdrop-filter:blur(2px)){.panel{background:rgba(16,18,22,.95)}}
+  .sec-label{font-family:"JetBrains Mono",monospace;font-size:var(--t-label);text-transform:uppercase;letter-spacing:.18em;color:var(--signal);margin-bottom:1.2rem}
+  h2{font-family:"Fraunces",serif;font-weight:360;font-size:clamp(1.9rem,4vw,3rem);letter-spacing:-.02em;margin-bottom:1.1rem;line-height:1.05}
+  h3{font-weight:600;font-size:1.1rem;margin-bottom:.4rem}
+  p{color:var(--paper-soft);max-width:64ch}
+  p + p{margin-top:1rem}
+  .work-list{list-style:none;margin-top:2rem;border-top:1px solid var(--hairline-soft)}
+  .work-list li{border-bottom:1px solid var(--hairline-soft);padding:1.2rem 0}
+  .work-list .k{font-family:"JetBrains Mono",monospace;font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:var(--signal);display:block;margin-bottom:.5rem}
+  .work-list p{font-size:.95rem}
+  footer{padding:4rem 0 6rem;color:var(--paper-faint);font-size:.9rem;position:relative;z-index:2}
+  footer .container{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+
+  .motion-toggle{
+    position:fixed;right:1rem;bottom:1rem;z-index:30;
+    font-family:"JetBrains Mono",monospace;font-size:.65rem;letter-spacing:.1em;
+    text-transform:uppercase;padding:.6rem .8rem;background:var(--ink-mid);
+    color:var(--paper-soft);border:1px solid var(--hairline);cursor:pointer;
+  }
+  .motion-toggle:hover{color:var(--paper);border-color:var(--signal)}
+  #fps{
+    position:fixed;left:1rem;bottom:1rem;z-index:30;display:none;
+    font-family:"JetBrains Mono",monospace;font-size:.65rem;color:var(--signal-soft);
+    background:rgba(10,11,13,.85);border:1px solid var(--hairline);padding:.5rem .7rem;white-space:pre;
+  }
+  #fps.on{display:block}
+
+  @media (prefers-reduced-motion: reduce){
+    *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+    html{scroll-behavior:auto}
+  }
+</style>
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to main content</a>
+
+<div id="bg" aria-hidden="true"><canvas id="gl"></canvas></div>
+<div id="scrim" aria-hidden="true"></div>
+
+<div class="page">
+  <div class="sample-bar">
+    <div class="container">
+      <span>Design sample 02 — lattice &amp; scroll camera</span>
+      <span id="mode">static</span>
+    </div>
+  </div>
+
+  <nav class="topnav" aria-label="Primary">
+    <div class="container">
+      <a class="brand" href="#top">Azhad Shaik</a>
+      <ul class="navlinks">
+        <li><a href="#about">About</a></li>
+        <li><a href="#work">Work</a></li>
+        <li><a href="#writing">Writing</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <nav class="rail" aria-label="Section progress">
+    <a href="#top"      data-rail="top"><span>Top</span></a>
+    <a href="#about"    data-rail="about"><span>About</span></a>
+    <a href="#work"     data-rail="work"><span>Work</span></a>
+    <a href="#writing"  data-rail="writing"><span>Writing</span></a>
+    <a href="#contact"  data-rail="contact"><span>Contact</span></a>
+  </nav>
+
+  <main id="main">
+    <header class="hero" id="top">
+      <div class="container">
+        <span class="eyebrow">Security research · placeholder role line</span>
+        <h1>Lorem ipsum dolor sit amet</h1>
+        <p class="role">Consectetur adipiscing elit — placeholder subtitle</p>
+        <p class="lead">
+          Placeholder lead paragraph. Scrolling flies the camera through the lattice behind
+          this text; the text itself is ordinary DOM and is read, indexed and selected
+          exactly as it would be with no canvas at all.
+        </p>
+        <div class="cta">
+          <a class="btn btn-primary" href="#work">View selected work</a>
+          <a class="btn" href="#contact">Get in touch</a>
+        </div>
+      </div>
+    </header>
+
+    <section id="about">
+      <div class="container">
+        <div class="panel">
+          <p class="sec-label">01 — About</p>
+          <h2>Lorem ipsum dolor sit</h2>
+          <p>Placeholder body copy. Duis aute irure dolor in reprehenderit in voluptate velit
+             esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
+             non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+          <p>Second placeholder paragraph. Sed ut perspiciatis unde omnis iste natus error sit
+             voluptatem accusantium doloremque laudantium.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="work">
+      <div class="container">
+        <div class="panel">
+          <p class="sec-label">02 — Selected work</p>
+          <h2>Placeholder project index</h2>
+          <ul class="work-list">
+            <li><span class="k">Project One</span><h3>Lorem ipsum dolor</h3>
+                <p>Placeholder description. Neque porro quisquam est qui dolorem ipsum quia dolor.</p></li>
+            <li><span class="k">Project Two</span><h3>Consectetur adipiscing</h3>
+                <p>Placeholder description. Ut enim ad minima veniam quis nostrum exercitationem.</p></li>
+            <li><span class="k">Project Three</span><h3>Sed do eiusmod tempor</h3>
+                <p>Placeholder description. Quis autem vel eum iure reprehenderit qui in ea voluptate.</p></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="writing">
+      <div class="container">
+        <div class="panel">
+          <p class="sec-label">03 — Writing</p>
+          <h2>Placeholder writing list</h2>
+          <p>Placeholder standfirst. At vero eos et accusamus et iusto odio dignissimos ducimus
+             qui blanditiis praesentium voluptatum deleniti atque corrupti.</p>
+          <ul class="work-list">
+            <li><h3>Article title one</h3><p>Placeholder standfirst line.</p></li>
+            <li><h3>Article title two</h3><p>Placeholder standfirst line.</p></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="container">
+        <div class="panel">
+          <p class="sec-label">04 — Contact</p>
+          <h2>Placeholder contact heading</h2>
+          <p>Placeholder contact copy. Replace with the real address block before deploying.</p>
+          <div class="cta" style="margin-top:1.75rem">
+            <a class="btn btn-primary" href="#contact">Email placeholder</a>
+            <a class="btn" href="#contact">Profile placeholder</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <span>&copy; Placeholder footer</span>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.1em">Sample 02</span>
+    </div>
+  </footer>
+</div>
+
+<button class="motion-toggle" id="motion-toggle" type="button" aria-pressed="false">Motion: auto</button>
+<div id="fps" aria-hidden="true"></div>
+
+<script>
+/* ==========================================================================
+   PERF BUDGET — how this holds 60fps on integrated graphics
+   --------------------------------------------------------------------------
+   1. 3 draw calls: one InstancedMesh (216 octahedra = 1,728 tris), one merged
+      LineSegments for the edges, one Points field. Nothing else is drawn.
+   2. No lights / no shadow maps / no post-processing. MeshBasicMaterial and
+      LineBasicMaterial only, so the fragment cost is close to zero.
+   3. RENDER ON DEMAND. rAF runs only while the smoothed scroll value is still
+      converging (or, high tier only, while the idle rotation is on). Stop
+      scrolling on the low tier and the GPU goes completely quiet.
+   4. Pixel ratio capped at 1.5 desktop / 1.0 small screens.
+   5. Scroll is read from a passive listener into a variable; the actual
+      camera maths happens once per rendered frame, never per scroll event.
+   6. Loop stops on tab hide (visibilitychange).
+   7. Low tier: 4x4x4 lattice instead of 6x6x6, no idle rotation, no depth
+      point field, antialias off.
+   8. Reduced motion / Save-Data: the camera never moves. One still frame is
+      drawn at the hero viewpoint and the page scrolls like a normal document.
+   Press "d" for a live frame-time / draw-call readout.
+   ========================================================================== */
+
+const THREE_URL = 'https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.min.js';
+
+const mqReduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+const mqSmall  = window.matchMedia('(max-width: 720px)');
+const modeEl   = document.getElementById('mode');
+
+/* three r163+ dropped WebGL1 entirely, so WebGL2 is the real requirement. */
+function hasWebGL(){
+  try{
+    const c = document.createElement('canvas');
+    return !!(window.WebGL2RenderingContext && c.getContext('webgl2'));
+  }catch(e){ return false; }
+}
+const savingData = () => !!(navigator.connection && navigator.connection.saveData === true);
+function motionPref(){
+  const s = localStorage.getItem('sample2-motion');
+  if(s === 'off') return false;
+  if(s === 'on')  return true;
+  return !mqReduce.matches;
+}
+function tier(){
+  const cores = navigator.hardwareConcurrency || 8;
+  const mem   = navigator.deviceMemory || 8;
+  return (mqSmall.matches || cores <= 4 || mem <= 4) ? 'low' : 'high';
+}
+
+/* ---------- motion toggle ---------- */
+const toggleBtn = document.getElementById('motion-toggle');
+function paintToggle(){
+  const s = localStorage.getItem('sample2-motion');
+  toggleBtn.textContent = s === 'off' ? 'Motion: off' : s === 'on' ? 'Motion: on' : 'Motion: auto';
+  toggleBtn.setAttribute('aria-pressed', String(motionPref()));
+}
+toggleBtn.addEventListener('click', () => {
+  const s = localStorage.getItem('sample2-motion');
+  const next = s === 'off' ? 'on' : s === 'on' ? '' : 'off';
+  if(next) localStorage.setItem('sample2-motion', next); else localStorage.removeItem('sample2-motion');
+  paintToggle(); location.reload();
+});
+paintToggle();
+
+const fpsEl = document.getElementById('fps');
+addEventListener('keydown', e => {
+  if(e.key === 'd' && !/^(INPUT|TEXTAREA)$/.test(document.activeElement.tagName)) fpsEl.classList.toggle('on');
+});
+
+/* ---------- section highlighting: works with or without WebGL ---------- */
+(function sectionObserver(){
+  const ids = ['top','about','work','writing','contact'];
+  const railLinks = new Map([...document.querySelectorAll('.rail a')].map(a => [a.dataset.rail, a]));
+  const navLinks  = new Map([...document.querySelectorAll('.navlinks a')].map(a => [a.getAttribute('href').slice(1), a]));
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(en => {
+      if(!en.isIntersecting) return;
+      ids.forEach(id => {
+        const on = id === en.target.id;
+        railLinks.get(id) && railLinks.get(id).setAttribute('aria-current', String(on));
+        navLinks.get(id)  && navLinks.get(id).setAttribute('aria-current', String(on));
+      });
+    });
+  }, { rootMargin: '-45% 0px -45% 0px' });
+  ids.forEach(id => { const el = document.getElementById(id); el && io.observe(el); });
+})();
+
+/* ---------- boot ---------- */
+if(!hasWebGL() || savingData()){
+  modeEl.textContent = savingData() ? 'data-saver — static backdrop' : 'no webgl — static backdrop';
+}else{
+  boot().catch(err => {
+    console.warn('[sample-2] 3D layer unavailable, static backdrop in use:', err && err.message);
+    modeEl.textContent = 'static backdrop';
+  });
+}
+
+async function boot(){
+  const THREE = await import(THREE_URL);
+
+  const canvas  = document.getElementById('gl');
+  const animate = motionPref();
+  const lvl     = tier();
+
+  const cfg = lvl === 'low'
+    ? { n: 4, dpr: 1.0, aa: false, dust: 0,   idleSpin: 0 }
+    : { n: 6, dpr: 1.5, aa: true,  dust: 320, idleSpin: 0.05 };
+
+  const renderer = new THREE.WebGLRenderer({
+    canvas, antialias: cfg.aa, alpha: false, stencil: false,
+    powerPreference: 'high-performance', preserveDrawingBuffer: false
+  });
+  renderer.setClearColor(0x0a0b0d, 1);
+
+  const scene  = new THREE.Scene();
+  scene.fog    = new THREE.FogExp2(0x0a0b0d, 0.16);   // free depth cue, no cost
+  const camera = new THREE.PerspectiveCamera(46, 1, 0.1, 60);
+
+  let dprCap = cfg.dpr;
+  function applySize(){
+    const w = window.innerWidth, h = window.innerHeight;
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, dprCap));
+    renderer.setSize(w, h, false);
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+  }
+
+  const world = new THREE.Group();
+  scene.add(world);
+
+  /* ============ 1. lattice nodes — ONE InstancedMesh ============ */
+  const N = cfg.n, SPAN = 2.0, step = SPAN / (N - 1);
+  const nodeGeo = new THREE.OctahedronGeometry(0.028, 0);      // 8 tris each
+  const nodeMat = new THREE.MeshBasicMaterial({ color: 0xffffff, toneMapped: false });
+  const nodes = new THREE.InstancedMesh(nodeGeo, nodeMat, N * N * N);
+  nodes.instanceMatrix.setUsage(THREE.StaticDrawUsage);
+
+  const m4 = new THREE.Matrix4();
+  const col = new THREE.Color();
+  const at = (i, j, k) => new THREE.Vector3(-SPAN/2 + i*step, -SPAN/2 + j*step, -SPAN/2 + k*step);
+  let idx = 0;
+  for(let i = 0; i < N; i++) for(let j = 0; j < N; j++) for(let k = 0; k < N; k++){
+    const p = at(i, j, k);
+    // corner nodes read brighter — gives the polytope a readable silhouette
+    const edgeness = ((i===0||i===N-1) + (j===0||j===N-1) + (k===0||k===N-1)) / 3;
+    const s = 0.6 + edgeness * 0.9;
+    m4.makeScale(s, s, s); m4.setPosition(p);
+    nodes.setMatrixAt(idx, m4);
+    col.setHSL(0.60, 0.06, 0.32 + edgeness * 0.50);
+    nodes.setColorAt(idx, col);
+    idx++;
+  }
+  nodes.instanceMatrix.needsUpdate = true;
+  if(nodes.instanceColor) nodes.instanceColor.needsUpdate = true;
+  nodes.matrixAutoUpdate = false; nodes.updateMatrix();
+  world.add(nodes);
+
+  /* ============ 2. lattice edges — ONE merged LineSegments ============ */
+  const ev = [];
+  for(let i = 0; i < N; i++) for(let j = 0; j < N; j++) for(let k = 0; k < N; k++){
+    const p = at(i, j, k);
+    if(i < N-1){ const q = at(i+1,j,k); ev.push(p.x,p.y,p.z, q.x,q.y,q.z); }
+    if(j < N-1){ const q = at(i,j+1,k); ev.push(p.x,p.y,p.z, q.x,q.y,q.z); }
+    if(k < N-1){ const q = at(i,j,k+1); ev.push(p.x,p.y,p.z, q.x,q.y,q.z); }
+  }
+  const edgeGeo = new THREE.BufferGeometry();
+  edgeGeo.setAttribute('position', new THREE.Float32BufferAttribute(ev, 3));
+  const edges = new THREE.LineSegments(edgeGeo, new THREE.LineBasicMaterial({
+    color: 0x39414f, transparent: true, opacity: 0.70, depthWrite: false, fog: true
+  }));
+  edges.matrixAutoUpdate = false; edges.updateMatrix();
+  world.add(edges);
+
+  /* ============ 3. sparse depth field (high tier only) ============ */
+  let dust = null;
+  if(cfg.dust > 0){
+    const dp = new Float32Array(cfg.dust * 3);
+    for(let i = 0; i < cfg.dust; i++){
+      const r = 5 + Math.random() * 9, u = Math.random() * Math.PI * 2, v = Math.acos(2*Math.random()-1);
+      dp[i*3]   = r * Math.sin(v) * Math.cos(u);
+      dp[i*3+1] = r * Math.cos(v) * 0.55;
+      dp[i*3+2] = r * Math.sin(v) * Math.sin(u);
+    }
+    const dg = new THREE.BufferGeometry();
+    dg.setAttribute('position', new THREE.BufferAttribute(dp, 3));
+    dust = new THREE.Points(dg, new THREE.PointsMaterial({
+      color: 0x8c97a8, size: 0.03, sizeAttenuation: true,
+      transparent: true, opacity: 0.5, depthWrite: false, fog: false
+    }));
+    dust.matrixAutoUpdate = false; dust.updateMatrix();
+    scene.add(dust);
+  }
+
+  /* ============ camera path: one curve for eye, one for target ============ */
+  const eyeCurve = new THREE.CatmullRomCurve3([
+    new THREE.Vector3( 0.0,   0.25,  4.90),  // hero  (well back — text has to win)
+    new THREE.Vector3( 3.30,  1.05,  2.90),  // about
+    new THREE.Vector3( 0.45, -2.10,  1.60),  // work  (dives under the lattice)
+    new THREE.Vector3(-3.40,  0.75,  3.10),  // writing
+    new THREE.Vector3( 0.0,   0.15,  5.90)   // contact
+  ], false, 'catmullrom', 0.4);
+  const aimCurve = new THREE.CatmullRomCurve3([
+    new THREE.Vector3( 0, 0,    0),
+    new THREE.Vector3(-.2, .05, 0),
+    new THREE.Vector3( 0, .35,  0),
+    new THREE.Vector3( .2, .05, 0),
+    new THREE.Vector3( 0, 0,    0)
+  ], false, 'catmullrom', 0.4);
+
+  const eye = new THREE.Vector3(), aim = new THREE.Vector3();
+  function placeCamera(u){
+    eyeCurve.getPointAt(THREE.MathUtils.clamp(u, 0, 1), eye);
+    aimCurve.getPointAt(THREE.MathUtils.clamp(u, 0, 1), aim);
+    camera.position.copy(eye);
+    camera.lookAt(aim);
+  }
+
+  /* ---------- scroll → target progress (passive, never does maths) ---------- */
+  let targetU = 0, currentU = 0;
+  function readScroll(){
+    const max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+    targetU = Math.min(1, Math.max(0, window.scrollY / max));
+  }
+  addEventListener('scroll', () => { readScroll(); wake(); }, { passive: true });
+  addEventListener('resize', () => { applySize(); readScroll(); wake(); });
+
+  applySize();
+  readScroll();
+  currentU = targetU;
+  placeCamera(currentU);
+  document.body.classList.add('gl-live');
+  modeEl.textContent = animate ? (lvl === 'low' ? 'live · low · render-on-demand' : 'live · render-on-demand') : 'still frame';
+
+  /* ---------- the on-demand loop ---------- */
+  const clock = new THREE.Clock();
+  let running = false, spin = 0, lastT = 0;
+  const samples = []; let downgraded = false;
+
+  function render(){ renderer.render(scene, camera); }
+
+  function frame(){
+    const dt = Math.min(clock.getDelta(), 0.05);
+
+    // critically-damped-ish smoothing, frame-rate independent
+    const k = 1 - Math.pow(0.0016, dt);
+    currentU += (targetU - currentU) * k;
+    const settled = Math.abs(targetU - currentU) < 0.00025;
+    if(settled) currentU = targetU;
+
+    if(cfg.idleSpin){ spin += dt * cfg.idleSpin; world.rotation.set(spin * 0.35, spin, 0); }
+    placeCamera(currentU);
+    render();
+
+    if(!downgraded){
+      samples.push(dt * 1000);
+      if(samples.length === 90){
+        const med = samples.slice().sort((a,b)=>a-b)[45];
+        if(med > 20){
+          dprCap = 1.0; cfg.idleSpin = 0; applySize();
+          if(dust){ dust.visible = false; }
+          modeEl.textContent = 'live · reduced';
+        }
+        downgraded = true;
+      }
+    }
+    if(fpsEl.classList.contains('on')){
+      fpsEl.textContent =
+        'frame  ' + (dt*1000).toFixed(1) + ' ms\n' +
+        'fps    ' + (1/Math.max(dt,1e-4)).toFixed(0) + '\n' +
+        'calls  ' + renderer.info.render.calls + '\n' +
+        'tris   ' + renderer.info.render.triangles + '\n' +
+        'u      ' + currentU.toFixed(3) + '\n' +
+        'state  ' + (running ? 'running' : 'idle');
+    }
+
+    // The whole point: if nothing is moving, stop burning the GPU.
+    if(settled && !cfg.idleSpin && !fpsEl.classList.contains('on')) sleep();
+  }
+
+  function wake(){
+    if(!animate || running || document.hidden) return;
+    running = true; clock.getDelta(); renderer.setAnimationLoop(frame);
+  }
+  function sleep(){
+    if(!running) return;
+    running = false; renderer.setAnimationLoop(null);
+  }
+  document.addEventListener('visibilitychange', () => { document.hidden ? sleep() : wake(); });
+
+  if(animate) wake(); else render();      // reduced motion → exactly one frame
+
+  addEventListener('pagehide', () => {
+    sleep();
+    nodeGeo.dispose(); nodeMat.dispose(); edgeGeo.dispose(); edges.material.dispose();
+    if(dust){ dust.geometry.dispose(); dust.material.dispose(); }
+    renderer.dispose();
+  });
+}
+</script>
+</body>
+</html>
