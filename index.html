@@ -145,12 +145,17 @@
     <link rel="icon" href="assets/screenshots/assets/logo-alt-c-icon.png" type="image/png" />
     <link rel="shortcut icon" href="assets/screenshots/assets/logo-alt-c-icon.png" type="image/png" />
     <link rel="stylesheet" href="styles.min.css?v=20260612-02" />
+    <link rel="stylesheet" href="assets/lattice.css?v=20260812-01" />
   </head>
   <body>
     <a class="skip-link" href="#mainContent">Skip to main content</a>
+    <!-- 3D backdrop. Fixed, aria-hidden, pointer-events:none. Falls back to a
+         CSS gradient when WebGL is unavailable or the visitor saves data. -->
+    <div id="bg" aria-hidden="true"><canvas id="gl"></canvas></div>
+    <div id="scrim" aria-hidden="true"></div>
     <div class="grain"></div>
 
-    <header class="hero">
+    <header class="hero" id="top">
       <div class="container">
         <nav class="nav" aria-label="Primary">
           <button class="brand-btn" id="brandLogoBtn" type="button" aria-label="Open logo preview" aria-haspopup="dialog" aria-controls="logoModal" aria-expanded="false">
@@ -646,6 +651,9 @@
     <footer class="footer">
       <div class="container"><p>&copy; 2026 Azhad Shahzad Shaik. All rights reserved.</p></div>
     </footer>
+    <button class="motion-toggle" id="motion-toggle" type="button" aria-pressed="false">Motion: auto</button>
 <script src="script.min.js?v=20260612-01" defer></script>
+    <!-- Three.js is vendored locally: the CSP is script-src 'self' and blocks CDNs. -->
+    <script type="module" src="assets/lattice.js?v=20260812-01"></script>
   </body>
 </html>
