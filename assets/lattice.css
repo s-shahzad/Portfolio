@@ -34,6 +34,16 @@ body.gl-live #bg::before{display:none}
     text-transform:uppercase;padding:.6rem .8rem;background:var(--ink-mid);
     color:var(--paper-soft);border:1px solid var(--hairline);cursor:pointer;}
 .motion-toggle:hover{color:var(--paper);border-color:var(--signal)}
+/* Narrow phones: a fixed bottom-right button sits on top of body copy
+   (hero lead, list items) because text spans the full viewport width.
+   Drop it into normal flow after the footer instead — still visible,
+   clickable and keyboard-focusable, but it can no longer cover text.
+   The backdrop honours the OS reduced-motion setting on its own, so the
+   toggle being at the page end is a convenience, not the only defence. */
+@media (max-width: 480px){
+  .motion-toggle{position:relative;right:auto;bottom:auto;z-index:2;
+      display:block;margin:0 auto 1.25rem;}
+}
 #fps{position:fixed;left:1rem;bottom:1rem;z-index:30;display:none;
     font-family:"JetBrains Mono",monospace;font-size:.65rem;color:var(--signal-soft);
     background:rgba(10,11,13,.85);border:1px solid var(--hairline);padding:.5rem .7rem;white-space:pre;}
