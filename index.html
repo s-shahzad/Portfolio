@@ -145,7 +145,7 @@
     <link rel="icon" href="assets/screenshots/assets/logo-alt-c-icon.png" type="image/png" />
     <link rel="shortcut icon" href="assets/screenshots/assets/logo-alt-c-icon.png" type="image/png" />
     <link rel="stylesheet" href="styles.min.css?v=20260612-02" />
-    <link rel="stylesheet" href="assets/lattice.css?v=20260813-01" />
+    <link rel="stylesheet" href="assets/lattice.css?v=20260813-02" />
   </head>
   <body>
     <a class="skip-link" href="#mainContent">Skip to main content</a>
@@ -172,7 +172,7 @@
             <li><a href="#research">Research</a></li>
             <li><a href="#publications">Publications</a></li>
             <li><a href="#featured">Projects</a></li>
-            <li><a href="#now">Now</a></li>
+            <li></li>
             <li><a href="#experience">Experience</a></li>
             <li><a href="#contact">Contact</a></li>
           </ul>
@@ -185,7 +185,6 @@
           <a href="#research">Research</a>
           <a href="#publications">Publications</a>
           <a href="#featured">Projects</a>
-          <a href="#now">Now</a>
           <a href="#experience">Experience</a>
           <a href="#certifications">Certifications</a>
           <a href="#education">Education</a>
@@ -248,7 +247,8 @@
           </div>
           <div class="about-grid">
             <div class="about-panel">
-              <p>Cybersecurity M.S., an ECE degree specialized in embedded controllers, IoTs and power electronics, and IEEE first-author on ML for EV-charger DoS. I build security systems to understand them, then measure whether they hold up. Fusion NIDS ran a 21,600-second stability soak: 87,533 per-packet records, 0 emitted alerts, memory bounded at 409 MB. Then I audited my own headline and published what it does and does not prove. The flow-record span was 3 h 19 m, capture-side packet loss peaked at 30.9%, and no attack-labelled traffic was present, so it demonstrates pipeline stability and not detection quality. I chose accuracy over latency, so p99 inference sits at 340 ms, a tradeoff I am actively working to improve. Vector handles auth and a multi-provider AI router I use daily.</p>
+              <p>Cybersecurity M.S., an ECE degree specialized in embedded controllers, IoTs and power electronics, and IEEE first-author on machine learning for EV-charger DoS. I build security systems to understand them, then measure whether they actually hold up. When the measurement disagrees with the headline, I publish the disagreement. That habit is most of what I have to offer, and the numbers behind it are in the projects below rather than asserted here.</p>
+              <p>The thread running through the work is industrial and embedded systems, from PLCs and RAN sites to EV chargers, and what happens to their security when the cryptography underneath them has to change. Measurement first. What infrastructure does, not what the specification says it should.</p>
               <p>Three lanes of background feed the research. Telecom OSS for ~3,500 Vodafone Idea sites during the SRAN cutover, including on-call work on migration failures. HL7 v2.5 &rarr; FHIR R4 pipelines at Solstice on Azure. IT risk and NIST CSF at iQ4, where I studied the 2016 Uber breach in depth.</p>
               <ul class="about-list" aria-label="What I work on">
                 <li>Backend APIs in Python / FastAPI. Auth, retries that aren't optimistic, structured errors.</li>
@@ -264,28 +264,33 @@
       <section id="research" class="section reveal">
         <div class="container">
           <div class="section-head">
-            <h2>Research Interests</h2>
-            <p>The questions I keep coming back to. I treat each project as a way to learn one of them in the open.</p>
+            <h2>Research</h2>
+            <p>The questions I keep coming back to, and what I am doing about each one now. This changes as I do.</p>
           </div>
           <div class="value-grid">
             <article class="value-card">
               <h3>ML for security &amp; anomaly detection</h3>
               <p>Hybrid signature-plus-anomaly fusion, supervised and unsupervised ensembles, and the hard part nobody publishes: keeping false positives low at production scale.</p>
+              <p class="now-line"><strong>Now:</strong> building eval harnesses, because a detection nobody has measured is a claim, not a control.</p>
             </article>
             <article class="value-card">
               <h3>Critical-infrastructure &amp; IoT/OT security</h3>
               <p>Protocol-level attack surfaces (OCPP, MQTT, CAN), EV-charging and smart-grid threat models, and where IT and OT meet and break.</p>
+              <p class="now-line"><strong>Now:</strong> going deeper on industrial and EV-charging protocols beyond OCPP, which is where the IEEE work pointed.</p>
             </article>
             <article class="value-card">
               <h3>Local-first &amp; agentic AI systems</h3>
               <p>Bounded agents, multi-provider routing, on-host telemetry, and health-IT data integrity (HL7/FHIR). How do we get useful AI tooling without handing data to someone else's cloud?</p>
+              <p class="now-line"><strong>Now:</strong> multi-agent orchestration and local LLM tooling. Reading the papers, then trying to break my own implementations of them.</p>
             </article>
             <article class="value-card">
               <h3>Security of the post-quantum migration</h3>
               <p>Measuring whether real infrastructure actually moves to post-quantum cryptography or only looks like it has: classical-only fallback, silent downgrades, and incomplete rollouts across TLS and OT/IoT fleets. Crypto-agility, not scheme design.</p>
+              <p class="now-line"><strong>Now:</strong> measurement tooling for endpoint readiness, and writing up what it finds.</p>
             </article>
           </div>
-          <p class="now-note research-statement">I write up the research side properly on the <a href="research/">research page</a> &mdash; measurement work on the post-quantum migration, publications, and how I evaluate my own results.</p>
+          <p class="now-note research-statement">I write up the research side properly on the <a href="research/">research page</a>: measurement work on the post-quantum migration, publications, and how I evaluate my own results.</p>
+          <p class="now-note">Open to research collaboration, sharp feedback, and roles where I would keep learning. If you are working on any of this, or think I am wrong about something, <a href="#contact">tell me</a>.</p>
         </div>
       </section>
       <section id="publications" class="section reveal">
@@ -461,34 +466,6 @@
         </div>
       </section>
 
-      <section id="now" class="section alt reveal">
-        <div class="container">
-          <div class="section-head">
-            <h2>Now</h2>
-            <p>What I am learning and building this season. This list changes as I do.</p>
-          </div>
-          <div class="value-grid">
-            <article class="value-card">
-              <h3>Agentic AI, in practice</h3>
-              <p>Multi-agent orchestration and local LLM tooling. Reading the papers, then trying to break my own implementations of them.</p>
-            </article>
-            <article class="value-card">
-              <h3>OT / ICS security</h3>
-              <p>Going deeper on industrial and EV-charging protocols beyond OCPP. Where my IEEE work pointed, and where I want to take it next.</p>
-            </article>
-            <article class="value-card">
-              <h3>Post-quantum migration security</h3>
-              <p>Building a small open tool that scans TLS endpoints for post-quantum readiness, flagging classical-only and downgradeable hosts. The start of a measurement-first take on the PQC transition.</p>
-            </article>
-            <article class="value-card">
-              <h3>Detection-as-code &amp; evaluation</h3>
-              <p>How do you actually measure a detection? Building eval harnesses so claims about ML security tooling are reproducible, not vibes.</p>
-            </article>
-          </div>
-          <p class="now-note">Open to research collaboration, sharp feedback, and roles where I would keep learning. If you are working on any of this, or think I am wrong about something, <a href="#contact">tell me</a>.</p>
-        </div>
-      </section>
-
       <section id="experience" class="section alt reveal">
         <div class="container">
           <div class="section-head">
@@ -580,20 +557,6 @@
                 <a class="btn ghost small" href="https://www.hackerrank.com/certificates/a99e37eeee6c" target="_blank" rel="noopener noreferrer">Verify PS Basic</a>
                 <a class="btn ghost small" href="https://www.hackerrank.com/certificates/f137b6531ccc" target="_blank" rel="noopener noreferrer">Verify PS Intermediate</a>
               </div>
-            </article>
-            <article class="project-card" data-category="security">
-              <div class="chip">Fortinet</div>
-              <h3>NSE 2 Network Security Associate</h3>
-              <p>Certification covering network security fundamentals and Fortinet security concepts.</p>
-              <p class="meta-row"><span class="meta-badge">Verified</span> <span class="meta-badge">Expired 2023</span></p>
-              <a class="text-link" href="https://training.fortinet.com/mod/customcert/verify_certificate.php?contextid=251440&amp;code=MBGdIukeds&amp;qrcode=1" target="_blank" rel="noopener noreferrer">Verify</a>
-            </article>
-            <article class="project-card" data-category="security">
-              <div class="chip">Fortinet</div>
-              <h3>NSE 1 Network Security Associate</h3>
-              <p>Certification covering foundational security concepts and Fortinet network security basics.</p>
-              <p class="meta-row"><span class="meta-badge">Verified</span> <span class="meta-badge">Expired 2023</span></p>
-              <a class="text-link" href="https://training.fortinet.com/mod/customcert/verify_certificate.php?contextid=251439&amp;code=NudBeGrVP0&amp;qrcode=1" target="_blank" rel="noopener noreferrer">Verify</a>
             </article>
           </div>
         </div>
