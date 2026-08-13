@@ -1,6 +1,10 @@
 User-agent: *
 Allow: /
-Disallow: /admin.html
-Disallow: /reports/
+
+# No Disallow entries by design. Non-public paths are blocked in netlify.toml
+# with force=true 404 redirects, which is access control. A Disallow line is
+# not access control, it is a published list of the paths worth trying.
+# The previous "Disallow: /admin.html" advertised an admin page while failing
+# to cover /admin, which was the path actually being served.
 
 Sitemap: https://azhadshahzadshaik.netlify.app/sitemap.xml

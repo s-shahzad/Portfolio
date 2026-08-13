@@ -32,8 +32,25 @@
 # The site publishes the repo root, so backend source, ops scripts, runbooks,
 # build config, and local data would otherwise be fetchable. Each rule returns
 # the 404 page with force=true so nothing here is ever served.
+#
+# NOTE on the three /admin rules below: Netlify resolves pretty URLs before
+# applying redirects, so blocking only "/admin.html" left the same file
+# publicly served at "/admin" (confirmed live 2026-08-13: HTTP 200, 63 KB).
+# Every extensionless variant needs its own rule.
 [[redirects]]
   from = "/admin.html"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/admin"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/admin/*"
   to = "/404.html"
   status = 404
   force = true
