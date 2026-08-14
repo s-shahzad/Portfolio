@@ -277,12 +277,30 @@ body { counter-reset: section-counter; }
   position: sticky;
   top: 0;
   z-index: 50;
-  background: linear-gradient(to bottom, var(--ink-base) 75%, rgba(10, 12, 16, 0));
   padding-bottom: 1rem;
-  border-bottom: 1px solid transparent;
-  transition: border-color var(--dur) var(--ease-out), backdrop-filter var(--dur) var(--ease-out);
 }
-.nav.is-scrolled {
+/* The nav sits inside .container (max-width 1280px), so painting the sticky
+   backdrop on .nav itself only covered the container's width — leaving the
+   page gutters bare and laying a hard-edged rectangle over the hero portrait
+   once scrolled. The backdrop lives on a full-bleed pseudo-element instead,
+   while the nav's CONTENT stays aligned to the container grid.
+   100vw is safe here: body sets overflow-x: hidden, so the bleed cannot
+   introduce a horizontal scrollbar. */
+.nav::before {
+  content: "";
+  position: absolute;
+  inset-block: 0;
+  left: 50%;
+  width: 100vw;
+  transform: translateX(-50%);
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(to bottom, var(--ink-base) 75%, rgba(10, 12, 16, 0));
+  border-bottom: 1px solid transparent;
+  transition: border-color var(--dur) var(--ease-out), backdrop-filter var(--dur) var(--ease-out),
+    background-color var(--dur) var(--ease-out);
+}
+.nav.is-scrolled::before {
   border-bottom-color: var(--hairline);
   backdrop-filter: blur(12px);
   background: rgba(10, 12, 16, 0.86);
