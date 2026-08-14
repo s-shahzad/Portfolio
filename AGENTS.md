@@ -3,7 +3,10 @@
 ## Project Scope
 - This repo is a production-style personal portfolio for Azhad Shahzad Shaik.
 - The public UI is static-first: `index.html`, `styles.css`, and `script.js`.
-- The backend is a local Python service in `server.py` for health checks, contact capture, and admin APIs.
+- **There is no backend.** The Python service moved to
+  [s-shahzad/portfolio-backend](https://github.com/s-shahzad/portfolio-backend)
+  on 2026-08-14. This repo is a static site with no runtime, no API and no
+  server-side dependencies. Do not add one back without an explicit request.
 
 ## Primary Goals
 - Keep the portfolio polished, fast, and easy to maintain.
@@ -17,14 +20,13 @@
 - Keep the contact section focused on email and GitHub only. Do not add LinkedIn unless explicitly requested.
 - Reuse existing section and component patterns before adding new bespoke UI.
 
-## Backend Rules
-- Keep contact submissions compatible with the current `/api/contact` and `/api/health` endpoints.
-- Do not change admin or token behavior unless the task is specifically about backend auth or operations.
-
 ## Preferred Validation
 - For frontend-only edits, verify the affected markup and JavaScript paths carefully.
-- For repo-wide confidence, run `python -m pytest -q` from the repo root.
-- If JavaScript changes are made, also run syntax checks when relevant.
+- After any `styles.css` or `script.js` edit, run `npm run build` and bump the
+  `?v=` stamp — the live pages load the `.min` files, so source edits alone
+  change nothing. CI enforces this via the required "Min files fresh" job.
+- Run `node --check script.js`, `python scripts/static_sanity.py` and
+  `python scripts/accessibility_perf_sanity.py` before pushing.
 
 ## Practical Workflow
 - Read the relevant file first, then make the smallest coherent patch.

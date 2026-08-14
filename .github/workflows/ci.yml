@@ -58,44 +58,16 @@ jobs:
         with:
           node-version: "24.14.0"
 
-      - name: Python compile check
-        run: python -m py_compile src/server.py
-
       - name: JS syntax check
         run: node --check script.js
 
       - name: Static HTML sanity
-        run: python src/scripts/static_sanity.py
+        run: python scripts/static_sanity.py
 
       - name: Accessibility/performance sanity
-        run: python src/scripts/accessibility_perf_sanity.py
+        run: python scripts/accessibility_perf_sanity.py
 
-  # Heavier checks stay advisory until they prove green in Actions, then drop
-  # the continue-on-error line to make them required too.
-  tests:
-    name: API smoke + pytest (advisory)
-    runs-on: ubuntu-latest
-    continue-on-error: true
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.12.10"
-
-      - name: Install test dependencies
-        run: |
-          python -m pip install --upgrade pip
-          if [ -f requirements-dev.txt ]; then
-            python -m pip install -r requirements-dev.txt
-          else
-            python -m pip install pytest
-          fi
-
-      - name: API smoke tests
-        run: python src/scripts/api_smoke_test.py --port 8123
-
-      - name: Pytest integration tests
-        run: python -m pytest -q src/tests
+  # The "API smoke + pytest (advisory)" job was removed when the Python backend
+  # moved to s-shahzad/portfolio-backend. It ran src/scripts/api_smoke_test.py
+  # and pytest over src/tests, none of which exist in this repo any more. The
+  # tests live on and still run in that repository; this one is a static site.

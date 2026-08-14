@@ -8,7 +8,7 @@ from urllib.parse import unquote
 
 
 MOJIBAKE_MARKERS = ["Ã", "Â", "â"]
-HTML_FILES = ["index.html", "admin.html", "cyber-demo.html"]
+HTML_FILES = ["index.html", "cyber-demo.html"]
 
 
 def _is_ignored_ref(ref: str) -> bool:
@@ -72,7 +72,9 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="Run static sanity checks on key HTML files.")
     parser.parse_args()
 
-    repo_root = Path(__file__).resolve().parents[2]
+    # This script lives in scripts/, so the repo root is one level up.
+    # It was parents[2] while the file sat in src/scripts/.
+    repo_root = Path(__file__).resolve().parents[1]
     errors: list[str] = []
 
     for relative_name in HTML_FILES:

@@ -29,46 +29,23 @@
     Cache-Control = "public, max-age=3600, must-revalidate"
 
 # --- Block non-public paths from being served at the public URL ---
-# The site publishes the repo root, so backend source, ops scripts, runbooks,
-# build config, and local data would otherwise be fetchable. Each rule returns
-# the 404 page with force=true so nothing here is ever served.
+# The site publishes the repo root, so anything left here would otherwise be
+# fetchable. Each rule returns the 404 page with force=true.
 #
-# NOTE on the three /admin rules below: Netlify resolves pretty URLs before
-# applying redirects, so blocking only "/admin.html" left the same file
-# publicly served at "/admin" (confirmed live 2026-08-13: HTTP 200, 63 KB).
-# Every extensionless variant needs its own rule.
-[[redirects]]
-  from = "/admin.html"
-  to = "/404.html"
-  status = 404
-  force = true
-
-[[redirects]]
-  from = "/admin"
-  to = "/404.html"
-  status = 404
-  force = true
-
-[[redirects]]
-  from = "/admin/*"
-  to = "/404.html"
-  status = 404
-  force = true
-
-[[redirects]]
-  from = "/src/*"
-  to = "/404.html"
-  status = 404
-  force = true
-
+# 17 rules were deleted on 2026-08-14 when the Python backend moved to
+# s-shahzad/portfolio-backend: /admin*, /src/*, /ops/*, /RUNBOOK.md,
+# /render.*, /pytest.ini, /requirements*.txt and the .ps1 wrappers. Those
+# files no longer exist in this repo, so the rules guarded nothing.
+#
+# ⚠ THESE RULES ARE NOT A RELIABLE CONTROL. Netlify matches `from`
+# CASE-SENSITIVELY, so /Scripts/foo.ps1 bypasses the /scripts/* rule below
+# (verified live 2026-08-14: /Src/server.py returned HTTP 200 while
+# /src/server.py returned 404). A denylist cannot be completed by adding
+# more rules — the fix is to publish a directory of public assets instead of
+# the repo root, at which point this whole block disappears. Tracked in
+# SHA-171 / SHA-172. Until then, treat everything in this repo as public.
 [[redirects]]
   from = "/scripts/*"
-  to = "/404.html"
-  status = 404
-  force = true
-
-[[redirects]]
-  from = "/ops/*"
   to = "/404.html"
   status = 404
   force = true
@@ -98,43 +75,7 @@
   force = true
 
 [[redirects]]
-  from = "/RUNBOOK.md"
-  to = "/404.html"
-  status = 404
-  force = true
-
-[[redirects]]
   from = "/AGENTS.md"
-  to = "/404.html"
-  status = 404
-  force = true
-
-[[redirects]]
-  from = "/render.yaml"
-  to = "/404.html"
-  status = 404
-  force = true
-
-[[redirects]]
-  from = "/render.env.example"
-  to = "/404.html"
-  status = 404
-  force = true
-
-[[redirects]]
-  from = "/pytest.ini"
-  to = "/404.html"
-  status = 404
-  force = true
-
-[[redirects]]
-  from = "/requirements.txt"
-  to = "/404.html"
-  status = 404
-  force = true
-
-[[redirects]]
-  from = "/requirements-dev.txt"
   to = "/404.html"
   status = 404
   force = true
@@ -153,42 +94,6 @@
 
 # Netlify root-level splats do not reliably match "/*.ps1", so block each
 # PowerShell file at the repo root explicitly.
-[[redirects]]
-  from = "/deploy.ps1"
-  to = "/404.html"
-  status = 404
-  force = true
-
-[[redirects]]
-  from = "/deploy-staging.ps1"
-  to = "/404.html"
-  status = 404
-  force = true
-
-[[redirects]]
-  from = "/start-server.ps1"
-  to = "/404.html"
-  status = 404
-  force = true
-
-[[redirects]]
-  from = "/portfolio.env.local.ps1"
-  to = "/404.html"
-  status = 404
-  force = true
-
-[[redirects]]
-  from = "/portfolio.env.local.ps1.example"
-  to = "/404.html"
-  status = 404
-  force = true
-
-[[redirects]]
-  from = "/portfolio.env.staging.ps1.example"
-  to = "/404.html"
-  status = 404
-  force = true
-
 [[redirects]]
   from = "/portfolio/*"
   to = "/:splat"
