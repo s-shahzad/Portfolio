@@ -5,7 +5,7 @@ import re
 from pathlib import Path
 
 
-HTML_FILES = ["index.html", "admin.html", "cyber-demo.html"]
+HTML_FILES = ["index.html", "cyber-demo.html"]
 
 
 def _check_file(path: Path) -> list[str]:
@@ -38,7 +38,9 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="Run lightweight accessibility/performance sanity checks.")
     parser.parse_args()
 
-    repo_root = Path(__file__).resolve().parents[2]
+    # This script lives in scripts/, so the repo root is one level up.
+    # It was parents[2] while the file sat in src/scripts/.
+    repo_root = Path(__file__).resolve().parents[1]
     failures: list[str] = []
 
     for rel in HTML_FILES:

@@ -666,8 +666,11 @@
         </div>
         <div class="links">
           <a href="/" target="_blank" rel="noopener">Portfolio</a>
-          <a href="/admin.html" target="_blank" rel="noopener">Admin Messages</a>
-          <a href="/api/health" target="_blank" rel="noopener">API Health</a>
+          <!-- "Admin Messages" (/admin.html) and "API Health" (/api/health) removed
+               2026-08-14: the backend moved to s-shahzad/portfolio-backend and neither
+               endpoint exists. This page is a non-functional archive — its only script
+               is inline and blocked by the site CSP (script-src 'self'). -->
+          <a href="https://github.com/s-shahzad/portfolio-backend" target="_blank" rel="noopener">Backend source</a>
           <button id="themeToggleBtn" class="theme-toggle" type="button" aria-pressed="false" title="Toggle theme">
             <span class="theme-toggle__glyph" aria-hidden="true">D</span>
             <span class="theme-toggle__text">Dark</span>

@@ -2,12 +2,24 @@
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 
+# Mirrors the "Static checks (required)" job in .github/workflows/ci.yml.
+# scripts/run-checks.ps1 was removed on 2026-08-14 when the Python backend
+# moved to s-shahzad/portfolio-backend; it only drove the API smoke tests.
+
 $repoRoot = Split-Path -Parent $PSScriptRoot
-$checkScript = Join-Path $repoRoot 'scripts/run-checks.ps1'
-if (-not (Test-Path $checkScript)) {
-    Write-Error "Required check script not found: $checkScript"
-    exit 1
+Push-Location $repoRoot
+try {
+    node --check script.js
+    if ($LASTEXITCODE -ne 0) { Write-Error 'JS syntax check failed'; exit 1 }
+
+    python scripts/static_sanity.py
+    if ($LASTEXITCODE -ne 0) { Write-Error 'Static HTML sanity failed'; exit 1 }
+
+    python scripts/accessibility_perf_sanity.py
+    if ($LASTEXITCODE -ne 0) { Write-Error 'Accessibility/performance sanity failed'; exit 1 }
+}
+finally {
+    Pop-Location
 }
 
-& $checkScript
-exit $LASTEXITCODE
+exit 0
