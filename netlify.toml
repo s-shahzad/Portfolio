@@ -28,6 +28,39 @@
   [headers.values]
     Cache-Control = "public, max-age=3600, must-revalidate"
 
+# /assets/* above downgrades everything under it to 1 hour, which caught the
+# pinned vendored libraries too — three.module.min.js is 691KB, never changes,
+# and was being revalidated hourly by every visitor. Vendored files are
+# version-pinned by path, so they are safe to serve immutable. (SHA-155)
+[[headers]]
+  for = "/assets/vendor/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Detection content is meant to be READ in the browser. Netlify was guessing
+# from the extension and getting it wrong, so every "View rule" link silently
+# downloaded a file instead of showing it: .spl was served as
+# application/x-futuresplash (Flash), .rules and .zeek as
+# application/octet-stream, .yml as application/x-yaml. (SHA-131)
+[[headers]]
+  for = "/detections/*"
+  [headers.values]
+    Content-Type = "text/plain; charset=utf-8"
+    Content-Disposition = "inline"
+    Cache-Control = "public, max-age=3600, must-revalidate"
+
+# /detections/ has an index.html that must stay HTML — the rule above would
+# otherwise flatten it to text/plain. More specific paths win in Netlify.
+[[headers]]
+  for = "/detections/"
+  [headers.values]
+    Content-Type = "text/html; charset=utf-8"
+
+[[headers]]
+  for = "/detections/index.html"
+  [headers.values]
+    Content-Type = "text/html; charset=utf-8"
+
 # --- Block non-public paths from being served at the public URL ---
 # The site publishes the repo root, so anything left here would otherwise be
 # fetchable. Each rule returns the 404 page with force=true.
@@ -91,6 +124,13 @@
   to = "/404.html"
   status = 404
   force = true
+
+# Browsers, crawlers, bookmark tools and link-preview bots request /favicon.ico
+# by default regardless of any <link rel="icon">. It was 404ing site-wide. (SHA-145)
+[[redirects]]
+  from = "/favicon.ico"
+  to = "/assets/images/assets/logo-alt-c-icon.svg"
+  status = 200
 
 [[redirects]]
   from = "/portfolio/*"
