@@ -92,15 +92,12 @@
   status = 404
   force = true
 
-# Netlify root-level splats do not reliably match "/*.ps1", so block each
-# PowerShell file at the repo root explicitly.
 [[redirects]]
   from = "/portfolio/*"
   to = "/:splat"
   status = 301
 
-[[redirects]]
-  from = "/reports/assets/Azhad_Shaik_Detection_Engineer_Resume.pdf"
-  to = "/reports/assets/Azhad%20Shahzad%20Shaik%20CV.pdf"
-  status = 301
-  force = true
+# The /reports/assets/...Resume.pdf -> ...CV.pdf redirect was removed
+# 2026-08-14. No CV is published on this site: /reports/ does not exist,
+# both sides of that redirect returned 404, and no page links a PDF. The
+# rule only pointed one dead URL at another.

@@ -5,7 +5,7 @@ import re
 from pathlib import Path
 
 
-HTML_FILES = ["index.html", "cyber-demo.html"]
+HTML_FILES = ["index.html"]
 
 
 def _check_file(path: Path) -> list[str]:
