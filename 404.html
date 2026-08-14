@@ -24,6 +24,9 @@
       p { color: #333333; line-height: 1.6; margin-bottom: 1.5rem; }
       a { color: #111111; text-decoration: underline; text-underline-offset: 3px; }
       a:focus-visible { outline: 2px solid #111111; outline-offset: 3px; }
+      /* SHA-140 follow-up: this page is fully self-contained, so the site nav
+         gets its rule here rather than from the bundle it does not load. */
+      .error-nav { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; justify-content: center; }
 
       /* SHA-153: this page is fully self-contained (no styles.min.css), so the
          site-wide .skip-link rule never reached it. body is display:flex/centred,
@@ -53,8 +56,18 @@
     <main id="mainContent" tabindex="-1">
       <p class="code">404 / not found</p>
       <h1>This page isn't here.</h1>
-      <p>The path you requested doesn't exist or isn't public. Head back to the portfolio.</p>
-      <a href="/">Return to azhadshahzadshaik.netlify.app</a>
+      <p>The path you requested doesn't exist or isn't public.</p>
+      <!-- SHA-140 follow-up: 404.html had exactly one link, back to the root.
+           A 404 is where a visitor arrives with a broken link from a search
+           result or a citation - handing them a single "go home" and making
+           them navigate again is the worst place on the site to be a dead end.
+           The same four destinations the other inner pages carry. -->
+      <nav class="error-nav" aria-label="Site">
+        <a href="/">Home</a>
+        <a href="/research/">Research</a>
+        <a href="/detections/">Detections</a>
+        <a href="/#contact">Contact</a>
+      </nav>
     </main>
   </body>
 </html>
