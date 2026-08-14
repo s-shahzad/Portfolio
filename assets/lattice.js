@@ -69,23 +69,15 @@ addEventListener('keydown', e => {
   if(e.key === 'd' && !/^(INPUT|TEXTAREA)$/.test(document.activeElement.tagName)) fpsEl.classList.toggle('on');
 });
 
-/* ---------- section highlighting: works with or without WebGL ---------- */
-(function sectionObserver(){
-  const ids = ['top','about','experience','featured','research','publications','contact'];
-  const railLinks = new Map([...document.querySelectorAll('.rail a')].map(a => [a.dataset.rail, a]));
-  const navLinks  = new Map([...document.querySelectorAll('.navlinks a')].map(a => [a.getAttribute('href').slice(1), a]));
-  const io = new IntersectionObserver(entries => {
-    entries.forEach(en => {
-      if(!en.isIntersecting) return;
-      ids.forEach(id => {
-        const on = id === en.target.id;
-        railLinks.get(id) && railLinks.get(id).setAttribute('aria-current', String(on));
-        navLinks.get(id)  && navLinks.get(id).setAttribute('aria-current', String(on));
-      });
-    });
-  }, { rootMargin: '-45% 0px -45% 0px' });
-  ids.forEach(id => { const el = document.getElementById(id); el && io.observe(el); });
-})();
+/* SHA-138: a sectionObserver used to live here. It was dead code carried over
+   from the 3D sample page — it queried `.rail a` and `.navlinks a`, neither of
+   which exists on this site (the real nav is `.nav-links`, hyphenated, and
+   there is no rail at all). Both Maps were always empty, so it set aria-current
+   on nothing on every scroll.
+
+   Deleted rather than repointed: script.js already runs a working scroll-spy
+   over `.nav-links a` that toggles `.is-active`, and `.nav-links a.is-active`
+   is already styled. Two scroll-spies for one nav is the bug, not the fix. */
 
 /* ---------- boot ---------- */
 if(!hasWebGL() || savingData()){

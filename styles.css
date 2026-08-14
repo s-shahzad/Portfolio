@@ -268,42 +268,46 @@ body { counter-reset: section-counter; }
   position: relative;
 }
 
+/* .nav is now a DIRECT CHILD OF BODY (SHA-130). position:sticky only sticks
+   within its containing block; while the nav lived inside header.hero it
+   scrolled away with the hero and left ~19,000px of homepage unnavigable.
+
+   Because it is full-width now, the backdrop paints on .nav itself and the
+   CONTENT is constrained by .nav-inner. That retires the .nav::before
+   100vw full-bleed workaround from PR #34 — the pseudo-element existed only
+   to escape the .container that no longer wraps this element. */
 .nav {
-  display: flex;
-  align-items: center;
-  gap: 2rem;
-  padding-block: 0.5rem;
-  margin-bottom: clamp(4rem, 9vw, 7rem);
   position: sticky;
   top: 0;
   z-index: 50;
-  padding-bottom: 1rem;
-}
-/* The nav sits inside .container (max-width 1280px), so painting the sticky
-   backdrop on .nav itself only covered the container's width — leaving the
-   page gutters bare and laying a hard-edged rectangle over the hero portrait
-   once scrolled. The backdrop lives on a full-bleed pseudo-element instead,
-   while the nav's CONTENT stays aligned to the container grid.
-   100vw is safe here: body sets overflow-x: hidden, so the bleed cannot
-   introduce a horizontal scrollbar. */
-.nav::before {
-  content: "";
-  position: absolute;
-  inset-block: 0;
-  left: 50%;
-  width: 100vw;
-  transform: translateX(-50%);
-  z-index: -1;
-  pointer-events: none;
+  padding-block: 0.5rem 1rem;
+  margin-bottom: clamp(4rem, 9vw, 7rem);
   background: linear-gradient(to bottom, var(--ink-base) 75%, rgba(10, 12, 16, 0));
   border-bottom: 1px solid transparent;
   transition: border-color var(--dur) var(--ease-out), backdrop-filter var(--dur) var(--ease-out),
     background-color var(--dur) var(--ease-out);
 }
-.nav.is-scrolled::before {
+.nav-inner {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+.nav.is-scrolled {
   border-bottom-color: var(--hairline);
   backdrop-filter: blur(12px);
   background: rgba(10, 12, 16, 0.86);
+}
+
+/* SHA-143: anchors landed underneath the sticky bar. There was no
+   scroll-margin anywhere in the CSS. Now that the bar persists for the whole
+   page (SHA-130) every anchored target needs the offset, not just sections. */
+:target,
+section[id],
+[id] {
+  scroll-margin-top: 5rem;
 }
 
 .brand-btn {
