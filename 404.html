@@ -6,24 +6,33 @@
     <meta name="robots" content="noindex" />
     <title>Not found — Azhad Shahzad Shaik</title>
     <style>
-      :root { color-scheme: light; }
+      /* SHA-160 #13: this page was color-scheme:light on a #ffffff body inside a
+         site that is dark everywhere else, so any broken URL flashed white. The
+         values below are the site tokens (styles.css :root) hardcoded, because
+         this page deliberately loads no stylesheet - see the SHA-153 note under
+         .skip-link. Keep them in step with styles.css by hand.
+           --ink-base   #0a0b0d   --paper       #e9e9ec
+           --ink-soft   #20242b   --paper-soft  #b8bac0
+           --hairline   #2e3340   --signal      #8c97a8  */
+      :root { color-scheme: dark; }
       * { margin: 0; box-sizing: border-box; }
       body {
         min-height: 100vh;
         display: flex;
         align-items: center;
         justify-content: center;
-        background: #ffffff;
-        color: #111111;
+        background: #0a0b0d;
+        color: #e9e9ec;
         font-family: ui-monospace, "SFMono-Regular", "Cascadia Code", Menlo, Consolas, monospace;
         padding: 2rem;
       }
       main { max-width: 32rem; text-align: left; }
-      .code { font-size: 0.8rem; letter-spacing: 0.2em; text-transform: uppercase; color: #6b6b6b; }
+      .code { font-size: 0.8rem; letter-spacing: 0.2em; text-transform: uppercase; color: #8c97a8; }
       h1 { font-size: 2rem; margin: 0.75rem 0 1rem; font-weight: 600; }
-      p { color: #333333; line-height: 1.6; margin-bottom: 1.5rem; }
-      a { color: #111111; text-decoration: underline; text-underline-offset: 3px; }
-      a:focus-visible { outline: 2px solid #111111; outline-offset: 3px; }
+      p { color: #b8bac0; line-height: 1.6; margin-bottom: 1.5rem; }
+      a { color: #e9e9ec; text-decoration: underline; text-underline-offset: 3px; }
+      a:hover { color: #8c97a8; }
+      a:focus-visible { outline: 2px solid #8c97a8; outline-offset: 3px; }
       /* SHA-140 follow-up: this page is fully self-contained, so the site nav
          gets its rule here rather than from the bundle it does not load. */
       .error-nav { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; justify-content: center; }
@@ -37,8 +46,8 @@
         top: -48px;
         left: 0;
         z-index: 100;
-        background: #111111;
-        color: #ffffff;
+        background: #8c97a8;
+        color: #0a0b0d;
         padding: 0.7rem 1.15rem;
         font-size: 0.8rem;
         letter-spacing: 0.14em;
@@ -46,7 +55,13 @@
         text-decoration: none;
         transition: top 160ms ease;
       }
-      .skip-link:focus { top: 0; color: #ffffff; }
+      .skip-link:focus { top: 0; color: #0a0b0d; }
+
+      /* SHA-160 #12: the logo is the home affordance everywhere else on the
+         site, and a 404 is the page most likely to be someone's first view of
+         it. .error-nav is flex, so the mark needs its own inline-flex box. */
+      .error-nav__home { display: inline-flex; align-items: center; gap: 0.5rem; }
+      .error-nav__home img { display: block; width: 24px; height: 24px; }
     </style>
     <link rel="icon" href="/assets/images/assets/logo-alt-c-icon.svg" type="image/svg+xml" />
   <link rel="alternate icon" href="/assets/screenshots/assets/logo-alt-c-icon.png" type="image/png" />
@@ -63,7 +78,7 @@
            them navigate again is the worst place on the site to be a dead end.
            The same four destinations the other inner pages carry. -->
       <nav class="error-nav" aria-label="Site">
-        <a href="/">Home</a>
+        <a class="error-nav__home" href="/"><img src="/assets/images/assets/logo-alt-c-icon.svg" alt="" width="24" height="24" loading="eager" decoding="async" />Home</a>
         <a href="/research/">Research</a>
         <a href="/detections/">Detections</a>
         <a href="/#contact">Contact</a>

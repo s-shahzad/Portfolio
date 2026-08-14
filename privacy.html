@@ -18,6 +18,10 @@
       .legal li{margin-bottom:.4rem;}
       .legal a{text-decoration:underline;}
       .legal .back{display:inline-block;margin-top:3rem;}
+      /* SHA-160 #12: this page had no nav and no logo - the only way back was a
+         text link 70 lines down. */
+      .legal-brand{display:inline-flex;align-items:center;gap:.5rem;padding:1.5rem 1.5rem 0;text-decoration:none;}
+      .legal-brand img{display:block;width:28px;height:28px;}
     </style>
     <link rel="icon" href="/assets/images/assets/logo-alt-c-icon.svg" type="image/svg+xml" />
   <link rel="alternate icon" href="/assets/screenshots/assets/logo-alt-c-icon.png" type="image/png" />
@@ -29,6 +33,7 @@
          loads styles.min.css, so the site-wide .skip-link rule applies and only
          the markup and a target id were missing. -->
     <a class="skip-link" href="#mainContent">Skip to main content</a>
+    <a class="legal-brand" href="/"><img src="/assets/images/assets/logo-alt-c-icon.svg" alt="" width="28" height="28" loading="eager" decoding="async" />Home</a>
     <main class="legal" id="mainContent" tabindex="-1">
       <h1>Privacy Policy</h1>
       <p class="updated">Last updated 14 August 2026</p>
@@ -74,7 +79,10 @@
       <p>Azhad Shahzad Shaik, Hartford, Connecticut, United States.<br />
         <a href="mailto:shaikazhadshahzad@gmail.com">shaikazhadshahzad@gmail.com</a></p>
 
-      <p class="back"><a href="/">Back to the site</a></p>
+      <!-- SHA-160 #18: every other back-affordance on the site is
+           "&larr; Back to <destination>". This one had no arrow and a different
+           noun. -->
+      <p class="back"><a href="/">&larr; Back to the portfolio</a></p>
     </main>
   </body>
 </html>
