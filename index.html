@@ -236,15 +236,17 @@
               <a class="btn ghost" href="https://www.linkedin.com/in/azhad-shahzad-shaik" target="_blank" rel="noopener noreferrer">View work history</a>
               <a class="btn ghost" href="#contact">Get in Touch</a>
             </div>
-            <div class="credentials-strip" aria-label="Verified credentials">
-              <span class="credential"><strong>IEEE</strong> first-author &middot; <a href="https://ieeexplore.ieee.org/document/11275540" target="_blank" rel="noopener noreferrer">GCAIoT 2025</a></span>
-              <span class="credential-sep" aria-hidden="true">|</span>
-              <span class="credential"><strong>CompTIA</strong> Security+ &middot; valid Oct 2028</span>
-              <span class="credential-sep" aria-hidden="true">|</span>
-              <span class="credential"><strong>M.S.</strong> Cybersecurity &middot; Sacred Heart Univ</span>
-              <span class="credential-sep" aria-hidden="true">|</span>
-              <span class="credential"><a href="https://scholar.google.com/citations?user=l2McKRYAAAAJ" target="_blank" rel="noopener noreferrer">Google Scholar</a></span>
-            </div>
+            <!-- SHA-175: was a <div aria-label> of <span>s with literal "|"
+                 separator spans. A div with aria-label and no role is ignored
+                 by screen readers (SHA-168), and the pipes landed at the start
+                 of a wrapped line on narrow screens. A real list carries the
+                 label, and the gap does the separating. -->
+            <ul class="credentials-strip" aria-label="Verified credentials">
+              <li class="credential"><strong>IEEE</strong> first-author &middot; <a href="https://ieeexplore.ieee.org/document/11275540" target="_blank" rel="noopener noreferrer">GCAIoT 2025</a></li>
+              <li class="credential"><strong>CompTIA</strong> Security+ &middot; valid Oct 2028</li>
+              <li class="credential"><strong>M.S.</strong> Cybersecurity &middot; Sacred Heart Univ</li>
+              <li class="credential"><a href="https://scholar.google.com/citations?user=l2McKRYAAAAJ" target="_blank" rel="noopener noreferrer">Google Scholar</a></li>
+            </ul>
           </div>
           <div class="hero-photo">
             <picture>
