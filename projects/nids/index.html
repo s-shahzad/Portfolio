@@ -89,7 +89,11 @@
             <span class="pill">No live API dependency</span>
           </div>
         </div>
-        <div class="hero-aside" id="heroSnapshot" aria-label="Run snapshot"></div>
+        <!-- SHA-168 #53: aria-label on a role-less div is dropped by assistive
+             tech, so these three regions were labelled only for the source
+             reader. role="group" makes each label actually reach the a11y tree
+             without hiding or renaming the content inside. -->
+        <div class="hero-aside" id="heroSnapshot" role="group" aria-label="Run snapshot"></div>
       </section>
 
       <section class="panel section-block">
@@ -103,7 +107,7 @@
           </p>
         </div>
         <div class="architecture-grid">
-          <div class="diagram-card" aria-label="Architecture diagram placeholder">
+          <div class="diagram-card" role="group" aria-label="Hybrid NIDS architecture diagram">
             <div class="diagram-flow">
               <div class="diagram-node">Traffic Replay</div>
               <div class="diagram-arrow"></div>
@@ -155,7 +159,7 @@
           </p>
         </div>
         <div class="chart-card">
-          <div class="bar-chart" id="engineChart" aria-label="Engine distribution chart"></div>
+          <div class="bar-chart" id="engineChart" role="group" aria-label="Engine distribution chart"></div>
         </div>
       </section>
 

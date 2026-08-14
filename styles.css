@@ -337,8 +337,19 @@ section[id],
   letter-spacing: 0.1em;
   color: var(--paper-soft);
 }
-.brand-btn:not(.has-rich-logo) .brand-logo-image { display: none; }
-.brand-btn.has-rich-logo .brand-logo-fallback { display: none; }
+/* SHA-168 #74: the header mark used to be gated on a JS-set .has-rich-logo
+   class, and script.js:302 hard-codes that host to { hasRichLogo: false }
+   "for webview reliability" - so the crafted mark was display:none for every
+   visitor and everyone saw the plain-text "AS" instead, while the logo modal
+   existed purely to show off that same mark. The reliability concern belongs
+   to the modal's <img>, which can 404; the header mark is INLINE SVG in the
+   document, so it cannot fail to load and needs no fallback gate. It is now
+   shown unconditionally and the monogram is retired.
+   NOTE: this is deliberately a CSS-only fix - script.js is outside this
+   change's file ownership, so setLogoVisualState() still toggles these
+   classes; they are simply no longer what decides header visibility. */
+.brand-btn .brand-logo-image { display: block; }
+.brand-btn .brand-logo-fallback { display: none; }
 
 .nav-links {
   display: none;

@@ -7,7 +7,9 @@
     <meta name="description" content="Measurement-first research on the post-quantum migration: whether real infrastructure moves to PQC or only looks like it has. Cross-protocol readiness scanning, OT/IoT charging-edge measurement, and reproducible detection evaluation. PhD applicant." />
     <meta name="robots" content="index,follow" />
     <link rel="canonical" href="https://azhadshahzadshaik.netlify.app/research/" />
-    <meta name="theme-color" content="#090c12" />
+    <!-- SHA-168 #54: must equal the painted body background (--ink-base in
+         styles.css:54). Kept in step with index.html. -->
+    <meta name="theme-color" content="#0a0b0d" />
     <meta property="og:title" content="Research | Azhad Shahzad Shaik" />
     <meta property="og:description" content="Measurement-first research on the security of the post-quantum migration. Crypto-agility, not scheme design." />
     <meta property="og:type" content="profile" />
@@ -217,6 +219,19 @@
         </div>
       </section>
     </main>
+
+    <!-- SHA-168 #73: this page ended at the last section with no footer at all,
+         so the bottom of a long scroll was a dead end. Same markup and the same
+         .footer / .footer-top rules index.html already uses (this page loads the
+         same stylesheet), so it needs no new CSS. "Back to top" targets
+         #mainContent - the existing skip-link target - rather than inventing an
+         id="top" that nothing else on this page references. -->
+    <footer class="footer">
+      <div class="container">
+        <p>&copy; 2026 Azhad Shahzad Shaik. All rights reserved.</p>
+        <p class="footer-top"><a href="#mainContent">Back to top</a> &middot; <a href="mailto:shaikazhadshahzad@gmail.com">Email</a> &middot; <a href="../index.html">Portfolio</a></p>
+      </div>
+    </footer>
     <!-- SHA-134: the hamburger above is inert markup without this. script.min.js
          drives .nav-toggle / #mobile-menu (open, close, Esc, focus trap, overlay
          offset) and every other handler in it is null-guarded, so it no-ops on the
