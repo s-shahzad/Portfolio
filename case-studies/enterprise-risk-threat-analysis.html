@@ -9,13 +9,71 @@
       content="Enterprise risk and threat analysis case study covering assessment approach, frameworks, and measurable outcomes."
     />
     <link rel="stylesheet" href="case-study.css" />
+    <!-- SHA-153 / SHA-140: this page loads case-study.css, not styles.min.css, so
+         the site-wide .skip-link and .nav rules never reach it. These are the
+         minimum rules the skip link and site nav below need. Kept in the page
+         rather than in case-study.css so this branch touches no shared
+         stylesheet; fold them into the shared sheet when the pages are unified. -->
+    <style>
+      .skip-link {
+        position: absolute;
+        top: -48px;
+        left: 0;
+        z-index: 100;
+        background: var(--accent);
+        color: #0a0c10;
+        padding: 0.7rem 1.15rem;
+        font: 500 0.78rem/1 "JetBrains Mono", ui-monospace, monospace;
+        text-transform: uppercase;
+        letter-spacing: 0.14em;
+        text-decoration: none;
+        transition: top 160ms ease;
+      }
+      .skip-link:focus { top: 0; }
+      .site-nav { border-bottom: 1px solid var(--border); }
+      .site-nav ul {
+        width: min(980px, calc(100% - 2rem));
+        margin: 0 auto;
+        padding: 0 0 0.6rem;
+        list-style: none;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0 1.4rem;
+      }
+      .site-nav a {
+        display: inline-flex;
+        align-items: center;
+        min-height: 44px;
+        color: var(--muted);
+        text-decoration: none;
+        font: 500 0.72rem/1 "JetBrains Mono", ui-monospace, monospace;
+        text-transform: uppercase;
+        letter-spacing: 0.14em;
+      }
+      .site-nav a:hover,
+      .site-nav a:focus-visible,
+      .site-nav a[aria-current="page"] { color: var(--accent); }
+    </style>
     <link rel="icon" href="/assets/images/assets/logo-alt-c-icon.svg" type="image/svg+xml" />
   <link rel="alternate icon" href="/assets/screenshots/assets/logo-alt-c-icon.png" type="image/png" />
 </head>
   <body>
-    <main class="page">
+    <a class="skip-link" href="#mainContent">Skip to main content</a>
+    <!-- SHA-140: this page had one back-link and no site nav, so Research and
+         Contact were two hops away via the homepage. Four destinations, one click.
+         SHA-153: tabindex="-1" on <main> makes the skip link's target
+         programmatically focusable without adding it to the tab order. -->
+    <nav class="site-nav" aria-label="Primary">
+      <ul>
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="../research/">Research</a></li>
+        <li><a href="../detections/">Detections</a></li>
+        <li><a href="../index.html#contact">Contact</a></li>
+      </ul>
+    </nav>
+    <main class="page" id="mainContent" tabindex="-1">
       <div class="top-actions">
-        <a class="back-link" href="../index.html#featured" aria-label="Back to portfolio featured work"><- Back to portfolio</a>
+        <a class="back-link" href="../index.html#featured" aria-label="Back to portfolio featured work">&larr; Back to portfolio</a>
       </div>
 
       <article class="panel">

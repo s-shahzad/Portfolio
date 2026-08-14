@@ -139,7 +139,18 @@
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-3CN94DG5LY"></script>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="preconnect" href="https://www.googletagmanager.com" />
-    <link rel="preload" as="image" href="assets/screenshots/assets/profile-hero.webp" type="image/webp" />
+    <!-- SHA-156: this preload used to name profile-hero.webp (1400w) with no
+         imagesrcset, so a phone downloaded the desktop file and then rendered the
+         500w variant the <picture> below actually selects ("preloaded but not
+         used"). imagesrcset/imagesizes mirror the <source> exactly, so the
+         preload and the render resolve to the same candidate at every width. -->
+    <link
+      rel="preload"
+      as="image"
+      type="image/webp"
+      href="assets/screenshots/assets/profile-hero.webp"
+      imagesrcset="assets/screenshots/assets/profile-hero-mobile.webp 500w, assets/screenshots/assets/profile-hero.webp 1400w"
+      imagesizes="(max-width: 768px) 500px, 1400px" />
     <link rel="preload" as="font" type="font/woff2" crossorigin href="https://fonts.gstatic.com/s/fraunces/v38/6NUV8FyLNQOQZAnv9ZwIlOk.woff2" />
     <link rel="preload" as="font" type="font/woff2" crossorigin href="https://fonts.gstatic.com/s/bricolagegrotesque/v9/3y9K6as8bTXq_nANBjzKo3IeZx8z6up5BeSl9D4dj_x9PpZBMlGIInE.woff2" />
     <link rel="shortcut icon" href="assets/screenshots/assets/logo-alt-c-icon.png" type="image/png" />
@@ -174,12 +185,20 @@
             </svg>
             <span class="brand-logo-fallback" aria-hidden="true">AS</span>
           </button>
+          <!-- SHA-141: the desktop list and #mobile-menu below must stay the SAME
+               item set, in the same order. They had drifted to 6 vs 9 (mobile had
+               Certifications/Education/Skills the desktop nav could not reach) and
+               this list also carried a stray empty list item that rendered an
+               unlabelled gap and an empty entry to a screen reader.
+               SHA-142: "Research" now points at research/ — the standalone page —
+               and the homepage section keeps its own entry as "Interests", so no
+               two items share a label. Both are one click from either menu. -->
           <ul class="nav-links">
             <li><a href="#about">About</a></li>
-            <li><a href="#research">Research</a></li>
+            <li><a href="#research">Interests</a></li>
+            <li><a href="research/">Research</a></li>
             <li><a href="#publications">Publications</a></li>
             <li><a href="#featured">Projects</a></li>
-            <li></li>
             <li><a href="#experience">Experience</a></li>
             <li><a href="#contact">Contact</a></li>
           </ul>
@@ -189,15 +208,18 @@
       </div>
     </nav>
 
+    <!-- SHA-141: same item set and order as .nav-links above. Certifications,
+         Education and Skills were dropped rather than added to the desktop bar:
+         ten uppercase letter-spaced items wrap .nav-links onto a second row, and
+         those three sections are reached by scrolling the page they sit on. If
+         they are ever wanted in the nav, add them to BOTH lists. -->
     <div id="mobile-menu" class="mobile-menu" hidden>
           <a href="#about">About</a>
-          <a href="#research">Research</a>
+          <a href="#research">Interests</a>
+          <a href="research/">Research</a>
           <a href="#publications">Publications</a>
           <a href="#featured">Projects</a>
           <a href="#experience">Experience</a>
-          <a href="#certifications">Certifications</a>
-          <a href="#education">Education</a>
-          <a href="#skills">Skills</a>
           <a href="#contact">Contact</a>
     </div>
 
@@ -275,7 +297,7 @@
       <section id="research" class="section reveal">
         <div class="container">
           <div class="section-head">
-            <h2>Research</h2>
+            <h2>Research Interests</h2>
             <p>The questions I keep coming back to, and what I am doing about each one now. This changes as I do.</p>
           </div>
           <div class="value-grid">
