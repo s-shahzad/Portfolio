@@ -53,6 +53,10 @@
       .site-nav a:hover,
       .site-nav a:focus-visible,
       .site-nav a[aria-current="page"] { color: var(--accent-strong); }
+      /* SHA-160 #12: .site-nav a is already inline-flex/centred, so the mark
+         needs a gap and a block display and nothing else. */
+      .site-nav__home { gap: 0.5rem; }
+      .site-nav__home img { display: block; width: 24px; height: 24px; }
     </style>
     <link rel="icon" href="/assets/images/assets/logo-alt-c-icon.svg" type="image/svg+xml" />
   <link rel="alternate icon" href="/assets/screenshots/assets/logo-alt-c-icon.png" type="image/png" />
@@ -65,7 +69,10 @@
          programmatically focusable without adding it to the tab order. -->
     <nav class="site-nav" aria-label="Primary">
       <ul>
-        <li><a href="../../index.html">Home</a></li>
+        <!-- SHA-160 #12: inner pages carried no logo at all. The mark is folded
+             into the existing Home link rather than added beside it so there is
+             one home target, not two adjacent links to the same page. -->
+        <li><a class="site-nav__home" href="../../index.html"><img src="/assets/images/assets/logo-alt-c-icon.svg" alt="" width="24" height="24" loading="eager" decoding="async" />Home</a></li>
         <li><a href="../../research/">Research</a></li>
         <li><a href="../../detections/">Detections</a></li>
         <li><a href="../../index.html#contact">Contact</a></li>

@@ -30,6 +30,14 @@
          two link lists identical. -->
     <nav class="nav" aria-label="Primary">
       <div class="nav-inner">
+        <!-- SHA-160 #12: this page copies the homepage nav but had no brand mark,
+             so the logo-is-home convention held nowhere outside the homepage.
+             `has-rich-logo` is required by styles.css:340 - without it the mark
+             is display:none. The homepage used to have that class applied by
+             script.js; here it is static because the <img> is not conditional. -->
+        <a class="brand-btn has-rich-logo" href="../index.html" aria-label="Azhad Shahzad Shaik - home">
+          <img class="brand-logo-image" src="/assets/images/assets/logo-alt-c-icon.svg" alt="" width="28" height="28" loading="eager" decoding="async" />
+        </a>
         <ul class="nav-links">
           <li><a href="../index.html">Portfolio</a></li>
           <li><a href="#interests">Interests</a></li>

@@ -149,11 +149,27 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
   border-radius: 2px;
 }
 
-/* Atmospheric film grain — already in HTML */
+/* SHA-169 #82 — STACKING ORDER, whole sheet. These were six magic numbers with
+   no relationship to each other; .grain at 1000 sat above every dialog and
+   control on the page and only failed to break them because it is
+   pointer-events:none. The ladder, lowest to highest:
+
+     1-2    assets/lattice.css     canvas, body > nav      (that file's numbers)
+     49     .mobile-menu           below .nav on purpose - the sticky bar stays
+                                   visible above the sheet it opened
+     50     .nav                   sticky bar
+     60     .chatbot               fixed control, above the bar
+    100     .grain                 ambient overlay, above chrome, below dialogs
+    200     .logo-modal            (rules retained; markup removed by SHA-160 #12)
+   2000     .skip-link             must beat everything when focused
+
+   .grain moves 1000 -> 100. Renders identically - it still covers the nav and
+   the chatbot - but it is now below the dialog layer instead of above it.
+   Anything new goes IN this table, not next to it. */
 .grain {
   position: fixed; inset: 0;
   pointer-events: none;
-  z-index: 1000;
+  z-index: 100;
   opacity: 0.035;
   mix-blend-mode: overlay;
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.6 0'/></filter><rect width='180' height='180' filter='url(%23n)'/></svg>");

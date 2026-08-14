@@ -176,7 +176,20 @@
          workaround added in PR #34. -->
     <nav class="nav" aria-label="Primary">
       <div class="nav-inner">
-          <button class="brand-btn" id="brandLogoBtn" type="button" aria-label="Open logo preview" aria-haspopup="dialog" aria-controls="logoModal" aria-expanded="false">
+          <!-- SHA-160 #12: this was a <button> whose only action was opening a
+               logo-preview modal. A site logo is a home link by convention, and
+               this was the one header element that broke that expectation. It is
+               now an <a href="/">; the #logoModal markup that used to sit above
+               the footer went with it.
+               `has-rich-logo` is hardcoded here on purpose: the class used to be
+               applied by script.js once it had confirmed the inline SVG painted,
+               and without it .brand-btn:not(.has-rich-logo) .brand-logo-image
+               (styles.css:340) hides the mark and shows the "AS" fallback. The
+               SVG is inline in this file, so there is nothing left to detect.
+               The .logo-modal rules in styles.css and setupBrandBadge() in
+               script.js are inert without these elements and are left for their
+               owners to sweep. -->
+          <a class="brand-btn has-rich-logo" href="/" aria-label="Azhad Shahzad Shaik - home">
             <svg class="brand-logo-image" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false">
               <rect x="0" y="0" width="512" height="512" rx="96" fill="#060B14"></rect>
               <circle cx="256" cy="256" r="126" fill="none" stroke="#F1EFE7" stroke-width="16"></circle>
@@ -184,7 +197,7 @@
               <path d="M274 318 C334 328 349 356 332 380 C314 406 260 409 246 382 C239 368 241 351 250 344" fill="none" stroke="#F1EFE7" stroke-width="16" stroke-linecap="round"></path>
             </svg>
             <span class="brand-logo-fallback" aria-hidden="true">AS</span>
-          </button>
+          </a>
           <!-- SHA-141: the desktop list and #mobile-menu below must stay the SAME
                item set, in the same order. They had drifted to 6 vs 9 (mobile had
                Certifications/Education/Skills the desktop nav could not reach) and
@@ -659,26 +672,10 @@
     </main>
 
 
-    <div id="logoModal" class="logo-modal" hidden aria-hidden="true">
-      <div class="logo-modal__overlay" data-close="true"></div>
-      <div class="logo-modal__card" role="dialog" aria-modal="true" aria-label="Logo preview">
-        <div class="logo-flip" id="logoFlip">
-          <div class="logo-face logo-face--front">
-            <svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet" class="logo-big" role="img" aria-label="Azhad Logo" focusable="false">
-              <title>Azhad Logo</title>
-              <rect x="0" y="0" width="512" height="512" rx="96" fill="#060B14"></rect>
-              <circle cx="256" cy="256" r="126" fill="none" stroke="#F1EFE7" stroke-width="16"></circle>
-              <path d="M216 368 L278 190 L338 368" fill="none" stroke="#8c97a8" stroke-width="20" stroke-linecap="round" stroke-linejoin="round"></path>
-              <path d="M274 318 C334 328 349 356 332 380 C314 406 260 409 246 382 C239 368 241 351 250 344" fill="none" stroke="#F1EFE7" stroke-width="16" stroke-linecap="round"></path>
-            </svg>
-            <div class="logo-big-fallback" aria-hidden="true">AS</div>
-          </div>
-          <div class="logo-face logo-face--back">
-            <div class="logo-back-bottom">Portfolio 2026</div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <!-- SHA-160 #12: the #logoModal preview dialog was removed with the brand
+         button that was its only trigger (see the nav above). script.min.js
+         still looks for #brandLogoBtn / #logoModal and returns early when it
+         finds neither, so nothing throws. -->
 
     <footer class="footer">
       <!-- SHA-161 #23: this page is ~19,000px - roughly 29 screens - and had no
