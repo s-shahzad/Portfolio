@@ -23,7 +23,13 @@
   <link rel="alternate icon" href="/assets/screenshots/assets/logo-alt-c-icon.png" type="image/png" />
 </head>
   <body>
-    <main class="legal">
+    <!-- SHA-153: privacy.html was the one page with no skip link. It was not on
+         the ticket's list, which named nids, detections, the two case studies,
+         404 and design-preview - it was missed there too. This page already
+         loads styles.min.css, so the site-wide .skip-link rule applies and only
+         the markup and a target id were missing. -->
+    <a class="skip-link" href="#mainContent">Skip to main content</a>
+    <main class="legal" id="mainContent" tabindex="-1">
       <h1>Privacy Policy</h1>
       <p class="updated">Last updated 14 August 2026</p>
 
