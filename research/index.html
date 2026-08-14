@@ -22,6 +22,12 @@
 
     <!-- SHA-130: nav moved out of header.hero so position:sticky applies to the
          whole document rather than dying with the hero. -->
+    <!-- SHA-134: .nav-links is display:none below 900px, and this page had no
+         hamburger, so on a phone all five links computed to 0x0 and the only way
+         off the page was a back-link ~8,000px down. The .nav-toggle + #mobile-menu
+         pattern below is the homepage's, verbatim, driven by script.min.js at the
+         end of this file — same class names, same ids, same ARIA wiring. Keep the
+         two link lists identical. -->
     <nav class="nav" aria-label="Primary">
       <div class="nav-inner">
         <ul class="nav-links">
@@ -31,8 +37,19 @@
           <li><a href="#publications">Publications</a></li>
           <li><a href="#method">Method</a></li>
         </ul>
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu">
+          <span></span><span></span><span></span>
+        </button>
       </div>
     </nav>
+
+    <div id="mobile-menu" class="mobile-menu" hidden>
+      <a href="../index.html">Portfolio</a>
+      <a href="#interests">Interests</a>
+      <a href="#current">Current work</a>
+      <a href="#publications">Publications</a>
+      <a href="#method">Method</a>
+    </div>
 
     <header class="hero">
       <div class="container">
@@ -200,5 +217,10 @@
         </div>
       </section>
     </main>
+    <!-- SHA-134: the hamburger above is inert markup without this. script.min.js
+         drives .nav-toggle / #mobile-menu (open, close, Esc, focus trap, overlay
+         offset) and every other handler in it is null-guarded, so it no-ops on the
+         elements this page does not have. Cache stamp matches index.html. -->
+    <script src="../script.min.js?v=20260814-02" defer></script>
   </body>
 </html>
