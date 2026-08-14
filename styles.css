@@ -8,7 +8,22 @@
    ========================================================================== */
 
 /* Self-served @font-face declarations via gstatic CDN — eliminates the
-   fonts.googleapis.com stylesheet round-trip. Latin subset only. */
+   fonts.googleapis.com stylesheet round-trip. Latin subset only.
+
+   SHA-164 (2026-08-14): JetBrains Mono was declared twice here, once at
+   weight 400 and once at weight 500, with a byte-identical src URL. It is one
+   variable file, so the browser only ever fetched it once and the duplicate
+   cost 0 wire bytes — but two blocks describing one file is a trap for the
+   next edit, which would have to be made in both places or drift. Merged into
+   a single block with the weight RANGE the stylesheet actually uses (400 and
+   500 are the only mono weights in this file).
+
+   Fraunces stays on the full four-axis file (SOFT, WONK, opsz, wght,
+   121,016 B) ON PURPOSE. 13 rules in this stylesheet drive "SOFT" and "WONK"
+   through font-variation-settings, so the slimmer opsz+wght slice would
+   silently flatten every display heading. The sibling stylesheets
+   case-studies/case-study.css and projects/nids/nids-case-study.css set no
+   variation settings at all and were moved to that slimmer slice instead. */
 
 @font-face {
   font-family: "Bricolage Grotesque";
@@ -31,16 +46,7 @@
 @font-face {
   font-family: "JetBrains Mono";
   font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url("https://fonts.gstatic.com/s/jetbrainsmono/v24/tDbv2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8yKwBNntkaToggR7BYRbKPxDcwg.woff2") format("woff2");
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-
-@font-face {
-  font-family: "JetBrains Mono";
-  font-style: normal;
-  font-weight: 500;
+  font-weight: 400 500;
   font-display: swap;
   src: url("https://fonts.gstatic.com/s/jetbrainsmono/v24/tDbv2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8yKwBNntkaToggR7BYRbKPxDcwg.woff2") format("woff2");
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;

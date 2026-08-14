@@ -10,6 +10,14 @@
     />
     <meta name="robots" content="index,follow" />
     <link rel="canonical" href="https://azhadshahzadshaik.netlify.app/detections/" />
+    <!-- SHA-164 (#58): GA was on the homepage only. This page loads no
+         script.min.js, so it needs both halves — the googletagmanager loader and
+         the gtag("config") call. The config lives in /assets/analytics.js because
+         the site CSP has no 'unsafe-inline', which silently blocks Google's
+         copy-paste inline snippet. -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3CN94DG5LY"></script>
+    <script src="/assets/analytics.js" defer></script>
+    <link rel="preconnect" href="https://www.googletagmanager.com" />
     <link rel="stylesheet" href="../case-studies/case-study.css" />
     <style>
       .rule-grid {

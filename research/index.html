@@ -14,6 +14,13 @@
     <meta property="og:description" content="Measurement-first research on the security of the post-quantum migration. Crypto-agility, not scheme design." />
     <meta property="og:type" content="profile" />
     <meta property="og:url" content="https://azhadshahzadshaik.netlify.app/research/" />
+    <!-- SHA-164 (#58): this page already loads script.min.js, which carries the
+         gtag("config") call, but the googletagmanager loader was missing — so the
+         config was pushed into dataLayer with nothing to consume it and /research/
+         recorded zero hits while looking instrumented. Loader only here; adding
+         /assets/analytics.js as well would double-count every visit. -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3CN94DG5LY"></script>
+    <link rel="preconnect" href="https://www.googletagmanager.com" />
     <link rel="stylesheet" href="../styles.min.css?v=20260814-03" />
     <link rel="icon" href="/assets/images/assets/logo-alt-c-icon.svg" type="image/svg+xml" />
   <link rel="alternate icon" href="/assets/screenshots/assets/logo-alt-c-icon.png" type="image/png" />
