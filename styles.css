@@ -8,7 +8,22 @@
    ========================================================================== */
 
 /* Self-served @font-face declarations via gstatic CDN — eliminates the
-   fonts.googleapis.com stylesheet round-trip. Latin subset only. */
+   fonts.googleapis.com stylesheet round-trip. Latin subset only.
+
+   SHA-164 (2026-08-14): JetBrains Mono was declared twice here, once at
+   weight 400 and once at weight 500, with a byte-identical src URL. It is one
+   variable file, so the browser only ever fetched it once and the duplicate
+   cost 0 wire bytes — but two blocks describing one file is a trap for the
+   next edit, which would have to be made in both places or drift. Merged into
+   a single block with the weight RANGE the stylesheet actually uses (400 and
+   500 are the only mono weights in this file).
+
+   Fraunces stays on the full four-axis file (SOFT, WONK, opsz, wght,
+   121,016 B) ON PURPOSE. 13 rules in this stylesheet drive "SOFT" and "WONK"
+   through font-variation-settings, so the slimmer opsz+wght slice would
+   silently flatten every display heading. The sibling stylesheets
+   case-studies/case-study.css and projects/nids/nids-case-study.css set no
+   variation settings at all and were moved to that slimmer slice instead. */
 
 @font-face {
   font-family: "Bricolage Grotesque";
@@ -31,16 +46,7 @@
 @font-face {
   font-family: "JetBrains Mono";
   font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url("https://fonts.gstatic.com/s/jetbrainsmono/v24/tDbv2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8yKwBNntkaToggR7BYRbKPxDcwg.woff2") format("woff2");
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-
-@font-face {
-  font-family: "JetBrains Mono";
-  font-style: normal;
-  font-weight: 500;
+  font-weight: 400 500;
   font-display: swap;
   src: url("https://fonts.gstatic.com/s/jetbrainsmono/v24/tDbv2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8yKwBNntkaToggR7BYRbKPxDcwg.woff2") format("woff2");
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
@@ -149,11 +155,27 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
   border-radius: 2px;
 }
 
-/* Atmospheric film grain — already in HTML */
+/* SHA-169 #82 — STACKING ORDER, whole sheet. These were six magic numbers with
+   no relationship to each other; .grain at 1000 sat above every dialog and
+   control on the page and only failed to break them because it is
+   pointer-events:none. The ladder, lowest to highest:
+
+     1-2    assets/lattice.css     canvas, body > nav      (that file's numbers)
+     49     .mobile-menu           below .nav on purpose - the sticky bar stays
+                                   visible above the sheet it opened
+     50     .nav                   sticky bar
+     60     .chatbot               fixed control, above the bar
+    100     .grain                 ambient overlay, above chrome, below dialogs
+    200     .logo-modal            (rules retained; markup removed by SHA-160 #12)
+   2000     .skip-link             must beat everything when focused
+
+   .grain moves 1000 -> 100. Renders identically - it still covers the nav and
+   the chatbot - but it is now below the dialog layer instead of above it.
+   Anything new goes IN this table, not next to it. */
 .grain {
   position: fixed; inset: 0;
   pointer-events: none;
-  z-index: 1000;
+  z-index: 100;
   opacity: 0.035;
   mix-blend-mode: overlay;
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.6 0'/></filter><rect width='180' height='180' filter='url(%23n)'/></svg>");
@@ -337,8 +359,19 @@ section[id],
   letter-spacing: 0.1em;
   color: var(--paper-soft);
 }
-.brand-btn:not(.has-rich-logo) .brand-logo-image { display: none; }
-.brand-btn.has-rich-logo .brand-logo-fallback { display: none; }
+/* SHA-168 #74: the header mark used to be gated on a JS-set .has-rich-logo
+   class, and script.js:302 hard-codes that host to { hasRichLogo: false }
+   "for webview reliability" - so the crafted mark was display:none for every
+   visitor and everyone saw the plain-text "AS" instead, while the logo modal
+   existed purely to show off that same mark. The reliability concern belongs
+   to the modal's <img>, which can 404; the header mark is INLINE SVG in the
+   document, so it cannot fail to load and needs no fallback gate. It is now
+   shown unconditionally and the monogram is retired.
+   NOTE: this is deliberately a CSS-only fix - script.js is outside this
+   change's file ownership, so setLogoVisualState() still toggles these
+   classes; they are simply no longer what decides header visibility. */
+.brand-btn .brand-logo-image { display: block; }
+.brand-btn .brand-logo-fallback { display: none; }
 
 .nav-links {
   display: none;
@@ -1281,15 +1314,35 @@ details > p { padding: 1rem 0 0; }
 @media (min-width: 900px) {
   .edu-item { grid-template-columns: 88px 1fr 200px; }
 }
+/* SHA-191: the img and the short-code span were both flex children of this
+   64px box, so they rendered SIDE BY SIDE - the crest shrank to ~33px and the
+   letters spilled past the right border. The span was always meant to be a
+   fallback for when the image fails, not a label shown next to it.
+   It now sits underneath, and the image covers it once loaded. */
 .edu-logo-wrap {
   width: 64px; height: 64px;
-  display: inline-flex; align-items: center; justify-content: center;
+  display: grid;
+  place-items: center;
   border: 1px solid var(--hairline-strong);
   background: var(--ink-mid);
   position: relative;
+  overflow: hidden;
 }
-.edu-logo { max-width: 100%; max-height: 100%; padding: 8px; filter: grayscale(1); }
+.edu-logo {
+  position: relative;
+  z-index: 1;
+  width: 100%; height: 100%;
+  object-fit: contain;
+  padding: 8px;
+  /* opaque, so a loaded image hides the fallback behind it */
+  background: var(--ink-mid);
+  filter: grayscale(1);
+}
 .edu-logo-fallback {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
   font-family: "JetBrains Mono", monospace;
   font-size: 0.85rem;
   font-weight: 500;

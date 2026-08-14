@@ -8,7 +8,15 @@
       name="description"
       content="Static case study for a hybrid network intrusion detection system with recruiter-friendly metrics, alert samples, and explanation notes."
     />
-    <link rel="stylesheet" href="nids-case-study.css" />
+    <!-- SHA-164 (#58): GA was on the homepage only. This page loads
+         nids-case-study.js but not script.min.js, so it needs both halves — the
+         googletagmanager loader and the gtag("config") call. The config lives in
+         /assets/analytics.js because the site CSP has no 'unsafe-inline', which
+         silently blocks Google's copy-paste inline snippet. -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3CN94DG5LY"></script>
+    <script src="/assets/analytics.js" defer></script>
+    <link rel="preconnect" href="https://www.googletagmanager.com" />
+    <link rel="stylesheet" href="nids-case-study.css?v=20260814-05" />
     <!-- SHA-153 / SHA-140: this page loads nids-case-study.css, not
          styles.min.css, so the site-wide .skip-link and .nav rules never reach it.
          These are the minimum rules the skip link and site nav below need. Kept in
@@ -53,6 +61,10 @@
       .site-nav a:hover,
       .site-nav a:focus-visible,
       .site-nav a[aria-current="page"] { color: var(--accent-strong); }
+      /* SHA-160 #12: .site-nav a is already inline-flex/centred, so the mark
+         needs a gap and a block display and nothing else. */
+      .site-nav__home { gap: 0.5rem; }
+      .site-nav__home img { display: block; width: 24px; height: 24px; }
     </style>
     <link rel="icon" href="/assets/images/assets/logo-alt-c-icon.svg" type="image/svg+xml" />
   <link rel="alternate icon" href="/assets/screenshots/assets/logo-alt-c-icon.png" type="image/png" />
@@ -65,7 +77,10 @@
          programmatically focusable without adding it to the tab order. -->
     <nav class="site-nav" aria-label="Primary">
       <ul>
-        <li><a href="../../index.html">Home</a></li>
+        <!-- SHA-160 #12: inner pages carried no logo at all. The mark is folded
+             into the existing Home link rather than added beside it so there is
+             one home target, not two adjacent links to the same page. -->
+        <li><a class="site-nav__home" href="../../index.html"><img src="/assets/images/assets/logo-alt-c-icon.svg" alt="" width="24" height="24" loading="eager" decoding="async" />Home</a></li>
         <li><a href="../../research/">Research</a></li>
         <li><a href="../../detections/">Detections</a></li>
         <li><a href="../../index.html#contact">Contact</a></li>
@@ -89,7 +104,11 @@
             <span class="pill">No live API dependency</span>
           </div>
         </div>
-        <div class="hero-aside" id="heroSnapshot" aria-label="Run snapshot"></div>
+        <!-- SHA-168 #53: aria-label on a role-less div is dropped by assistive
+             tech, so these three regions were labelled only for the source
+             reader. role="group" makes each label actually reach the a11y tree
+             without hiding or renaming the content inside. -->
+        <div class="hero-aside" id="heroSnapshot" role="group" aria-label="Run snapshot"></div>
       </section>
 
       <section class="panel section-block">
@@ -103,7 +122,7 @@
           </p>
         </div>
         <div class="architecture-grid">
-          <div class="diagram-card" aria-label="Architecture diagram placeholder">
+          <div class="diagram-card" role="group" aria-label="Hybrid NIDS architecture diagram">
             <div class="diagram-flow">
               <div class="diagram-node">Traffic Replay</div>
               <div class="diagram-arrow"></div>
@@ -155,7 +174,7 @@
           </p>
         </div>
         <div class="chart-card">
-          <div class="bar-chart" id="engineChart" aria-label="Engine distribution chart"></div>
+          <div class="bar-chart" id="engineChart" role="group" aria-label="Engine distribution chart"></div>
         </div>
       </section>
 
@@ -241,6 +260,6 @@
       </section>
     </main>
 
-    <script type="module" src="nids-case-study.js"></script>
+    <script type="module" src="nids-case-study.js?v=20260814-05"></script>
   </body>
 </html>

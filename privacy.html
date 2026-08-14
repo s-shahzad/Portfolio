@@ -7,7 +7,15 @@
     <meta name="description" content="Privacy policy for this site and for the personal LinkedIn publishing integration operated by Azhad Shahzad Shaik." />
     <meta name="robots" content="index,follow" />
     <link rel="canonical" href="https://azhadshahzadshaik.netlify.app/privacy.html" />
-    <link rel="stylesheet" href="styles.min.css?v=20260814-01" />
+    <!-- SHA-164 (#58): GA was on the homepage only. This page loads no
+         script.min.js, so it needs both halves — the googletagmanager loader and
+         the gtag("config") call. The config lives in /assets/analytics.js because
+         the site CSP has no 'unsafe-inline', which silently blocks Google's
+         copy-paste inline snippet. -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3CN94DG5LY"></script>
+    <script src="/assets/analytics.js" defer></script>
+    <link rel="preconnect" href="https://www.googletagmanager.com" />
+    <link rel="stylesheet" href="styles.min.css?v=20260814-05" />
     <style>
       .legal{max-width:70ch;margin:0 auto;padding:4rem 1.5rem 6rem;}
       .legal h1{margin-bottom:.4rem;}
@@ -18,6 +26,10 @@
       .legal li{margin-bottom:.4rem;}
       .legal a{text-decoration:underline;}
       .legal .back{display:inline-block;margin-top:3rem;}
+      /* SHA-160 #12: this page had no nav and no logo - the only way back was a
+         text link 70 lines down. */
+      .legal-brand{display:inline-flex;align-items:center;gap:.5rem;padding:1.5rem 1.5rem 0;text-decoration:none;}
+      .legal-brand img{display:block;width:28px;height:28px;}
     </style>
     <link rel="icon" href="/assets/images/assets/logo-alt-c-icon.svg" type="image/svg+xml" />
   <link rel="alternate icon" href="/assets/screenshots/assets/logo-alt-c-icon.png" type="image/png" />
@@ -29,6 +41,7 @@
          loads styles.min.css, so the site-wide .skip-link rule applies and only
          the markup and a target id were missing. -->
     <a class="skip-link" href="#mainContent">Skip to main content</a>
+    <a class="legal-brand" href="/"><img src="/assets/images/assets/logo-alt-c-icon.svg" alt="" width="28" height="28" loading="eager" decoding="async" />Home</a>
     <main class="legal" id="mainContent" tabindex="-1">
       <h1>Privacy Policy</h1>
       <p class="updated">Last updated 14 August 2026</p>
@@ -74,7 +87,10 @@
       <p>Azhad Shahzad Shaik, Hartford, Connecticut, United States.<br />
         <a href="mailto:shaikazhadshahzad@gmail.com">shaikazhadshahzad@gmail.com</a></p>
 
-      <p class="back"><a href="/">Back to the site</a></p>
+      <!-- SHA-160 #18: every other back-affordance on the site is
+           "&larr; Back to <destination>". This one had no arrow and a different
+           noun. -->
+      <p class="back"><a href="/">&larr; Back to the portfolio</a></p>
     </main>
   </body>
 </html>

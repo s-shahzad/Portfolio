@@ -8,7 +8,38 @@ from urllib.parse import unquote
 
 
 MOJIBAKE_MARKERS = ["Ã", "Â", "â"]
-HTML_FILES = ["index.html"]
+
+# index.html must always exist; its absence is a hard failure rather than
+# "nothing to check".
+REQUIRED_HTML_FILES = ["index.html"]
+
+# Directories that are not the live site: vendored code, saved Lighthouse
+# reports (which are full HTML documents full of duplicate ids by design),
+# old backups, and scratch branches' leftovers.
+SKIP_DIR_PARTS = {
+    "node_modules",
+    "mobile-scan",
+    "archives",
+    ".git",
+    "_bk_tmp",
+    "_ghp_tmp",
+}
+
+
+def _discover_html_files(repo_root: Path) -> list[Path]:
+    """Every shipped page, not just the homepage.
+
+    This used to be the hardcoded list ["index.html"], which meant the gate
+    guarded one page out of eight. Seven pages could take any change at all
+    and CI still reported [PASS] -- so a green run was never evidence for
+    them. Found 2026-08-14 while merging a batch that edited all eight.
+    """
+    found = [
+        path
+        for path in sorted(repo_root.rglob("*.html"))
+        if not (SKIP_DIR_PARTS & set(path.relative_to(repo_root).parts))
+    ]
+    return found
 
 
 def _is_ignored_ref(ref: str) -> bool:
@@ -92,12 +123,17 @@ def main() -> int:
     repo_root = Path(__file__).resolve().parents[1]
     errors: list[str] = []
 
-    for relative_name in HTML_FILES:
-        file_path = repo_root / relative_name
-        if not file_path.exists():
+    for relative_name in REQUIRED_HTML_FILES:
+        if not (repo_root / relative_name).exists():
             errors.append(f"Missing required file: {relative_name}")
-            continue
+
+    pages = _discover_html_files(repo_root)
+    for file_path in pages:
         errors.extend(_check_html_file(file_path, repo_root))
+
+    print(f"Checked {len(pages)} page(s):")
+    for page in pages:
+        print(f"  - {page.relative_to(repo_root).as_posix()}")
 
     if errors:
         print("[FAIL] Static sanity checks found issues:")

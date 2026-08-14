@@ -8,7 +8,15 @@
       name="description"
       content="HL7 to FHIR data integration case study focused on interoperability, validation quality, and deployment readiness."
     />
-    <link rel="stylesheet" href="case-study.css" />
+    <!-- SHA-164 (#58): GA was on the homepage only. This page loads no
+         script.min.js, so it needs both halves — the googletagmanager loader and
+         the gtag("config") call. The config lives in /assets/analytics.js because
+         the site CSP has no 'unsafe-inline', which silently blocks Google's
+         copy-paste inline snippet. -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3CN94DG5LY"></script>
+    <script src="/assets/analytics.js" defer></script>
+    <link rel="preconnect" href="https://www.googletagmanager.com" />
+    <link rel="stylesheet" href="case-study.css?v=20260814-05" />
     <!-- SHA-153 / SHA-140: this page loads case-study.css, not styles.min.css, so
          the site-wide .skip-link and .nav rules never reach it. These are the
          minimum rules the skip link and site nav below need. Kept in the page
@@ -53,6 +61,10 @@
       .site-nav a:hover,
       .site-nav a:focus-visible,
       .site-nav a[aria-current="page"] { color: var(--accent); }
+      /* SHA-160 #12: .site-nav a is already inline-flex/centred, so the mark
+         needs a gap and a block display and nothing else. */
+      .site-nav__home { gap: 0.5rem; }
+      .site-nav__home img { display: block; width: 24px; height: 24px; }
     </style>
     <link rel="icon" href="/assets/images/assets/logo-alt-c-icon.svg" type="image/svg+xml" />
   <link rel="alternate icon" href="/assets/screenshots/assets/logo-alt-c-icon.png" type="image/png" />
@@ -65,7 +77,10 @@
          programmatically focusable without adding it to the tab order. -->
     <nav class="site-nav" aria-label="Primary">
       <ul>
-        <li><a href="../index.html">Home</a></li>
+        <!-- SHA-160 #12: inner pages carried no logo at all. The mark is folded
+             into the existing Home link rather than added beside it so there is
+             one home target, not two adjacent links to the same page. -->
+        <li><a class="site-nav__home" href="../index.html"><img src="/assets/images/assets/logo-alt-c-icon.svg" alt="" width="24" height="24" loading="eager" decoding="async" />Home</a></li>
         <li><a href="../research/">Research</a></li>
         <li><a href="../detections/">Detections</a></li>
         <li><a href="../index.html#contact">Contact</a></li>
@@ -82,7 +97,15 @@
         <p class="meta">Role: Jr. Data Analyst | Organization: Solstice Solutions, Inc. | Period: Oct 2025 to Present</p>
         <p class="lede">Bridged two healthcare standards into a more reliable, validation-first integration path for clinical delivery teams.</p>
 
-        <div class="summary-grid" aria-label="Case study summary">
+        <!-- SHA-163 #49 + SHA-168 #53, one fix: the page went h1 -> h3 because
+             these three cards were the first headings after the title and
+             nothing declared the level between them. The grid was also a plain
+             <div aria-label> with no role, so that label was discarded by
+             assistive tech and the block was announced as nothing at all. A
+             real, visible h2 both closes the level gap and names the region,
+             which is why the dead aria-label is gone rather than re-roled. -->
+        <h2>At a glance</h2>
+        <div class="summary-grid">
           <div class="summary-card">
             <h3>Standards</h3>
             <strong>HL7 + FHIR</strong>
@@ -116,7 +139,10 @@
         <h2>Business Value</h2>
         <p>The practical benefit was less integration churn: fewer avoidable mismatches, cleaner downstream data handling, and a more reusable path for future healthcare interface work.</p>
 
-        <div class="kpis" aria-label="Case study highlights">
+        <!-- SHA-168 #53: aria-label on a role-less div is ignored. This strip
+             has no heading of its own to lean on, so it takes role="group" and
+             keeps its label instead of losing it. -->
+        <div class="kpis" role="group" aria-label="Case study highlights">
           <div class="kpi">
             <strong>Interoperability</strong>
             <p>improved for cross-system exchange</p>
@@ -134,9 +160,14 @@
         <h2>Tools and Methods</h2>
         <p class="meta">HL7, FHIR, dataset validation, transformation checks, mapping documentation.</p>
 
+        <!-- SHA-160 #16: "More Case Studies" pointed at ../index.html#featured -
+             the homepage carousel - so the only route from one case study to the
+             other was back through the homepage. There are exactly two case
+             studies; the sibling is now a direct link. -->
         <div class="panel-actions">
           <a class="button-link" href="../index.html#contact">Discuss Similar Work</a>
-          <a class="button-link" href="../index.html#featured">More Case Studies</a>
+          <a class="button-link" href="enterprise-risk-threat-analysis.html">Next Case Study: Enterprise Risk and Threat Analysis</a>
+          <a class="button-link" href="../index.html#featured">All Work</a>
         </div>
       </article>
     </main>

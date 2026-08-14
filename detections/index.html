@@ -10,7 +10,15 @@
     />
     <meta name="robots" content="index,follow" />
     <link rel="canonical" href="https://azhadshahzadshaik.netlify.app/detections/" />
-    <link rel="stylesheet" href="../case-studies/case-study.css" />
+    <!-- SHA-164 (#58): GA was on the homepage only. This page loads no
+         script.min.js, so it needs both halves — the googletagmanager loader and
+         the gtag("config") call. The config lives in /assets/analytics.js because
+         the site CSP has no 'unsafe-inline', which silently blocks Google's
+         copy-paste inline snippet. -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3CN94DG5LY"></script>
+    <script src="/assets/analytics.js" defer></script>
+    <link rel="preconnect" href="https://www.googletagmanager.com" />
+    <link rel="stylesheet" href="../case-studies/case-study.css?v=20260814-05" />
     <style>
       .rule-grid {
         display: grid;
@@ -124,6 +132,10 @@
       .site-nav a:hover,
       .site-nav a:focus-visible,
       .site-nav a[aria-current="page"] { color: var(--accent); }
+      /* SHA-160 #12: .site-nav a is already inline-flex/centred, so the mark
+         needs a gap and a block display and nothing else. */
+      .site-nav__home { gap: 0.5rem; }
+      .site-nav__home img { display: block; width: 24px; height: 24px; }
     </style>
     <link rel="icon" href="/assets/images/assets/logo-alt-c-icon.svg" type="image/svg+xml" />
   <link rel="alternate icon" href="/assets/screenshots/assets/logo-alt-c-icon.png" type="image/png" />
@@ -136,7 +148,10 @@
          programmatically focusable without adding it to the tab order. -->
     <nav class="site-nav" aria-label="Primary">
       <ul>
-        <li><a href="../index.html">Home</a></li>
+        <!-- SHA-160 #12: inner pages carried no logo at all. The mark is folded
+             into the existing Home link rather than added beside it so there is
+             one home target, not two adjacent links to the same page. -->
+        <li><a class="site-nav__home" href="../index.html"><img src="/assets/images/assets/logo-alt-c-icon.svg" alt="" width="24" height="24" loading="eager" decoding="async" />Home</a></li>
         <li><a href="../research/">Research</a></li>
         <li><a href="./" aria-current="page">Detections</a></li>
         <li><a href="../index.html#contact">Contact</a></li>
@@ -181,7 +196,12 @@
             </div>
             <h3>Suspicious PowerShell with Base64-Encoded Payload</h3>
             <p>Catches the <code>-EncodedCommand</code> + offensive-tradecraft pattern; tuning lever is signed-installer allowlist.</p>
-            <a class="rule-link" href="sigma/proc_susp_pwsh_b64.yml">View rule &rarr;</a>
+            <!-- SHA-163 #50: seven links on this page read "View rule" or
+                 "View query" and nothing else, so a screen reader's link list
+                 was seven identical rows. The visible text is the design and
+                 stays; each accessible name now leads with that same visible
+                 string (WCAG 2.5.3) and appends the rule its card is about. -->
+            <a class="rule-link" href="sigma/proc_susp_pwsh_b64.yml" aria-label="View rule: Suspicious PowerShell with Base64-Encoded Payload">View rule &rarr;</a>
           </article>
           <article class="rule-card">
             <div class="tag-row">
@@ -190,7 +210,7 @@
             </div>
             <h3>DNS Tunneling via Long-Label Subdomain Encoding</h3>
             <p>Surfaces long, high-entropy DNS labels. Per-domain baseline keeps CDN edge keys from paging.</p>
-            <a class="rule-link" href="sigma/net_dns_exfil_long_label.yml">View rule &rarr;</a>
+            <a class="rule-link" href="sigma/net_dns_exfil_long_label.yml" aria-label="View rule: DNS Tunneling via Long-Label Subdomain Encoding">View rule &rarr;</a>
           </article>
           <article class="rule-card">
             <div class="tag-row">
@@ -199,7 +219,7 @@
             </div>
             <h3>Periodic C2 Beacon with Low Jitter</h3>
             <p>Standalone it&rsquo;s soft - combined with one other engine in the agreement window, it pages.</p>
-            <a class="rule-link" href="sigma/net_c2_beacon_jitter.yml">View rule &rarr;</a>
+            <a class="rule-link" href="sigma/net_c2_beacon_jitter.yml" aria-label="View rule: Periodic C2 Beacon with Low Jitter">View rule &rarr;</a>
           </article>
           <article class="rule-card">
             <div class="tag-row">
@@ -208,7 +228,7 @@
             </div>
             <h3>Authentication Burst - Failed Logon Rate Spike</h3>
             <p>10+ failures from one source in 60s. Red-team CIDR excluded; identity-aware filter downstream.</p>
-            <a class="rule-link" href="sigma/auth_burst_5xx_fail.yml">View rule &rarr;</a>
+            <a class="rule-link" href="sigma/auth_burst_5xx_fail.yml" aria-label="View rule: Authentication Burst - Failed Logon Rate Spike">View rule &rarr;</a>
           </article>
           <article class="rule-card">
             <div class="tag-row">
@@ -217,7 +237,7 @@
             </div>
             <h3>TCP SYN Port Scan from External Source</h3>
             <p>30+ distinct dest ports in 30s with 90%+ SYN-no-ACK. Internal vuln-scanner CIDR allowlist required.</p>
-            <a class="rule-link" href="sigma/net_port_scan_syn.yml">View rule &rarr;</a>
+            <a class="rule-link" href="sigma/net_port_scan_syn.yml" aria-label="View rule: TCP SYN Port Scan from External Source">View rule &rarr;</a>
           </article>
         </div>
       </section>
@@ -237,7 +257,7 @@
             </div>
             <h3>Beacon Interval Stddev</h3>
             <p>Coefficient of variation on per-pair inter-arrival times; emits <code>beacon_score</code> consumed by the Sigma fusion rule.</p>
-            <a class="rule-link" href="splunk/beacon_interval_stddev.spl">View query &rarr;</a>
+            <a class="rule-link" href="splunk/beacon_interval_stddev.spl" aria-label="View query: Beacon Interval Stddev">View query &rarr;</a>
           </article>
           <article class="rule-card">
             <div class="tag-row">
@@ -246,7 +266,7 @@
             </div>
             <h3>Lateral Movement Chain</h3>
             <p>Single identity &ge;3 hosts across &ge;2 subnets in 20m, with a privileged-logon gate.</p>
-            <a class="rule-link" href="splunk/lateral_movement_chain.spl">View query &rarr;</a>
+            <a class="rule-link" href="splunk/lateral_movement_chain.spl" aria-label="View query: Lateral Movement Chain">View query &rarr;</a>
           </article>
         </div>
       </section>

@@ -3,7 +3,43 @@
    2026-08-14. That @import was silently BLOCKED by the site's own CSP
    (`style-src 'self' 'unsafe-inline'` does not allow fonts.googleapis.com),
    so every heading on this page fell back to Georgia. font-src already
-   allows fonts.gstatic.com, which is why loading the woff2 directly works. */
+   allows fonts.gstatic.com, which is why loading the woff2 directly works.
+
+   SHA-164 (2026-08-14): two dead JetBrains Mono blocks removed, and Fraunces
+   moved to a narrower axis slice.
+
+   - JetBrains Mono was declared TWICE, weight 400 and weight 500, pointing
+     at the identical URL. The two declarations are now merged into one
+     covering 400-500.
+
+     CORRECTION (2026-08-14, same day): the merge commit for SHA-164 first
+     DELETED both declarations, on the stated grounds that the family was
+     "never named anywhere outside those two declarations". That was wrong.
+     It is named in the inline <style> block of every page that loads this
+     sheet, twice each:
+         font: 500 0.78rem/1 "JetBrains Mono", ui-monospace, monospace;
+         font: 500 0.72rem/1 "JetBrains Mono", ui-monospace, monospace;
+     Six live consumers across enterprise-risk-threat-analysis.html,
+     hl7-fhir-integration.html and projects/nids/index.html.
+
+     styles.css also declares this face, but that does NOT rescue these
+     pages: @font-face is scoped to the DOCUMENT, and each of these pages
+     links only its own stylesheet, never styles.min.css. Deleting the face
+     here dropped those six spans to system monospace. Restored before the
+     branch was merged. Keep this declaration unless the inline <style>
+     blocks stop naming the family.
+
+   - Fraunces was the full four-axis file (SOFT, WONK, opsz, wght) at
+     121,016 B. Nothing in this stylesheet sets `font-variation-settings`, so
+     SOFT and WONK sit at their default of 0 and cannot be moved off it.
+     Dropping those two axes gives the opsz+wght slice at 67,304 B — 53,712 B
+     less per page load, with identical rendering and a byte-identical
+     unicode-range (verified against the Google Fonts CSS2 API, 2026-08-14).
+     opsz is deliberately KEPT: `font-optical-sizing` defaults to `auto`, so
+     the browser drives that axis by itself and removing it would visibly
+     change heading shapes.
+     styles.css must NOT get the same treatment — it sets SOFT and WONK
+     explicitly in 13 rules and genuinely needs the full-axis file. */
 
 @font-face {
   font-family: "Bricolage Grotesque";
@@ -19,23 +55,18 @@
   font-style: normal;
   font-weight: 300 900;
   font-display: swap;
-  src: url("https://fonts.gstatic.com/s/fraunces/v38/6NUV8FyLNQOQZAnv9ZwIlOk.woff2") format("woff2");
+  src: url("https://fonts.gstatic.com/s/fraunces/v38/6NU78FyLNQOQZAnv9bYEvDiIdE9Ea92uemAk_WBq8U_9v0c2Wa0KxC9TeA.woff2") format("woff2");
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
+/* One declaration replacing the former 400 + 500 pair. Both pointed at this
+   same URL, so the range covers what the two of them did. Consumers are the
+   inline <style> blocks of the pages linking this sheet; see the note above
+   before removing it. */
 @font-face {
   font-family: "JetBrains Mono";
   font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url("https://fonts.gstatic.com/s/jetbrainsmono/v24/tDbv2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8yKwBNntkaToggR7BYRbKPxDcwg.woff2") format("woff2");
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-
-@font-face {
-  font-family: "JetBrains Mono";
-  font-style: normal;
-  font-weight: 500;
+  font-weight: 400 500;
   font-display: swap;
   src: url("https://fonts.gstatic.com/s/jetbrainsmono/v24/tDbv2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8yKwBNntkaToggR7BYRbKPxDcwg.woff2") format("woff2");
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;

@@ -7,12 +7,21 @@
     <meta name="description" content="Measurement-first research on the post-quantum migration: whether real infrastructure moves to PQC or only looks like it has. Cross-protocol readiness scanning, OT/IoT charging-edge measurement, and reproducible detection evaluation. PhD applicant." />
     <meta name="robots" content="index,follow" />
     <link rel="canonical" href="https://azhadshahzadshaik.netlify.app/research/" />
-    <meta name="theme-color" content="#090c12" />
+    <!-- SHA-168 #54: must equal the painted body background (--ink-base in
+         styles.css:54). Kept in step with index.html. -->
+    <meta name="theme-color" content="#0a0b0d" />
     <meta property="og:title" content="Research | Azhad Shahzad Shaik" />
     <meta property="og:description" content="Measurement-first research on the security of the post-quantum migration. Crypto-agility, not scheme design." />
     <meta property="og:type" content="profile" />
     <meta property="og:url" content="https://azhadshahzadshaik.netlify.app/research/" />
-    <link rel="stylesheet" href="../styles.min.css?v=20260814-03" />
+    <!-- SHA-164 (#58): this page already loads script.min.js, which carries the
+         gtag("config") call, but the googletagmanager loader was missing — so the
+         config was pushed into dataLayer with nothing to consume it and /research/
+         recorded zero hits while looking instrumented. Loader only here; adding
+         /assets/analytics.js as well would double-count every visit. -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3CN94DG5LY"></script>
+    <link rel="preconnect" href="https://www.googletagmanager.com" />
+    <link rel="stylesheet" href="../styles.min.css?v=20260814-05" />
     <link rel="icon" href="/assets/images/assets/logo-alt-c-icon.svg" type="image/svg+xml" />
   <link rel="alternate icon" href="/assets/screenshots/assets/logo-alt-c-icon.png" type="image/png" />
 </head>
@@ -30,6 +39,14 @@
          two link lists identical. -->
     <nav class="nav" aria-label="Primary">
       <div class="nav-inner">
+        <!-- SHA-160 #12: this page copies the homepage nav but had no brand mark,
+             so the logo-is-home convention held nowhere outside the homepage.
+             `has-rich-logo` is required by styles.css:340 - without it the mark
+             is display:none. The homepage used to have that class applied by
+             script.js; here it is static because the <img> is not conditional. -->
+        <a class="brand-btn has-rich-logo" href="../index.html" aria-label="Azhad Shahzad Shaik - home">
+          <img class="brand-logo-image" src="/assets/images/assets/logo-alt-c-icon.svg" alt="" width="28" height="28" loading="eager" decoding="async" />
+        </a>
         <ul class="nav-links">
           <li><a href="../index.html">Portfolio</a></li>
           <li><a href="#interests">Interests</a></li>
@@ -217,10 +234,23 @@
         </div>
       </section>
     </main>
+
+    <!-- SHA-168 #73: this page ended at the last section with no footer at all,
+         so the bottom of a long scroll was a dead end. Same markup and the same
+         .footer / .footer-top rules index.html already uses (this page loads the
+         same stylesheet), so it needs no new CSS. "Back to top" targets
+         #mainContent - the existing skip-link target - rather than inventing an
+         id="top" that nothing else on this page references. -->
+    <footer class="footer">
+      <div class="container">
+        <p>&copy; 2026 Azhad Shahzad Shaik. All rights reserved.</p>
+        <p class="footer-top"><a href="#mainContent">Back to top</a> &middot; <a href="mailto:shaikazhadshahzad@gmail.com">Email</a> &middot; <a href="../index.html">Portfolio</a></p>
+      </div>
+    </footer>
     <!-- SHA-134: the hamburger above is inert markup without this. script.min.js
          drives .nav-toggle / #mobile-menu (open, close, Esc, focus trap, overlay
          offset) and every other handler in it is null-guarded, so it no-ops on the
          elements this page does not have. Cache stamp matches index.html. -->
-    <script src="../script.min.js?v=20260814-03" defer></script>
+    <script src="../script.min.js?v=20260814-05" defer></script>
   </body>
 </html>
