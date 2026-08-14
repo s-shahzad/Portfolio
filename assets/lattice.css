@@ -1,18 +1,26 @@
 /* ============================================================================
-   lattice.css — palette E (violet on cream) backdrop for the live homepage
+   lattice.css — violet-on-dark 3D backdrop for the live homepage
    ----------------------------------------------------------------------------
    Loaded AFTER styles.min.css so these rules win. This file only adds the 3D
    backdrop layer and its controls; it does not restyle existing content.
 
    Three.js is vendored at /assets/vendor/three.module.min.js because the
-   netlify.toml CSP is script-src 'self' and would block a CDN import.
+   netlify.toml CSP is script-src 'self' and would block a CDN import. It is
+   also only fetched on the high tier — see the gate in lattice.js. Everyone
+   else gets the #bg::before gradient below, which is why that rule is the
+   default state and .gl-live is what hides it.
    ============================================================================ */
 
+/* SHA-167 #39: these used to be four --lattice-* names that nothing read,
+   while lattice.js carried its own hardcoded hexes. These four are the
+   colours the scene actually draws with; lattice.js reads them from here at
+   boot and falls back to the same values if the stylesheet has not applied.
+   Changing a lattice colour means changing it here, once. */
 :root{
-  --lattice-signal:#8b7bf0;
-  --lattice-signal-soft:#a99df5;
-  --lattice-hairline:#2b2a4a;
-  --lattice-hairline-soft:#191a2e;
+  --lattice-node:#f1efe7;   /* instanced octahedra at the lattice vertices */
+  --lattice-edge:#4b3fa0;   /* the merged LineSegments cage */
+  --lattice-dust:#8b7bf0;   /* sparse depth-cue point field */
+  --lattice-void:#090c12;   /* clear colour and fog colour */
 }
 
 #bg{position:fixed;inset:0;z-index:0;pointer-events:none}
@@ -44,13 +52,13 @@ body.gl-live #bg::before{display:none}
   .motion-toggle{position:relative;right:auto;bottom:auto;z-index:2;
       display:block;margin:0 auto 1.25rem;}
 }
-#fps{position:fixed;left:1rem;bottom:1rem;z-index:30;display:none;
-    font-family:"JetBrains Mono",monospace;font-size:.65rem;color:var(--signal-soft);
-    background:rgba(10,11,13,.85);border:1px solid var(--hairline);padding:.5rem .7rem;white-space:pre;}
-#fps.on{display:block}
+/* SHA-162 #37: an #fps debug readout was styled here and toggled by a global
+   "d" keypress in lattice.js. The element it styled was never in the document
+   on this site, and the keypress check ran inside the frame loop. Both are
+   gone; these rules went with them. */
 
-/* The sample wrapped content in .page. The live page has no such wrapper, so
-   lift the real landmarks above the fixed backdrop and scrim instead. */
+/* The prototype wrapped content in .page. The live page has no such wrapper,
+   so lift the real landmarks above the fixed backdrop and scrim instead. */
 body > header,
 body > main,
 body > footer,
