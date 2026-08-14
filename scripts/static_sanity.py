@@ -32,12 +32,27 @@ def _normalize_ref_path(raw_ref: str) -> str:
     return unquote(ref)
 
 
+def _strip_html_comments(text: str) -> str:
+    """Remove <!-- ... --> blocks.
+
+    Everything inside an HTML comment is prose, not markup, and must not be
+    scanned for ids or refs. Without this, writing `id="top"` inside an
+    explanatory comment makes this checker report a duplicate id that does not
+    exist in the DOM — which is exactly what happened on 2026-08-14 and failed
+    the required "Static checks" job on a correct PR.
+    """
+    return re.sub(r"<!--.*?-->", "", text, flags=re.DOTALL)
+
+
 def _check_html_file(path: Path, repo_root: Path) -> list[str]:
     errors: list[str] = []
-    text = path.read_text(encoding="utf-8")
+    raw_text = path.read_text(encoding="utf-8")
+    # Mojibake is checked against the RAW text: a broken byte sequence inside a
+    # comment is still a broken file and should be caught.
+    text = _strip_html_comments(raw_text)
 
     for marker in MOJIBAKE_MARKERS:
-        if marker in text:
+        if marker in raw_text:
             errors.append(f"{path.name}: suspicious mojibake marker '{marker}' found")
 
     ids = re.findall(r"id\s*=\s*[\"']([^\"']+)[\"']", text, flags=re.IGNORECASE)
