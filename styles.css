@@ -422,7 +422,11 @@ section[id],
   gap: 5px;
   padding: 8px;
   margin-left: auto;
-  width: 38px; height: 38px;
+  /* SHA-167 #26: was 38x38. This is the ONLY way to open the menu below 900px,
+     so it is the most important tap target on the page for phone visitors.
+     44x44 is the WCAG 2.5.5 (AAA) target; 38 cleared the 24px AA minimum but
+     missed it. The bars inside stay 16px - the target grew, not the glyph. */
+  width: 44px; height: 44px;
   align-items: center; justify-content: center;
   border: 1px solid var(--hairline);
   border-radius: 999px;
@@ -1379,6 +1383,15 @@ a.contact-link:hover { color: var(--signal); border-color: var(--signal); }
   color: var(--paper-faint);
   margin: 0;
 }
+/* SHA-161 #23: back-to-top. Inherits the footer's own type treatment rather
+   than introducing a new one, and keeps its underline - colour alone must not
+   be the only affordance for a link (WCAG 1.4.1). */
+.footer .footer-top { margin-top: 0.85rem; }
+.footer-top a {
+  color: var(--paper-soft);
+  border-bottom: 1px solid var(--signal-faint);
+}
+.footer-top a:hover { color: var(--signal-soft); border-bottom-color: var(--signal); }
 
 /* --------------------------------------------------------------------------
    Chatbot — minimal

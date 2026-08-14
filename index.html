@@ -258,7 +258,12 @@
                 srcset="assets/screenshots/assets/profile-hero-mobile.jpg 500w, assets/screenshots/assets/profile-hero.jpg 1400w"
                 sizes="(max-width: 768px) 500px, 1400px"
                 type="image/jpeg" />
-              <img class="profile-photo" src="assets/screenshots/assets/profile-hero.jpg" alt="Azhad Shahzad Shaik" width="1200" height="1200" loading="eager" decoding="async" fetchpriority="high" />
+              <!-- SHA-167 #27: declared 1200x1200 (ratio 1.0) while the file is
+                   actually 1400x1045 (ratio 1.34), measured with System.Drawing.
+                   The browser reserves space from these attributes before the
+                   image arrives, so a wrong ratio reserves a wrong-shaped box and
+                   the layout shifts when the real image lands. Now matches. -->
+              <img class="profile-photo" src="assets/screenshots/assets/profile-hero.jpg" alt="Azhad Shahzad Shaik" width="1400" height="1045" loading="eager" decoding="async" fetchpriority="high" />
             </picture>
           </div>
           <div class="hero-card">
@@ -676,7 +681,20 @@
     </div>
 
     <footer class="footer">
-      <div class="container"><p>&copy; 2026 Azhad Shahzad Shaik. All rights reserved.</p></div>
+      <!-- SHA-161 #23: this page is ~19,000px - roughly 29 screens - and had no
+           way back to the top. `id="top"` already existed on the hero at :226
+           with nothing anywhere referencing it.
+           Deliberately a footer link, NOT a floating button: a fixed-position
+           control over a full-width text column is exactly what caused SHA-113
+           (the motion toggle covering body copy at 390 and 360 wide). A link in
+           the footer needs no JS, no scroll listener and no z-index, and the
+           footer is where you already are when you reach the bottom.
+           Anchor focus is handled site-wide by the SHA-144 fix, so this moves
+           focus as well as scroll position. -->
+      <div class="container">
+        <p>&copy; 2026 Azhad Shahzad Shaik. All rights reserved.</p>
+        <p class="footer-top"><a href="#top">Back to top</a></p>
+      </div>
     </footer>
 <script src="script.min.js?v=20260814-03" defer></script>
     <!-- Three.js is vendored locally: the CSP is script-src 'self' and blocks CDNs. -->
