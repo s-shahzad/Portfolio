@@ -839,25 +839,23 @@ section[id],
   counter-reset: proj-counter;
 }
 
-#featuredProjectsWrapper,
-.featured-swiper,
-.featured-swiper .swiper-wrapper {
-  display: block !important;
-  width: 100% !important;
-  height: auto !important;
-  transform: none !important;
-  overflow: visible !important;
+/* SHA-166 #78: this block used to be 15 `!important` declarations whose only
+   job was to out-specify swiper-bundle.min.css. That stylesheet was deleted in
+   SHA-159 and Swiper was never loaded on this site anyway, so there is nothing
+   left to override. The markup was renamed off the Swiper vocabulary at the
+   same time - calling a static stack `.swiper-slide` invited the next reader to
+   assume a carousel exists. Plain rules now, no overrides. */
+.featured-stack,
+.featured-stack__list {
+  display: block;
+  width: 100%;
 }
-.featured-swiper .swiper-slide {
-  display: block !important;
-  width: 100% !important;
-  flex-shrink: 1 !important;
-  transform: none !important;
-  margin: 0 0 clamp(3rem, 6vw, 5rem) !important;
-  height: auto !important;
-  opacity: 1 !important;
+.featured-stack__item {
+  display: block;
+  width: 100%;
+  margin: 0 0 clamp(3rem, 6vw, 5rem);
 }
-.featured-swiper .swiper-slide:last-child { margin-bottom: 0 !important; }
+.featured-stack__item:last-child { margin-bottom: 0; }
 
 .featured-case {
   display: grid;
@@ -1089,22 +1087,10 @@ section[id],
 /* --------------------------------------------------------------------------
    Publications / Certifications — flat grid
    -------------------------------------------------------------------------- */
-.auto-swiper,
-.auto-swiper .swiper-wrapper {
-  display: block !important;
-  width: 100% !important;
-  transform: none !important;
-  height: auto !important;
-}
-.auto-swiper .swiper-slide {
-  display: block !important;
-  width: 100% !important;
-  flex-shrink: 1 !important;
-  transform: none !important;
-  height: auto !important;
-  opacity: 1 !important;
-}
-.swiper-shell { display: block !important; }
+/* SHA-166 #78: `.auto-swiper` and `.swiper-shell` rules lived here, 11 more
+   `!important` declarations fighting a stylesheet this site never loaded.
+   Neither class appears in any HTML file on the site - verified across every
+   page, not just index.html - so they were unreachable as well as pointless. */
 
 #publications .cards,
 #certifications .cards {
@@ -1549,8 +1535,11 @@ mark.hit {
   text-decoration: underline;
 }
 
-.is-hidden, .slide-hidden { display: none !important; }
-.card-spotlight, .card-dim { opacity: 1 !important; transform: none !important; }
+/* SHA-166 #78: `.is-hidden`, `.slide-hidden`, `.card-spotlight` and `.card-dim`
+   were applied by the deleted site-search and Swiper spotlight code (SHA-159).
+   Nothing sets them any more and no HTML carries them, so the rules - and four
+   more `!important` - are gone. `[hidden]` at the top of this file is the one
+   hiding mechanism left, which is the right number. */
 
 /* --------------------------------------------------------------------------
    Reveal motion
