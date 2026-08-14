@@ -89,7 +89,15 @@
         <p class="meta">Role: Jr. Data Analyst | Organization: Solstice Solutions, Inc. | Period: Oct 2025 to Present</p>
         <p class="lede">Bridged two healthcare standards into a more reliable, validation-first integration path for clinical delivery teams.</p>
 
-        <div class="summary-grid" aria-label="Case study summary">
+        <!-- SHA-163 #49 + SHA-168 #53, one fix: the page went h1 -> h3 because
+             these three cards were the first headings after the title and
+             nothing declared the level between them. The grid was also a plain
+             <div aria-label> with no role, so that label was discarded by
+             assistive tech and the block was announced as nothing at all. A
+             real, visible h2 both closes the level gap and names the region,
+             which is why the dead aria-label is gone rather than re-roled. -->
+        <h2>At a glance</h2>
+        <div class="summary-grid">
           <div class="summary-card">
             <h3>Standards</h3>
             <strong>HL7 + FHIR</strong>
@@ -123,7 +131,10 @@
         <h2>Business Value</h2>
         <p>The practical benefit was less integration churn: fewer avoidable mismatches, cleaner downstream data handling, and a more reusable path for future healthcare interface work.</p>
 
-        <div class="kpis" aria-label="Case study highlights">
+        <!-- SHA-168 #53: aria-label on a role-less div is ignored. This strip
+             has no heading of its own to lean on, so it takes role="group" and
+             keeps its label instead of losing it. -->
+        <div class="kpis" role="group" aria-label="Case study highlights">
           <div class="kpi">
             <strong>Interoperability</strong>
             <p>improved for cross-system exchange</p>
