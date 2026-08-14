@@ -12,7 +12,7 @@
     <meta property="og:description" content="Measurement-first research on the security of the post-quantum migration. Crypto-agility, not scheme design." />
     <meta property="og:type" content="profile" />
     <meta property="og:url" content="https://azhadshahzadshaik.netlify.app/research/" />
-    <link rel="stylesheet" href="../styles.min.css?v=20260814-01" />
+    <link rel="stylesheet" href="../styles.min.css?v=20260814-02" />
     <link rel="icon" href="/assets/images/assets/logo-alt-c-icon.svg" type="image/svg+xml" />
   <link rel="alternate icon" href="/assets/screenshots/assets/logo-alt-c-icon.png" type="image/png" />
 </head>
@@ -20,18 +20,22 @@
     <a class="skip-link" href="#mainContent">Skip to main content</a>
     <div class="grain"></div>
 
+    <!-- SHA-130: nav moved out of header.hero so position:sticky applies to the
+         whole document rather than dying with the hero. -->
+    <nav class="nav" aria-label="Primary">
+      <div class="nav-inner">
+        <ul class="nav-links">
+          <li><a href="../index.html">Portfolio</a></li>
+          <li><a href="#interests">Interests</a></li>
+          <li><a href="#current">Current work</a></li>
+          <li><a href="#publications">Publications</a></li>
+          <li><a href="#method">Method</a></li>
+        </ul>
+      </div>
+    </nav>
+
     <header class="hero">
       <div class="container">
-        <nav class="nav" aria-label="Primary">
-          <ul class="nav-links">
-            <li><a href="../index.html">Portfolio</a></li>
-            <li><a href="#interests">Interests</a></li>
-            <li><a href="#current">Current work</a></li>
-            <li><a href="#publications">Publications</a></li>
-            <li><a href="#method">Method</a></li>
-          </ul>
-        </nav>
-
         <div class="hero-main">
           <p class="hero-eyebrow">Research &middot; measurement-first security &middot; PhD applicant</p>
           <h1>Does critical infrastructure actually move to post-quantum cryptography, or does it only look like it has?</h1>

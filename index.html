@@ -143,7 +143,7 @@
     <link rel="preload" as="font" type="font/woff2" crossorigin href="https://fonts.gstatic.com/s/fraunces/v38/6NUV8FyLNQOQZAnv9ZwIlOk.woff2" />
     <link rel="preload" as="font" type="font/woff2" crossorigin href="https://fonts.gstatic.com/s/bricolagegrotesque/v9/3y9K6as8bTXq_nANBjzKo3IeZx8z6up5BeSl9D4dj_x9PpZBMlGIInE.woff2" />
     <link rel="shortcut icon" href="assets/screenshots/assets/logo-alt-c-icon.png" type="image/png" />
-    <link rel="stylesheet" href="styles.min.css?v=20260814-01" />
+    <link rel="stylesheet" href="styles.min.css?v=20260814-02" />
     <link rel="stylesheet" href="assets/lattice.css?v=20260813-02" />
     <link rel="icon" href="/assets/images/assets/logo-alt-c-icon.svg" type="image/svg+xml" />
   <link rel="alternate icon" href="/assets/screenshots/assets/logo-alt-c-icon.png" type="image/png" />
@@ -156,9 +156,15 @@
     <div id="scrim" aria-hidden="true"></div>
     <div class="grain"></div>
 
-    <header class="hero" id="top">
-      <div class="container">
-        <nav class="nav" aria-label="Primary">
+    <!-- SHA-130: this nav used to live inside header.hero. position:sticky only
+         sticks within its containing block, so it scrolled away with the hero and
+         left ~19,000px of page with no navigation. It is now a direct child of
+         body — which assets/lattice.css:57 (`body > nav { z-index: 2 }`) already
+         assumed. The backdrop paints on .nav (full width) and the CONTENT is
+         constrained by .nav-inner, which also retires the .nav::before full-bleed
+         workaround added in PR #34. -->
+    <nav class="nav" aria-label="Primary">
+      <div class="nav-inner">
           <button class="brand-btn" id="brandLogoBtn" type="button" aria-label="Open logo preview" aria-haspopup="dialog" aria-controls="logoModal" aria-expanded="false">
             <svg class="brand-logo-image" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false">
               <rect x="0" y="0" width="512" height="512" rx="96" fill="#060B14"></rect>
@@ -180,8 +186,10 @@
           <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu">
             <span></span><span></span><span></span>
           </button>
-        </nav>
-        <div id="mobile-menu" class="mobile-menu" hidden>
+      </div>
+    </nav>
+
+    <div id="mobile-menu" class="mobile-menu" hidden>
           <a href="#about">About</a>
           <a href="#research">Research</a>
           <a href="#publications">Publications</a>
@@ -191,8 +199,10 @@
           <a href="#education">Education</a>
           <a href="#skills">Skills</a>
           <a href="#contact">Contact</a>
-        </div>
+    </div>
 
+    <header class="hero" id="top">
+      <div class="container">
         <div class="hero-content">
           <div class="hero-text">
             <p class="hero-eyebrow">Engineer &amp; applied researcher &middot; security, ML &amp; intelligent systems &middot; Hartford, CT</p>
@@ -645,8 +655,8 @@
       <div class="container"><p>&copy; 2026 Azhad Shahzad Shaik. All rights reserved.</p></div>
     </footer>
     <button class="motion-toggle" id="motion-toggle" type="button" aria-pressed="false">Motion: auto</button>
-<script src="script.min.js?v=20260612-01" defer></script>
+<script src="script.min.js?v=20260814-02" defer></script>
     <!-- Three.js is vendored locally: the CSP is script-src 'self' and blocks CDNs. -->
-    <script type="module" src="assets/lattice.js?v=20260812-01"></script>
+    <script type="module" src="assets/lattice.js?v=20260814-02"></script>
   </body>
 </html>

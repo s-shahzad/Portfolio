@@ -174,6 +174,14 @@
         behavior: smooth && !prefersReducedMotion ? "smooth" : "auto",
         block: "start",
       });
+
+      // SHA-144: scrolling alone leaves document.activeElement on BODY, so the
+      // next Tab dumps keyboard and screen-reader users back at the top of the
+      // page instead of continuing from the section they just navigated to.
+      // tabindex="-1" makes a non-interactive section programmatically
+      // focusable without adding it to the tab order. WCAG 2.4.3.
+      if (!target.hasAttribute("tabindex")) target.setAttribute("tabindex", "-1");
+      target.focus({ preventScroll: true });
     };
 
     const syncHashOffset = ({ smooth = false } = {}) => {
