@@ -22,11 +22,9 @@
 
 const THREE_URL = '/assets/vendor/three.module.min.js';
 
-/* SHA-162 #36: the prototype this grew out of stored its preference under a
-   sample-page key. Renamed to a name that belongs to this site. There is no
-   migration on purpose - a stale preference is not worth carrying a dead
-   identifier into production for. */
-const MOTION_KEY = 'portfolio-motion';
+/* SHA-162 #36 renamed a sample-era localStorage key here. SHA-189 then removed
+   the motion override entirely, so the key has no reader or writer left and is
+   gone with it. Nothing on this site persists a motion preference now. */
 
 /* SHA-135: how long the idle rotation is allowed to keep the render loop
    alive after the last interaction. The loop used to run forever on the high
@@ -57,14 +55,11 @@ function hasWebGL(){
 const savingData = () =>
   mqData.matches || !!(navigator.connection && navigator.connection.saveData === true);
 
-function motionState(){
-  const s = localStorage.getItem(MOTION_KEY);
-  return s === 'off' ? 'off' : s === 'on' ? 'on' : 'auto';
-}
+/* SHA-189: the OS setting is the only input. A localStorage override used to
+   sit in front of this, driven by a Motion off/auto/on button; both are gone.
+   Reduced-motion visitors get exactly one still frame, with no way for the
+   page to talk them out of it. */
 function motionPref(){
-  const s = motionState();
-  if(s === 'off') return false;
-  if(s === 'on')  return true;
   return !mqReduce.matches;
 }
 
@@ -84,37 +79,18 @@ function tier(){
   return 'high';
 }
 
-/* ---------- motion toggle ---------- */
-const toggleBtn = document.getElementById('motion-toggle');
 /* The live backdrop's control surface, or null while the static fallback is
-   showing. SHA-148 needs this so the toggle can act on a running loop
-   instead of reloading the document. */
+   showing. The OS-preference listener below acts on it so a visitor who
+   changes their reduced-motion setting mid-visit is honoured immediately,
+   without a reload. */
 let backdrop = null;
 
-function paintToggle(){
-  if(!toggleBtn) return;
-  const state = motionState();
-  toggleBtn.textContent = 'Motion: ' + state;
-  /* SHA-162 #35: aria-pressed is a two-state attribute on a three-state
-     control, so a screen reader announced "pressed: true" for both "on" and
-     "auto". Name the state in the accessible name instead. The visible text
-     is a prefix of that name, so label-in-name still holds. */
-  toggleBtn.removeAttribute('aria-pressed');
-  toggleBtn.setAttribute(
-    'aria-label',
-    'Motion: ' + state + '. Activate to cycle background motion between auto, off and on.'
-  );
-}
-toggleBtn && toggleBtn.addEventListener('click', () => {
-  const next = motionState() === 'auto' ? 'off' : motionState() === 'off' ? 'on' : '';
-  if(next) localStorage.setItem(MOTION_KEY, next); else localStorage.removeItem(MOTION_KEY);
-  paintToggle();
-  /* SHA-148: apply the setting in place. This used to call location.reload(),
-     which threw away the visitor's scroll position and re-downloaded the whole
-     page to change a background. */
-  if(backdrop) backdrop.setMotion(motionPref());
-});
-paintToggle();
+/* SHA-189: a Motion off/auto/on button lived here. It wrote a localStorage
+   override that sat in front of the OS setting, and earlier versions reloaded
+   the whole document to apply it (SHA-148). Both the control and the override
+   are gone — the backdrop reads (prefers-reduced-motion: reduce) and nothing
+   else. Removing it also retired the aria-pressed-on-a-three-state-control
+   problem from SHA-162 #35 rather than working around it. */
 
 /* SHA-138: a sectionObserver used to live here. It was dead code carried over
    from the 3D prototype - it queried two nav selectors that do not exist on
