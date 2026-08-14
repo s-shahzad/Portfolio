@@ -96,6 +96,29 @@ h1, h2, h3 { font-family: "Fraunces", Georgia, serif; }
   text-decoration: underline;
 }
 
+/* SHA-157: this stylesheet styled .back-link and .rule-link but never a plain
+   anchor, so the two inline links to the NIDS case study on /detections/ fell
+   all the way back to the user-agent default — #0000EE underlined — on the dark
+   panel. That measures 1.93:1 against --panel: a WCAG 1.4.3 failure, and it reads
+   as a broken page on the one page meant to showcase detection work.
+
+   Scoped with :not([class]) so it reaches exactly the anchors nothing else
+   claims, and cannot fight .back-link / .rule-link over colour or decoration.
+   --accent #ff6b3d measures 6.41:1 on --panel #12161d and 6.11:1 on the
+   --panel-soft #161b23 end of the gradient — AA body text across the whole fill.
+   The underline stays: these are inline prose links, so colour alone must not
+   be the only thing marking them (WCAG 1.4.1). */
+.page a:not([class]) {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}
+
+.page a:not([class]):hover,
+.page a:not([class]):focus-visible {
+  color: var(--text);
+}
+
 .panel {
   border: 1px solid var(--border);
   border-radius: 16px;
