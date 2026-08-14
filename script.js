@@ -284,10 +284,16 @@
     onScrollState();
     window.addEventListener("scroll", onScrollState, { passive: true });
 
+    // SHA-142: the nav now contains page links ("research/"), not only in-page
+    // anchors. document.querySelector("research/") THROWS a SyntaxError — "/" is
+    // not valid selector syntax — and because this runs inside setupNavigation(),
+    // the throw aborted bootstrapApp() and took analytics, reveal, search and the
+    // carousel down with it. Scroll-spy only ever applied to in-page anchors, so
+    // restrict the lookup to hrefs that are actually selectors.
     const sectionElements = desktopNavLinks
       .map((link) => {
         const id = link.getAttribute("href");
-        const section = id ? document.querySelector(id) : null;
+        const section = id && id.startsWith("#") && id.length > 1 ? document.querySelector(id) : null;
         return section ? { id, section } : null;
       })
       .filter(Boolean);
