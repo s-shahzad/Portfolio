@@ -8,7 +8,7 @@ from urllib.parse import unquote
 
 
 MOJIBAKE_MARKERS = ["Ã", "Â", "â"]
-HTML_FILES = ["index.html", "cyber-demo.html"]
+HTML_FILES = ["index.html"]
 
 
 def _is_ignored_ref(ref: str) -> bool:
