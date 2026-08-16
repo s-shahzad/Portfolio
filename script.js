@@ -227,10 +227,14 @@
           observer.unobserve(entry.target);
         });
       },
-      // threshold is a fraction of the ELEMENT, so a section taller than
-      // ~7x the viewport can never reach 0.14 and stays at opacity:0 forever.
-      // #certifications (6,287px) needed a 957px viewport; Projects broke below 646px. SHA-221
-      { threshold: 0.05, rootMargin: "0px 0px -8% 0px" }
+      // threshold MUST stay 0. It is a fraction of the ELEMENT, so a tall
+      // section can never reach a nonzero value and stays at opacity:0 forever:
+      // 0.14 hid #certifications on every laptop (SHA-221), and 0.05 still hid it
+      // below a ~633px viewport once mobile reflow made it ~11,600px (SHA-222) --
+      // which is where LinkedIn's in-app browser lives. At 0 any nonzero
+      // intersection fires, so no element height can break it. The -8% rootMargin
+      // below, not the threshold, is what delays the reveal until it is on screen.
+      { threshold: 0, rootMargin: "0px 0px -8% 0px" }
     );
 
     revealAll.forEach((node) => revealObserver.observe(node));
