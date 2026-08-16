@@ -306,13 +306,6 @@
               <p>Cybersecurity M.S., an ECE degree specialized in embedded controllers, IoTs and power electronics, and IEEE first-author on machine learning for EV-charger DoS. I build security systems to understand them, then measure whether they actually hold up. When the measurement disagrees with the headline, I publish the disagreement. That habit is most of what I have to offer, and the numbers behind it are in the projects below rather than asserted here.</p>
               <p>The thread running through the work is industrial and embedded systems, from PLCs and RAN sites to EV chargers, and what happens to their security when the cryptography underneath them has to change. Measurement first. What infrastructure does, not what the specification says it should.</p>
               <p>Three lanes of background feed the research. Telecom OSS for ~3,500 Vodafone Idea sites during the SRAN cutover, including on-call work on migration failures. HL7 v2.5 &rarr; FHIR R4 pipelines at Solstice on Azure. IT risk and NIST CSF at iQ4, where I studied the 2016 Uber breach in depth.</p>
-              <ul class="about-list" aria-label="What I work on">
-                <li>Backend APIs in Python / FastAPI. Auth, retries that aren't optimistic, structured errors.</li>
-                <li>Healthcare interop - HL7 v2.5, FHIR R4, EDI 837/835. Validation at every pipeline stage.</li>
-                <li>Hybrid IDS - live capture and PCAP replay with optional Suricata/Zeek ingest, feeding a supervised ensemble (Random Forest, ExtraTrees, HistGB, XGBoost) with a signature-anomaly fusion layer on top.</li>
-                <li>Local-first AI tooling - multi-provider router (Ollama &rarr; Gemini &rarr; OpenAI &rarr; Grok &rarr; NVIDIA), bounded agents.</li>
-                <li>Risk &rarr; remediation in language eng teams will actually pick up. No infosec-ese.</li>
-              </ul>
             </div>
           </div>
         </div>
@@ -516,31 +509,6 @@
                     <p class="featured-note">Long-term commercial project - case study on request.</p>
                   </article>
                 </div>
-                <div class="featured-stack__item">
-                  <article class="project-card featured-case" data-category="security">
-                    <h3>Enterprise Risk &amp; Threat Analysis</h3>
-                    <figure class="featured-proof">
-                      <img class="featured-proof-image" src="assets/images/proof-enterprise-risk.svg?v=20260612" alt="Enterprise risk workflow from findings to NIST mapping and remediation" width="640" height="320" loading="lazy" decoding="async" fetchpriority="low" />
-                    </figure>
-                    <p>Read through the 2016 Uber breach at iQ4 and rebuilt the postmortem against NIST CSF - Identify through Recover. Wrote remediation language eng teams could actually pick up without re-translating.</p>
-                    <!-- SHA-163 #50: was "View case study", identical to the HL7
-                         link below. The subject is folded into the visible text
-                         rather than hidden in an aria-label, matching the
-                         sibling links "View NIDS case study" / "View detection
-                         library" already used in this same stack. -->
-                    <a class="text-link" href="case-studies/enterprise-risk-threat-analysis.html">View enterprise risk case study</a>
-                  </article>
-                </div>
-                <div class="featured-stack__item">
-                  <article class="project-card featured-case" data-category="backend healthcare">
-                    <h3>HL7 v2.5 &rarr; FHIR R4 at Solstice</h3>
-                    <figure class="featured-proof">
-                      <img class="featured-proof-image" src="assets/images/proof-hl7-fhir.svg?v=20260612" alt="HL7 to FHIR mapping pipeline diagram" width="640" height="320" loading="lazy" decoding="async" fetchpriority="low" />
-                    </figure>
-                    <p>HL7 v2.5 messages parsed, mapped to FHIR R4 resources, dropped into Azure. Validation at ingest, transform, and export. Caught one EDI 837 claim with a malformed patient identifier that would've bounced a real bill back.</p>
-                    <a class="text-link" href="case-studies/hl7-fhir-integration.html">View HL7 to FHIR case study</a>
-                  </article>
-                </div>
               </div>
             </div>
           </div>
@@ -558,6 +526,7 @@
             <article class="exp-item">
               <div class="exp-top"><div><h3>Solstice Solutions, Inc.</h3><p class="exp-role">Jr. Data Analyst</p><p class="exp-loc">Hartford, CT</p></div><div class="exp-date">Oct 2025 - Present</div></div>
               <ul class="exp-points"><li>HL7 v2.5 &rarr; FHIR R4 on Azure. Mapped ADT, ORU, and ORM message types end to end.</li><li>Wrote validation at ingest, transform, and export. Claims approval at 99.9% in the runs I've shipped.</li><li>Caught a malformed patient identifier in an EDI 837 that would've kicked a real bill back to the payer.</li></ul>
+              <a class="text-link" href="case-studies/hl7-fhir-integration.html">View HL7 to FHIR case study</a>
             </article>
             <article class="exp-item">
               <div class="exp-top"><div><h3>Infosysnow Inc.</h3><p class="exp-role">Cyber Security Engineer</p><p class="exp-loc">Remote</p></div><div class="exp-date">Aug 2025 - Oct 2025</div></div>
@@ -566,6 +535,7 @@
             <article class="exp-item">
               <div class="exp-top"><div><h3>iQ4</h3><p class="exp-role">IT Risk Analyst Intern</p><p class="exp-loc">Remote</p></div><div class="exp-date">May 2024 - Aug 2024</div></div>
               <ul class="exp-points"><li>IT risk intern. Read through the 2016 Uber breach and mapped findings against the full NIST CSF lifecycle.</li><li>Findings landed in the team's incident-response playbook. Good thing it didn't stay theoretical.</li></ul>
+              <a class="text-link" href="case-studies/enterprise-risk-threat-analysis.html">View enterprise risk case study</a>
             </article>
             <article class="exp-item">
               <div class="exp-top"><div><h3>Sripton Technologies Pvt Ltd</h3><p class="exp-role">Associate Software Engineer</p><p class="exp-loc">India</p></div><div class="exp-date">Apr 2023 - Dec 2023</div></div>
@@ -944,7 +914,7 @@
             <div class="skill-group">
               <h3>Core Security</h3>
               <div class="skills">
-                <div class="skill">Threat Modeling</div><div class="skill">Risk Assessment</div><div class="skill">Vulnerability Analysis</div><div class="skill">Incident Response</div><div class="skill">NIST CSF</div><div class="skill">SIEM</div><div class="skill">Pen Testing</div><div class="skill">Network Security</div>
+                <div class="skill">Threat Modeling</div><div class="skill">Risk Assessment</div><div class="skill">Vulnerability Analysis</div><div class="skill">Incident Response</div><div class="skill">NIST CSF</div><div class="skill">SIEM</div><div class="skill">Network Security</div>
               </div>
             </div>
             <div class="skill-group">
@@ -961,7 +931,7 @@
             </div>
             <div class="skill-group">
               <h3>Tools</h3>
-              <div class="skills"><div class="skill">Wireshark</div><div class="skill">Nmap</div><div class="skill">Snort</div><div class="skill">Gitleaks</div><div class="skill">Linux/Bash</div><div class="skill">PowerShell</div><div class="skill">Git</div><div class="skill">TCP/IP</div><div class="skill">Tableau</div><div class="skill">Power BI</div></div>
+              <div class="skills"><div class="skill">Wireshark</div><div class="skill">Gitleaks</div><div class="skill">Linux/Bash</div><div class="skill">PowerShell</div><div class="skill">Git</div><div class="skill">TCP/IP</div></div>
             </div>
           </div>
         </div>
