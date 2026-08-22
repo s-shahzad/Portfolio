@@ -243,12 +243,34 @@ em { font-style: italic; color: var(--paper); }
   padding-inline: var(--gutter);
 }
 
+/* SHA-257: the nine content sections rendered straight onto the animated
+   lattice. `.section` set position:relative but no background, and `.section.alt`
+   explicitly forced `transparent`, so body text composited against whatever the
+   canvas happened to draw that frame. WCAG 1.4.3 cannot be satisfied by a
+   background that changes every frame — the worst case is what counts, and the
+   worst case was a bright drifting node under --paper-soft text.
+
+   Same fix as SHA-149 used for .hero-card: an OPAQUE panel. assets/lattice.css
+   already lifts `body > main` to z-index 2, above #bg (0) and #scrim (1), so an
+   opaque section background means neither the canvas nor the scrim contributes
+   anything to the rendered background. Contrast stops being a moving target and
+   becomes a fixed, computable number:
+     --paper      #e9e9ec on --ink-base #0a0b0d = 16.25:1
+     --paper-soft #b8bac0 on --ink-base #0a0b0d = 10.15:1
+     --paper      #e9e9ec on --ink-deep #101216 = 15.47:1
+     --paper-soft #b8bac0 on --ink-deep #101216 =  9.66:1
+   All four clear AA body text (4.5:1) and AAA (7:1) at every viewport.
+
+   `.alt` now earns its name — it alternates a half-step lighter instead of
+   being a no-op. The lattice stays fully visible in the hero, where it is an
+   entrance effect rather than something readers must read through. */
 .section {
   padding-block: var(--section-py);
   position: relative;
+  background: var(--ink-base);
   border-top: 1px solid var(--hairline);
 }
-.section.alt { background: transparent; }
+.section.alt { background: var(--ink-deep); }
 .section:first-of-type { border-top: 0; }
 
 .section-head {
