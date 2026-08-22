@@ -30,7 +30,6 @@
             "@type": "Person",
             "name": "Azhad Shahzad Shaik",
             "jobTitle": "Engineer & Applied Researcher",
-            "email": "mailto:shaikazhadshahzad@gmail.com",
             "image": "https://azhadshahzadshaik.netlify.app/assets/screenshots/assets/profile-hero.jpg",
             "url": "https://azhadshahzadshaik.netlify.app/",
             "sameAs": ["https://github.com/s-shahzad", "https://www.linkedin.com/in/azhad-shahzad-shaik", "https://orcid.org/0009-0009-6450-5837", "https://scholar.google.com/citations?user=l2McKRYAAAAJ"],
@@ -214,7 +213,6 @@
             <li><a href="#research">Interests</a></li>
             <li><a href="research/">Research</a></li>
             <li><a href="#publications">Publications</a></li>
-            <li><a href="#featured">Projects</a></li>
             <li><a href="#experience">Experience</a></li>
             <li><a href="#contact">Contact</a></li>
           </ul>
@@ -234,7 +232,7 @@
           <a href="#research">Interests</a>
           <a href="research/">Research</a>
           <a href="#publications">Publications</a>
-          <a href="#featured">Projects</a>
+          Projects
           <a href="#experience">Experience</a>
           <a href="#contact">Contact</a>
     </div>
@@ -250,17 +248,15 @@
             <div class="cta-row">
               <a class="btn primary" href="#research">Research &amp; Projects</a>
               <a class="btn ghost" href="https://www.linkedin.com/in/azhad-shahzad-shaik" target="_blank" rel="noopener noreferrer">View work history</a>
-              <a class="btn ghost" href="mailto:shaikazhadshahzad@gmail.com">Get in Touch</a>
+              <a class="btn ghost" href="#contact">Get in Touch</a>
             </div>
             <!-- SHA-175: was a <div aria-label> of <span>s with literal "|"
                  separator spans. A div with aria-label and no role is ignored
                  by screen readers (SHA-168), and the pipes landed at the start
                  of a wrapped line on narrow screens. A real list carries the
                  label, and the gap does the separating. -->
-            <ul class="credentials-strip" aria-label="Verified credentials">
+            <ul class="credentials-strip" aria-label="Publications and research profiles">
               <li class="credential"><strong>IEEE</strong> first-author &middot; <a href="https://ieeexplore.ieee.org/document/11275540" target="_blank" rel="noopener noreferrer">GCAIoT 2025</a></li>
-              <li class="credential"><strong>CompTIA</strong> Security+ &middot; valid Oct 2028</li>
-              <li class="credential"><strong>M.S.</strong> Cybersecurity &middot; Sacred Heart Univ</li>
               <li class="credential"><a href="https://scholar.google.com/citations?user=l2McKRYAAAAJ" target="_blank" rel="noopener noreferrer">Google Scholar</a></li>
             </ul>
           </div>
@@ -384,65 +380,6 @@
           </div>
         </div>
       </section>
-      <section id="featured" class="section reveal">
-        <div class="container">
-          <div class="section-head">
-            <h2>Selected Projects &amp; Research</h2>
-            <p>Things I built to answer a question. Real numbers, and the tradeoffs I would revisit.</p>
-          </div>
-          <div class="featured-carousel">
-            <div class="featured-stack">
-              <div class="featured-stack__list">
-                <div class="featured-stack__item">
-                  <article class="project-card featured-case" data-category="security ml backend">
-                    <h3>Fusion NIDS - Hybrid Intrusion Detection</h3>
-                    <figure class="featured-proof">
-                      <img class="featured-proof-image" src="assets/images/proof-nids-workspace.svg?v=20260612" alt="NIDS workspace diagram showing ingest, features, training, and detection output" width="640" height="320" loading="lazy" decoding="async" fetchpriority="low" />
-                    </figure>
-                    <p>Live capture and PCAP replay with optional Suricata/Zeek ingest, feeding a supervised ensemble (Random Forest, ExtraTrees, HistGB, XGBoost) plus unsupervised detection, with a signature-anomaly fusion layer on top. Ran it through a <strong>21,600-second stability soak</strong>: 87,533 per-packet records, 0 emitted alerts, 409 MB peak memory, 13.3 s restart recovery, then audited my own headline number and published what it does and does not prove. The honest version: 3 h 19 m of flow records, 30.9% peak capture loss, and no attack traffic in the corpus, so it is a stability result and not a false-positive rate. The IDS literature is full of claims that don't survive scrutiny. I wanted mine to.</p>
-                    <ul class="featured-meta">
-                      <li><strong>Stack:</strong> Python, FastAPI, scikit-learn, XGBoost, Suricata/Zeek adapters, Pandas, Docker</li>
-                      <li><strong>Detection:</strong> signature + anomaly + supervised ML, fusion layer for confirmation</li>
-                      <li><strong>Validation:</strong> 21,600 s soak, 3 h 19 m of flow records / 0 emitted alerts / 409 MB peak RSS &middot; <!-- ci-metrics:start -->292 tests passing (CI, 2026-07-27) &middot; 75.83% coverage at 2026-07-02<!-- ci-metrics:end --> &middot; claims self-audited (SOAK_CLAIM_AUDIT)</li>
-                      <li><strong>Tradeoff:</strong> chose accuracy over latency; p99 inference is 340 ms, which I am working to bring down.</li>
-                    </ul>
-                    <a class="text-link" href="projects/nids/">View NIDS case study</a>
-                    <a class="text-link" href="https://github.com/s-shahzad/fusion-nids" target="_blank" rel="noopener noreferrer">Source on GitHub</a>
-                  </article>
-                </div>
-                <div class="featured-stack__item">
-                  <article class="project-card featured-case" data-category="security detection">
-                    <h3>Detection Library - Sigma, SPL, Suricata, Zeek</h3>
-                    <p>The rules behind the NIDS pipeline, written out as code. Five Sigma rules + two Splunk hunts + a Suricata UA pack + a Zeek enrichment script - each one tagged with the engine it feeds (signature / anomaly / supervised / unsupervised / fusion) and the MITRE ATT&amp;CK technique it catches.</p>
-                    <ul class="featured-meta">
-                      <li><strong>Sigma:</strong> PowerShell b64, DNS exfil, C2 beacon, auth burst, SYN scan</li>
-                      <li><strong>SPL:</strong> beacon stddev, lateral movement chain</li>
-                      <li><strong>Sensor:</strong> Suricata UA anomaly rules + Zeek conn enrichment</li>
-                      <li><strong>Tuning:</strong> each rule documents the lever to adjust before deploying</li>
-                    </ul>
-                    <a class="text-link" href="detections/">View detection library</a>
-                  </article>
-                </div>
-                <div class="featured-stack__item">
-                  <article class="project-card featured-case" data-category="security ml backend ai">
-                    <h3>Vector - Local-first AI Security Platform</h3>
-                    <figure class="featured-proof">
-                      <img class="featured-proof-image" src="assets/images/proof-nids-workspace.svg?v=20260612" alt="Vector platform architecture diagram" width="640" height="320" loading="lazy" decoding="async" fetchpriority="low" />
-                    </figure>
-                    <p>Local-first because I don't want telemetry leaving the box. FastAPI runtime (chosen over Flask for its middleware model), multi-provider router falls across Ollama &rarr; Gemini &rarr; OpenAI &rarr; Grok &rarr; NVIDIA. Bounded agents so the model can't reach beyond the tools I've defined for it.</p>
-                    <ul class="featured-meta">
-                      <li><strong>Stack:</strong> Python, FastAPI, Ollama, sqlite, Windows DPAPI for creds</li>
-                      <li><strong>Architecture:</strong> local-first, agent-bounded, telemetry stays on-host</li>
-                      <li><strong>Status:</strong> active dev. Private repo. My team uses it daily.</li>
-                    </ul>
-                    <p class="featured-note">Long-term commercial project - case study on request.</p>
-                  </article>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
       <section id="research" class="section reveal">
         <div class="container">
           <div class="section-head">
@@ -451,24 +388,19 @@
           </div>
           <div class="value-grid">
             <article class="value-card">
-              <h3>ML for security &amp; anomaly detection</h3>
-              <p>Hybrid signature-plus-anomaly fusion, supervised and unsupervised ensembles, and the hard part nobody publishes: keeping false positives low at production scale.</p>
-              <p class="now-line"><strong>Now:</strong> building eval harnesses, because a detection nobody has measured is a claim, not a control.</p>
+              <h3>Post-quantum migration, measured</h3>
+              <p>The standards are settled. ML-KEM is FIPS 203. NIST IR 8547 deprecates classical public-key cryptography in 2030 and disallows it in 2035. The deployment is not settled, and nobody can manage a migration they cannot see. I build measurement tooling that asks what infrastructure actually negotiates, not what its release notes claim. Crypto-agility, not scheme design.</p>
+              <p class="now-line"><strong>Now:</strong> internet-scale readiness measurement across TLS and SSH, with results in peer review.</p>
             </article>
             <article class="value-card">
-              <h3>Critical-infrastructure &amp; IoT/OT security</h3>
-              <p>Protocol-level attack surfaces (OCPP, MQTT, CAN), EV-charging and smart-grid threat models, and where IT and OT meet and break.</p>
-              <p class="now-line"><strong>Now:</strong> going deeper on industrial and EV-charging protocols beyond OCPP, which is where the IEEE work pointed.</p>
+              <h3>The long tail: critical infrastructure and OT</h3>
+              <p>Harvest-now-decrypt-later is a deadline problem, and it lands hardest where devices ship with fifteen-year service lives and no update path. EV charging, industrial protocols, embedded fleets. These are the endpoints that will still be negotiating classical key exchange long after the browsers have moved on, and they are the least measured.</p>
+              <p class="now-line"><strong>Now:</strong> extending readiness measurement past the web PKI into OCPP and OT protocol surfaces.</p>
             </article>
             <article class="value-card">
-              <h3>Local-first &amp; agentic AI systems</h3>
-              <p>Bounded agents, multi-provider routing, on-host telemetry, and health-IT data integrity (HL7/FHIR). How do we get useful AI tooling without handing data to someone else's cloud?</p>
-              <p class="now-line"><strong>Now:</strong> multi-agent orchestration and local LLM tooling. Reading the papers, then trying to break my own implementations of them.</p>
-            </article>
-            <article class="value-card">
-              <h3>Security of the post-quantum migration</h3>
-              <p>Measuring whether real infrastructure actually moves to post-quantum cryptography or only looks like it has: classical-only fallback, silent downgrades, and incomplete rollouts across TLS and OT/IoT fleets. Crypto-agility, not scheme design.</p>
-              <p class="now-line"><strong>Now:</strong> measurement tooling for endpoint readiness, and writing up what it finds.</p>
+              <h3>Evidence over claims</h3>
+              <p>Security research has a reproducibility problem. Detection results get published as headline numbers with no error bars, no capture loss, no negative controls. My IEEE work on ML intrusion detection taught me how easy that is to do by accident. I now audit my own headline figures before anyone else can, and publish what they do not prove.</p>
+              <p class="now-line"><strong>Now:</strong> scan methodology and ethics, reproducible artifacts, and stating limitations in the paper rather than after review.</p>
             </article>
           </div>
           <p class="now-note research-statement">I write up the research side properly on the <a href="research/">research page</a>: measurement work on the post-quantum migration, publications, and how I evaluate my own results.</p>
@@ -486,7 +418,6 @@
             <article class="exp-item">
               <div class="exp-top"><div><h3>Solstice Solutions, Inc.</h3><p class="exp-role">Jr. Data Analyst</p><p class="exp-loc">Hartford, CT</p></div><div class="exp-date">Nov 2025 - Present</div></div>
               <ul class="exp-points"><li>HL7 v2.5 &rarr; FHIR R4 on Azure. Mapped ADT, ORU, and ORM message types end to end.</li><li>Wrote validation at ingest, transform, and export &mdash; structural and conformance gates at every stage.</li><li>Caught a malformed patient identifier in an EDI 837 that would've kicked a real bill back to the payer.</li></ul>
-              <a class="text-link" href="case-studies/hl7-fhir-integration.html">View HL7 to FHIR case study</a>
             </article>
             <article class="exp-item">
               <div class="exp-top"><div><h3>Infosysnow Inc.</h3><p class="exp-role">Cyber Security Engineer</p><p class="exp-loc">Remote</p></div><div class="exp-date">Aug 2025 - Nov 2025</div></div>
@@ -495,7 +426,6 @@
             <article class="exp-item">
               <div class="exp-top"><div><h3>iQ4</h3><p class="exp-role">IT Risk Analyst Intern</p><p class="exp-loc">Remote</p></div><div class="exp-date">May 2024 - Aug 2024</div></div>
               <ul class="exp-points"><li>IT risk intern. Read through the 2016 Uber breach and mapped findings against the full NIST CSF lifecycle.</li><li>Findings landed in the team's incident-response playbook. Good thing it didn't stay theoretical.</li></ul>
-              <a class="text-link" href="case-studies/enterprise-risk-threat-analysis.html">View enterprise risk case study</a>
             </article>
             <article class="exp-item">
               <div class="exp-top"><div><h3>Sripton Technologies Pvt Ltd</h3><p class="exp-role">Associate Software Engineer</p><p class="exp-loc">India</p></div><div class="exp-date">Apr 2023 - Dec 2023</div></div>
@@ -634,7 +564,7 @@
                  announces itself as "Email Me", so the label is removed rather
                  than propped up with an invented role. -->
             <div class="contact-actions">
-              <a class="btn primary" href="mailto:shaikazhadshahzad@gmail.com">Email Me</a>
+              
             </div>
           </div>
         </div>
